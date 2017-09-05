@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <requestFocus/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dreamcatcher"
+                android:textColor="@color/duckEggBlue"
+                android:textSize="30dp"
+                android:id="@+id/title1"
+                android:textStyle="bold"
+                />
+
+            <View
+                android:layout_gravity="center_horizontal"
+                android:layout_width="200dp"
+                android:layout_height="5dp"
+                android:background="@color/Coral" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="What is a &quot;dreamer&quot; really need"
+                android:textStyle="bold"
+                android:textColor="@color/White"
+                android:id="@+id/title2"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/White"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            app:cardCornerRadius="10dp">
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/email"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/charcoalGrey"/>
+
+                <EditText
+                    android:backgroundTint="@color/colorAccent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/txtEmail"
+                    android:textSize="20dp"
+                    android:textColor="@color/charcoalGrey"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/password"
+                    android:layout_marginTop="20dp"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/charcoalGrey"/>
+
+                <EditText
+                    android:backgroundTint="@color/colorAccent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/txtPassword"
+                    android:textSize="20dp"
+                    android:textColor="@color/charcoalGrey"
+                    android:layout_marginBottom="30dp"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-20dp"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:background="@drawable/capsule_button_1"
+            android:text="login"
+            android:id="@+id/btnLogin"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/White"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Have no account yet?"
+                android:textColor="@color/White"
+                android:textSize="20dp"
+                android:id="@+id/btnRegister"
+                android:textStyle="bold"
+                />
+
+            <View
+                android:layout_gravity="center_horizontal"
+                android:layout_width="200dp"
+                android:layout_height="5dp"
+                android:background="@color/Coral" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Join Now Later"
+                android:textStyle="bold"
+                android:textColor="@color/lightBlueGrey"
+                android:id="@+id/join_later"
+                android:textSize="40dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
