@@ -5,5 +5,15 @@ package com.cheteam.dreamcatcher.Register.Model;
  */
 
 public class RegisterResponse {
-    public String token;
+    public String success;
+    public String message;
+    public String status_code;
+    public DataUser data;
+
+    public class DataUser
+    {
+        public int id_user;
+        public String name;
+        public String email;
+    }
 }

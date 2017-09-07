@@ -22,7 +22,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/icon_return"
+                android:src="@drawable/icon_return"
+                android:tint="@color/duckEggBlue"
                 android:id="@+id/btnReturn"/>
 
             <TextView
@@ -107,6 +108,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/name"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/charcoalGrey"/>
+
+                <EditText
+                    android:backgroundTint="@color/colorAccent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/txtName"
+                    android:textSize="20dp"
+                    android:textColor="@color/charcoalGrey"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="Email"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/email"
@@ -188,6 +212,7 @@
             android:id="@+id/btnRegister"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:textColor="@color/White"/>
+            android:textColor="@color/White"
+            android:layout_marginBottom="200dp"/>
     </LinearLayout>
 </ScrollView>
