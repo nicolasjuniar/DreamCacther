@@ -10,14 +10,42 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+//        jackOptions {
+//            enabled true
+//        }
+
     }
+
+    signingConfigs {
+        release {
+            keyAlias 'ReleaseKey'
+            keyPassword 'binarche123'
+            storePassword 'binarche123'
+            storeFile file("ReleaseKey.jks")
+        }
+
+        debug {
+            storeFile file("DebugKey.jks")
+            keyAlias 'DebugKey'
+            keyPassword 'binarche123'
+            storePassword 'binarche123'
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            debuggable false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
+            testCoverageEnabled true
             debuggable true
+            signingConfig signingConfigs.debug
         }
     }
 }

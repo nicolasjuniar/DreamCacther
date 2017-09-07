@@ -6,4 +6,8 @@ package com.cheteam.dreamcatcher.Login.Model;
 
 public class LoginResponse {
     public String token;
+    public String email;
+    public String success;
+    public String message;
+    public String status_code;
 }

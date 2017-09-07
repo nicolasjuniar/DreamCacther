@@ -21,9 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login.View.LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Register.View.RegisterActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Timeline.View.TimelineActivity"/>
     </application>
 

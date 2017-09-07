@@ -138,7 +138,7 @@
                 android:text="Have no account yet?"
                 android:textColor="@color/White"
                 android:textSize="20dp"
-                android:id="@+id/btnRegister"
+                android:id="@+id/no_account"
                 android:textStyle="bold"
                 />
 
@@ -148,15 +148,33 @@
                 android:layout_height="5dp"
                 android:background="@color/Coral" />
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Join Now Later"
-                android:textStyle="bold"
-                android:textColor="@color/lightBlueGrey"
-                android:id="@+id/join_later"
-                android:textSize="40dp"/>
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skip"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="50dp"
+                    android:textColor="@color/lightBlueGrey"
+                    android:id="@+id/join_later"
+                    android:textSize="40dp"/>
+
+                <TextView
+                    android:layout_marginLeft="50dp"
+                    android:layout_toEndOf="@+id/join_later"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Join Now"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightBlueGrey"
+                    android:id="@+id/join_now"
+                    android:textSize="40dp"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 
