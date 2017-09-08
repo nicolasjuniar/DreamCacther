@@ -14,5 +14,5 @@ import retrofit.http.GET;
 
 public interface TimelineAPI {
     @GET("v1/posts")
-    Call<ArrayList<ModelTimeline>> GetTimeline();
+    Call<ResponseTimeline> GetTimeline();
 }

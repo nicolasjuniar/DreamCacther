@@ -7,5 +7,8 @@ import java.util.ArrayList;
  */
 
 public class ResponseTimeline {
-    ArrayList<ModelTimeline> listpost;
+    public ArrayList<ModelTimeline> posts;
+    public String success;
+    public String message;
+    public String status_code;
 }

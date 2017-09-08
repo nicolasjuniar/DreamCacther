@@ -2,16 +2,21 @@ package com.cheteam.dreamcatcher.Login.View;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.InterestForm.View.InterestFormActivity;
 import com.cheteam.dreamcatcher.Login.Controller.LoginAPI;
 import com.cheteam.dreamcatcher.Login.Model.LoginResponse;
 import com.cheteam.dreamcatcher.R;
@@ -40,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
+
+
         email=(TextView) findViewById(R.id.email);
         password=(TextView) findViewById(R.id.password);
         txtEmail=(EditText) findViewById(R.id.txtEmail);
@@ -76,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         join_later.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(LoginActivity.this,TimelineActivity.class);
+                Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putBoolean("login",false);
                 intent.putExtras(bundle);
@@ -122,25 +129,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<LoginResponse> response) {
                 LoginResponse loginResponse=response.body();
-                if(loginResponse.email.equalsIgnoreCase(email))
-                {
-                    if ((progressDialog != null) && progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(LoginActivity.this, loginResponse.message, Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(LoginActivity.this,TimelineActivity.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putBoolean("login",true);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                if ((progressDialog != null) && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
                 }
-                else
-                {
-                    if ((progressDialog != null) && progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(LoginActivity.this, "Password or Email Incorrect", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(LoginActivity.this, loginResponse.message, Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putBoolean("login",true);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override

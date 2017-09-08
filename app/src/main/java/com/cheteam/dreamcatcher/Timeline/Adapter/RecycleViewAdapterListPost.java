@@ -54,11 +54,33 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         holder.txtTitle.setTypeface(Roboto_Regular);
         holder.txtFullName.setTypeface(Roboto_Regular);
         holder.txtTime.setTypeface(Roboto_Regular);
+        holder.txtCategories.setTypeface(Roboto_Regular);
 
 
         ModelTimeline model=list.get(position);
         holder.txtTitle.setText(model.post_title);
         holder.txtFullName.setText(model.name);
+        holder.txtCategories.setText(model.categories);
+        if(model.id_background==1)
+        {
+            holder.BgImage.setBackgroundResource(R.drawable.red_bg);
+        }
+        if(model.id_background==2)
+        {
+            holder.BgImage.setBackgroundResource(R.drawable.green_bg);
+        }
+        if(model.id_background==3)
+        {
+            holder.BgImage.setBackgroundResource(R.drawable.blue_bg);
+        }
+        if(model.id_background==4)
+        {
+            holder.BgImage.setBackgroundResource(R.drawable.yellow_bg);
+        }
+        if(model.id_background==5)
+        {
+            holder.BgImage.setBackgroundResource(R.drawable.violet_bg);
+        }
     }
 
     @Override
@@ -76,7 +98,7 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         TextView txtTitle,txtTime, txtFullName;
         CircleImageView AvatarUser;
         ImageView BgImage;
-        //TextView txtCategories;
+        TextView txtCategories;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -84,7 +106,7 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
             txtTime=(TextView) view.findViewById(R.id.txtTime);
             txtTitle=(TextView) view.findViewById(R.id.txtTitle);
             txtFullName=(TextView) view.findViewById(R.id.txtFullName);
-            //txtCategories=(TextView) view.findViewById(R.id.txtCategories);
+            txtCategories=(TextView) view.findViewById(R.id.txtCategories);
             AvatarUser=(CircleImageView) view.findViewById(R.id.AvatarUser);
             BgImage=(ImageView) view.findViewById(R.id.BgImage);
         }
