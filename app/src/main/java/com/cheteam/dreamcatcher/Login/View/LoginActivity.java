@@ -1,7 +1,9 @@
 package com.cheteam.dreamcatcher.Login.View;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -34,21 +36,19 @@ public class LoginActivity extends AppCompatActivity {
     TextView title1,title2,no_account,join_later,join_now;
     EditText txtEmail,txtPassword;
     Button btnLogin;
-    TextView email,password;
 
     LoginAPI service;
     Call<LoginResponse> CallLogin;
 
     ProgressDialog progressDialog;
+    public static Activity LA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
+        LA=this;
 
-
-        email=(TextView) findViewById(R.id.email);
-        password=(TextView) findViewById(R.id.password);
         txtEmail=(EditText) findViewById(R.id.txtEmail);
         txtPassword=(EditText) findViewById(R.id.txtPassword);
         title1=(TextView) findViewById(R.id.title1);
@@ -109,8 +109,6 @@ public class LoginActivity extends AppCompatActivity {
         Typeface justAnotherHand=Typeface.createFromAsset(getAssets(), "fonts/JustAnotherHand.ttf");
         Typeface Lobster_Regular=Typeface.createFromAsset(getAssets(), "fonts/Lobster-Regular.ttf");
         Typeface Roboto_Regular=Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        email.setTypeface(Roboto_Regular);
-        password.setTypeface(Roboto_Regular);
         txtEmail.setTypeface(Roboto_Regular);
         txtPassword.setTypeface(Roboto_Regular);
         title1.setTypeface(Lobster_Regular);
@@ -133,11 +131,24 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 }
                 Toast.makeText(LoginActivity.this, loginResponse.message, Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putBoolean("login",true);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                Boolean interest=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE).getBoolean("interest",false);
+                if(!interest)
+                {
+                    Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putBoolean("login",true);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else if(interest)
+                {
+                    SharedPreferences sp=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sp.edit();
+                    editor.putBoolean("session",true);
+                    editor.apply();
+                    startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
+                    finish();
+                }
             }
 
             @Override

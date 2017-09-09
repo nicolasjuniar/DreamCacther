@@ -39,7 +39,6 @@ public class RegisterActivity extends AppCompatActivity {
     ImageView btnReturn;
     EditText txtEmail,txtPassword,txtRepassword,txtName;
     Button btnRegister;
-    TextView email,password,repassword,name;
 
     RegisterAPI service;
     Call<RegisterResponse> CallRegister;
@@ -49,13 +48,9 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_layout);
-        email=(TextView) findViewById(R.id.email);
-        password=(TextView) findViewById(R.id.password);
-        name=(TextView) findViewById(R.id.name);
         txtEmail=(EditText) findViewById(R.id.txtEmail);
         return1=(TextView) findViewById(R.id.return1);
         txtPassword=(EditText) findViewById(R.id.txtPassword);
-        repassword=(TextView) findViewById(R.id.repassword);
         txtRepassword=(EditText) findViewById(R.id.txtRepassword);
         txtName=(EditText) findViewById(R.id.txtName);
         title1=(TextView) findViewById(R.id.title1);
@@ -103,18 +98,14 @@ public class RegisterActivity extends AppCompatActivity {
         Typeface Lobster_Regular=Typeface.createFromAsset(getAssets(), "fonts/Lobster-Regular.ttf");
         Typeface RockoFLF=Typeface.createFromAsset(getAssets(), "fonts/RockoFLF.ttf");
         Typeface Roboto_Regular=Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        email.setTypeface(Roboto_Regular);
-        password.setTypeface(Roboto_Regular);
         txtEmail.setTypeface(Roboto_Regular);
         txtPassword.setTypeface(Roboto_Regular);
-        repassword.setTypeface(Roboto_Regular);
         txtRepassword.setTypeface(Roboto_Regular);
         title1.setTypeface(Lobster_Regular);
         title2.setTypeface(justAnotherHand);
         title3.setTypeface(RockoFLF);
         btnRegister.setTypeface(Lobster_Regular);
         return1.setTypeface(RockoFLF);
-        name.setTypeface(Roboto_Regular);
         txtName.setTypeface(Roboto_Regular);
     }
 

@@ -1,6 +1,8 @@
 package com.cheteam.dreamcatcher.InterestForm.View;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +35,7 @@ public class InterestFormActivity extends AppCompatActivity {
     RecycleViewAdapterListInterest adapter;
     ArrayList<ModelInterest> list;
     ArrayList<String> listInterest;
+    Boolean check;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,10 +53,26 @@ public class InterestFormActivity extends AppCompatActivity {
         setFont();
         setListInterest();
 
+        Bundle bundle = getIntent().getExtras();
+        check=bundle.getBoolean("login",false);
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(InterestFormActivity.this,TimelineActivity.class));
+                if(check)
+                {
+                    SharedPreferences sp=InterestFormActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sp.edit();
+                    editor.putBoolean("session",true);
+                    editor.putBoolean("interest",true);
+                    editor.apply();
+                    startActivity(new Intent(InterestFormActivity.this,TimelineActivity.class));
+                }
+                else if(!check)
+                {
+                    startActivity(new Intent(InterestFormActivity.this,TimelineActivity.class));
+                }
+                LoginActivity.LA.finish();
                 finish();
             }
         });

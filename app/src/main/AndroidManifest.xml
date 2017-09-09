@@ -26,10 +26,13 @@
         <activity
             android:name=".Register.View.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Timeline.View.TimelineActivity" />
+        <activity android:name=".Timeline.View.TimelineActivity"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".InterestForm.View.InterestFormActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Timeline.View.EditProfileActivity"
+            android:label="Edit Profile"/>
     </application>
 
 </manifest>

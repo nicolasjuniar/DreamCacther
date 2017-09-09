@@ -62,16 +62,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/email"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/charcoalGrey"/>
-
                 <EditText
                     android:backgroundTint="@color/colorAccent"
                     android:layout_width="match_parent"
@@ -79,21 +69,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="-10dp"
                     android:layout_marginRight="20dp"
+                    android:hint="Email"
                     android:id="@+id/txtEmail"
                     android:textSize="20dp"
                     android:textColor="@color/charcoalGrey"
                     />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/password"
-                    android:layout_marginTop="20dp"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/charcoalGrey"/>
 
                 <EditText
                     android:backgroundTint="@color/colorAccent"
@@ -101,10 +81,11 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="-10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:id="@+id/txtPassword"
                     android:textSize="20dp"
+                    android:hint="Password"
                     android:textColor="@color/charcoalGrey"
                     android:layout_marginBottom="30dp"
                     />
