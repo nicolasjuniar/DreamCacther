@@ -2,6 +2,7 @@ package com.cheteam.dreamcatcher.Timeline.Fragment;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -72,6 +73,13 @@ public class FragmentTimeline extends Fragment {
 
         SetListCategories();
         setFont();
+
+        txtEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DialogFragmentSelectCategory().show(getFragmentManager(),"Select Category");
+            }
+        });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

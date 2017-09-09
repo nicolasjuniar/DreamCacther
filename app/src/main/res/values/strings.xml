@@ -3,4 +3,11 @@
     <string name="logo_name"><b>Dream</b>Catcher</string>
     <string name="title1"><u>What are you looking for?</u></string>
     <string name="greeting">good night</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="not_login">You\'re not logged in \nClick <b>here</b> to login</string>
 </resources>

@@ -3,6 +3,7 @@ package com.cheteam.dreamcatcher.Timeline.View;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.Controller.TimelineAPI;
+import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentProfile;
 import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentTimeline;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.R;
@@ -43,11 +45,20 @@ public class TimelineActivity extends AppCompatActivity {
     MenuItem btnLogin;
     ViewPager viewPager;
     TabLayout tabLayout;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_layout);
+
+        fab=(FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TimelineActivity.this, "tes", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 //        Bundle bundle = getIntent().getExtras();
 //        check=bundle.getBoolean("login",false);
@@ -97,7 +108,7 @@ public class TimelineActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentTimeline(), "Home");
         adapter.addFragment(new FragmentTimeline(), "Categories");
-        adapter.addFragment(new FragmentTimeline(), "Profile");
+        adapter.addFragment(new FragmentProfile(), "Profile");
         viewPager.setAdapter(adapter);
 
     }

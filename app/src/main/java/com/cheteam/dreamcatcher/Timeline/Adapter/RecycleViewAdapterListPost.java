@@ -81,6 +81,26 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         {
             holder.BgImage.setBackgroundResource(R.drawable.violet_bg);
         }
+        if(model.id_avatar==1)
+        {
+            holder.AvatarUser.setImageResource(R.drawable.avatar_1);
+        }
+        if(model.id_avatar==2)
+        {
+            holder.AvatarUser.setImageResource(R.drawable.avatar_2);
+        }
+        if(model.id_avatar==3)
+        {
+            holder.AvatarUser.setImageResource(R.drawable.avatar_3);
+        }
+        if(model.id_avatar==4)
+        {
+            holder.AvatarUser.setImageResource(R.drawable.avatar_4);
+        }
+        if(model.id_avatar==5)
+        {
+            holder.AvatarUser.setImageResource(R.drawable.avatar_5);
+        }
     }
 
     @Override

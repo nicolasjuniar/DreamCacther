@@ -5,7 +5,9 @@ package com.cheteam.dreamcatcher.Timeline.Model;
  */
 
 public class ModelTimeline {
+    public int id_post;
     public String name;
+    public int id_avatar;
     public String post_title;
     public int id_background;
     public String categories;
