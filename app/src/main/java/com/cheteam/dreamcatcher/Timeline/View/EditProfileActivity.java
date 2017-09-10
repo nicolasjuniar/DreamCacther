@@ -45,14 +45,14 @@ public class EditProfileActivity extends AppCompatActivity {
         add_photo_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(EditProfileActivity.this, "add photo user", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(EditProfileActivity.this,PickAvatarActivity.class));
             }
         });
 
         add_photo_cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(EditProfileActivity.this, "add photo cover", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(EditProfileActivity.this,PickCoverActivity.class));
             }
         });
         setFont();

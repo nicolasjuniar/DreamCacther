@@ -33,6 +33,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Timeline.View.EditProfileActivity"
             android:label="Edit Profile"/>
+        <activity android:name=".Timeline.View.PickCoverActivity"
+            android:label="Select Cover Profile"/>
+        <activity android:name=".Timeline.View.PickAvatarActivity"
+            android:label="Select Avatar Profile"/>
     </application>
 
 </manifest>
