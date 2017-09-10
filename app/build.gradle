@@ -5,19 +5,47 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.cheteam.dreamcatcher"
-        defaultConfig.applicationId="com.cheteam.dreamcatcher"
+        defaultConfig.applicationId = "com.cheteam.dreamcatcher"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+//        jackOptions {
+//            enabled true
+//        }
+
     }
+
+    signingConfigs {
+        release {
+            keyAlias 'ReleaseKey'
+            keyPassword 'binarche123'
+            storePassword 'binarche123'
+            storeFile file("ReleaseKey.jks")
+        }
+
+        debug {
+            storeFile file("DebugKey.jks")
+            keyAlias 'DebugKey'
+            keyPassword 'binarche123'
+            storePassword 'binarche123'
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            debuggable false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
+            testCoverageEnabled true
             debuggable true
+            signingConfig signingConfigs.debug
         }
     }
 }
@@ -37,4 +65,5 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

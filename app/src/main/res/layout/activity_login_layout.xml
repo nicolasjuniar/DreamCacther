@@ -62,16 +62,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/email"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/charcoalGrey"/>
-
                 <EditText
                     android:backgroundTint="@color/colorAccent"
                     android:layout_width="match_parent"
@@ -79,21 +69,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="-10dp"
                     android:layout_marginRight="20dp"
+                    android:hint="Email"
                     android:id="@+id/txtEmail"
                     android:textSize="20dp"
                     android:textColor="@color/charcoalGrey"
                     />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/password"
-                    android:layout_marginTop="20dp"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/charcoalGrey"/>
 
                 <EditText
                     android:backgroundTint="@color/colorAccent"
@@ -101,10 +81,11 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="-10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:id="@+id/txtPassword"
                     android:textSize="20dp"
+                    android:hint="Password"
                     android:textColor="@color/charcoalGrey"
                     android:layout_marginBottom="30dp"
                     />
@@ -138,7 +119,7 @@
                 android:text="Have no account yet?"
                 android:textColor="@color/White"
                 android:textSize="20dp"
-                android:id="@+id/btnRegister"
+                android:id="@+id/no_account"
                 android:textStyle="bold"
                 />
 
@@ -148,15 +129,33 @@
                 android:layout_height="5dp"
                 android:background="@color/Coral" />
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Join Now Later"
-                android:textStyle="bold"
-                android:textColor="@color/lightBlueGrey"
-                android:id="@+id/join_later"
-                android:textSize="40dp"/>
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skip"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="50dp"
+                    android:textColor="@color/lightBlueGrey"
+                    android:id="@+id/join_later"
+                    android:textSize="40dp"/>
+
+                <TextView
+                    android:layout_marginLeft="50dp"
+                    android:layout_toEndOf="@+id/join_later"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Join Now"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightBlueGrey"
+                    android:id="@+id/join_now"
+                    android:textSize="40dp"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

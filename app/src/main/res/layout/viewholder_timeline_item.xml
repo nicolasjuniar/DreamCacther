@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:background="@drawable/red_bg" />
+                />
 
             <TextView
                 android:id="@+id/txtTitle"
@@ -36,6 +36,16 @@
                 android:textSize="20dp"
                 android:textColor="@color/White"
                 android:text="Tes Tes Tes Tes Tes Tes Tes Tes Tes Tes Tes Tes"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTime"
+                android:text="few hours ago"
+                android:textColor="@color/White"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"/>
         </FrameLayout>
 
         <TextView
@@ -48,15 +58,6 @@
             android:layout_marginLeft="10dp"
             android:id="@+id/txtFullName"
             android:layout_toEndOf="@+id/AvatarUser"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtTime"
-            android:text="few hours ago"
-            android:textColor="#4a4a4a"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="10dp"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -65,6 +66,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="-30dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categories"
+            android:textColor="#4a4a4a"
+            android:textSize="14dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="5dp"
+            android:id="@+id/txtCategories"
             />
 
     </RelativeLayout>

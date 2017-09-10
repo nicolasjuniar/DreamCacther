@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:textColor="@color/Black"
+        android:id="@+id/filter"
+        android:layout_marginTop="20dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ListCategories"
+        android:layout_centerHorizontal="true"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="APPLY"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="30dp"
+        android:id="@+id/txtApply"
+        android:textColor="#009688"
+        android:textSize="14sp"
+        android:layout_below="@+id/ListCategories"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CANCEL"
+        android:layout_below="@+id/ListCategories"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/txtCancel"
+        android:textColor="#009688"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/txtApply"
+        android:layout_marginRight="30dp"
+        android:textSize="14sp"/>
+
+</RelativeLayout>

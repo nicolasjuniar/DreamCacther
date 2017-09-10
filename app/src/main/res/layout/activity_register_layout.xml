@@ -22,7 +22,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/icon_return"
+                android:src="@drawable/icon_return"
+                android:tint="@color/duckEggBlue"
                 android:id="@+id/btnReturn"/>
 
             <TextView
@@ -82,100 +83,79 @@
             android:textStyle="bold"
             />
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            app:cardBackgroundColor="@color/White"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="-10dp"
+                    android:hint="Name"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColor="@color/charcoalGrey"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/txtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Email"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColor="@color/charcoalGrey"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/txtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:inputType="textPassword"
+                    android:hint="Password"
+                    android:textColor="@color/charcoalGrey"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/txtRepassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:inputType="textPassword"
+                    android:textColor="@color/charcoalGrey"
+                    android:hint="Re-Type Password"
+                    android:textSize="20dp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
         <View
             android:layout_gravity="center_horizontal"
             android:layout_width="80dp"
             android:layout_height="2dp"
             android:background="@color/Coral"
             android:layout_marginBottom="10dp"/>
-
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/White"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            app:cardCornerRadius="10dp">
-            <LinearLayout
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/email"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/charcoalGrey"/>
-
-                <EditText
-                    android:backgroundTint="@color/colorAccent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="-10dp"
-                    android:layout_marginRight="20dp"
-                    android:id="@+id/txtEmail"
-                    android:textSize="20dp"
-                    android:textColor="@color/charcoalGrey"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/password"
-                    android:layout_marginTop="20dp"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/charcoalGrey"/>
-
-                <EditText
-                    android:backgroundTint="@color/colorAccent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="-10dp"
-                    android:layout_marginRight="20dp"
-                    android:id="@+id/txtPassword"
-                    android:textSize="20dp"
-                    android:textColor="@color/charcoalGrey"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Re-Type Password"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/repassword"
-                    android:layout_marginTop="20dp"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/charcoalGrey"/>
-
-                <EditText
-                    android:backgroundTint="@color/colorAccent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="-10dp"
-                    android:layout_marginRight="20dp"
-                    android:id="@+id/txtRepassword"
-                    android:textSize="20dp"
-                    android:textColor="@color/charcoalGrey"
-                    android:layout_marginBottom="30dp"
-                    />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
 
 
         <Button

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dream Catcher</string>
+    <string name="logo_name"><b>Dream</b>Catcher</string>
+    <string name="greeting">selamat malam</string>
+</resources>

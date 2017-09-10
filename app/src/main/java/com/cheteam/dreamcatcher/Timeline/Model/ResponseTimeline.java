@@ -1,5 +1,7 @@
 package com.cheteam.dreamcatcher.Timeline.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -7,5 +9,12 @@ import java.util.ArrayList;
  */
 
 public class ResponseTimeline {
-    ArrayList<ModelTimeline> listpost;
+    @SerializedName("posts")
+    public ArrayList<ModelTimeline> posts;
+    @SerializedName("success")
+    public String success;
+    @SerializedName("message")
+    public String message;
+    @SerializedName("status_code")
+    public String status_code;
 }
