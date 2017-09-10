@@ -1,6 +1,7 @@
 package com.cheteam.dreamcatcher.Timeline.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cheteam.dreamcatcher.ArticlePreview.View.ArticlePreview;
 import com.cheteam.dreamcatcher.SplashScreenActivity;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.R;
@@ -18,6 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by Nicolas Juniar on 14/11/2016.
@@ -129,6 +133,15 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
             txtCategories=(TextView) view.findViewById(R.id.txtCategories);
             AvatarUser=(CircleImageView) view.findViewById(R.id.AvatarUser);
             BgImage=(ImageView) view.findViewById(R.id.BgImage);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent myactivity = new Intent(context, ArticlePreview.class);
+                    myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                    context.getApplicationContext().startActivity(myactivity);
+                }
+            });
         }
     }
 }

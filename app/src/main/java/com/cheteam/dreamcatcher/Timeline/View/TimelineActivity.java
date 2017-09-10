@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.AddPost.View.AddPostActivity;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.Controller.TimelineAPI;
@@ -67,7 +68,7 @@ public class TimelineActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(TimelineActivity.this, "tes", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(TimelineActivity.this, AddPostActivity.class));
             }
         });
 

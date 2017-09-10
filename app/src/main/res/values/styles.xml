@@ -11,6 +11,11 @@
         <item name="actionOverflowButtonStyle">@style/OverFlow</item>
     </style>
 
+    <style name="MyToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/White</item>
+        <item name="android:textColorPrimary">@color/White</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
