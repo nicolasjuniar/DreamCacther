@@ -16,62 +16,59 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecyclerViewAdapterMypost;
-import com.cheteam.dreamcatcher.Timeline.Controller.ProfileAPI;
-import com.cheteam.dreamcatcher.Timeline.Controller.TimelineAPI;
-import com.cheteam.dreamcatcher.Timeline.Model.ModelUser;
-import com.cheteam.dreamcatcher.Timeline.Model.ResponseTimeline;
+import com.cheteam.dreamcatcher.Timeline.API.ProfileAPI;
+import com.cheteam.dreamcatcher.Timeline.Controller.ProfileController;
+import com.cheteam.dreamcatcher.Timeline.Model.ProfileResponse;
 import com.cheteam.dreamcatcher.ViewPagerAdapter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Nicolas Juniar on 09/09/2017.
  */
 
-public class FragmentProfile extends Fragment {
+public class FragmentProfile extends Fragment implements ProfileController.onProfileResponse{
 
-    TextView txtLogin;
-    RelativeLayout LayoutProfile;
-    ImageView BgProfile;
-    TextView txtJumlahPost,Username,Location,UserBio;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    CircleImageView AvatarUser;
+    @BindView(R.id.txtLogin) TextView txtLogin;
+    @BindView(R.id.LayoutProfile) RelativeLayout LayoutProfile;
+    @BindView(R.id.BgProfile) ImageView BgProfile;
+    @BindView(R.id.txtJumlahPost) TextView txtJumlahPost;
+    @BindView(R.id.Username) TextView Username;
+    @BindView(R.id.Location) TextView Location;
+    @BindView(R.id.UserBio) TextView UserBio;
+    @BindView(R.id.tabs) TabLayout tabLayout;
+    @BindView(R.id.viewpager) ViewPager viewPager;
+    @BindView(R.id.AvatarUser) CircleImageView AvatarUser;
 
-    ProfileAPI service;
-    Call<ModelUser> CallProfile;
-    RecyclerView ListMyPost;
     RecyclerViewAdapterMypost adapter;
-    public static SharedPreferences sp;
+    private PreferenceHelper preferences;
+    ProfileController PC;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_profile_layout,
                 container, false);
-        txtLogin=(TextView) view.findViewById(R.id.txtLogin);
-        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        LayoutProfile=(RelativeLayout) view.findViewById(R.id.LayoutProfile);
-        BgProfile=(ImageView) view.findViewById(R.id.BgProfile);
-        txtJumlahPost=(TextView) view.findViewById(R.id.txtJumlahPost);
-        Username=(TextView) view.findViewById(R.id.Username);
-        Location=(TextView) view.findViewById(R.id.Location);
-        UserBio=(TextView) view.findViewById(R.id.UserBio);
-        AvatarUser=(CircleImageView) view.findViewById(R.id.AvatarUser);
-        setFont();
-        setProfile();
 
-        sp=getActivity().getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
-        setContent(sp.getBoolean("session",false));
+        ButterKnife.bind(this,view);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+        setFont();
+        preferences=PreferenceHelper.getInstance(getActivity());
+
+        PC=new ProfileController(this);
+        PC.GetProfile();
+
+        setContent(preferences.getBoolean("session",false));
 
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,49 +92,6 @@ public class FragmentProfile extends Fragment {
             txtLogin.setVisibility(View.VISIBLE);
             LayoutProfile.setVisibility(View.GONE);
         }
-    }
-
-    public void setProfile()
-    {
-        service= ServiceGenerator.createService(ProfileAPI.class);
-        CallProfile=service.GetProfile();
-        CallProfile.enqueue(new Callback<ModelUser>() {
-            @Override
-            public void onResponse(Response<ModelUser> response) {
-                ModelUser model=response.body();
-                Username.setText(model.name);
-                Location.setText(model.address);
-                UserBio.setText(model.bio);
-                txtJumlahPost.setText(String.valueOf(model.total_posts)+" Posts");
-                setCover(model.id_cover_photo);
-
-                if(model.id_avatar==1)
-                {
-                    AvatarUser.setImageResource(R.drawable.avatar_1);
-                }
-                if(model.id_avatar==2)
-                {
-                    AvatarUser.setImageResource(R.drawable.avatar_2);
-                }
-                if(model.id_avatar==3)
-                {
-                    AvatarUser.setImageResource(R.drawable.avatar_3);
-                }
-                if(model.id_avatar==4)
-                {
-                    AvatarUser.setImageResource(R.drawable.avatar_4);
-                }
-                if(model.id_avatar==5)
-                {
-                    AvatarUser.setImageResource(R.drawable.avatar_5);
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
     }
 
     public void setCover(int id_cover)
@@ -182,8 +136,6 @@ public class FragmentProfile extends Fragment {
         {
             BgProfile.setBackgroundResource(R.drawable.cover_1);
         }
-
-
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -191,7 +143,6 @@ public class FragmentProfile extends Fragment {
         adapter.addFragment(new FragmentMypost(),"Posts");
         adapter.addFragment(new FragmentBookmarks(), "Bookmarks");
         viewPager.setAdapter(adapter);
-
     }
 
     public void setFont()
@@ -213,6 +164,40 @@ public class FragmentProfile extends Fragment {
                 if (tabViewChild instanceof TextView) {
                     ((TextView) tabViewChild).setTypeface(Roboto_Regular);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void getProfileResponse(boolean error, ProfileResponse response, Throwable t) {
+        if(!error)
+        {
+            ProfileResponse model=response;
+            Username.setText(model.name);
+            Location.setText(model.address);
+            UserBio.setText(model.bio);
+            txtJumlahPost.setText(String.valueOf(model.total_posts)+" Posts");
+            setCover(model.id_cover_photo);
+
+            if(model.id_avatar==1)
+            {
+                AvatarUser.setImageResource(R.drawable.avatar_1);
+            }
+            if(model.id_avatar==2)
+            {
+                AvatarUser.setImageResource(R.drawable.avatar_2);
+            }
+            if(model.id_avatar==3)
+            {
+                AvatarUser.setImageResource(R.drawable.avatar_3);
+            }
+            if(model.id_avatar==4)
+            {
+                AvatarUser.setImageResource(R.drawable.avatar_4);
+            }
+            if(model.id_avatar==5)
+            {
+                AvatarUser.setImageResource(R.drawable.avatar_5);
             }
         }
     }

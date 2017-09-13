@@ -10,39 +10,27 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.AddPost.View.AddPostActivity;
+import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
-import com.cheteam.dreamcatcher.ServiceGenerator;
-import com.cheteam.dreamcatcher.Timeline.Controller.TimelineAPI;
 import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentFeedsCategory;
 import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentProfile;
 import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentTimeline;
-import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.R;
-import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListPost;
-import com.cheteam.dreamcatcher.Timeline.Model.ResponseTimeline;
 import com.cheteam.dreamcatcher.ViewPagerAdapter;
 
-import java.util.ArrayList;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.http.POST;
 
 /**
  * Created by Nicolas Juniar on 31/08/2017.
@@ -51,20 +39,24 @@ import retrofit.http.POST;
 public class TimelineActivity extends AppCompatActivity {
 
     MenuItem btnLogin,btnLogout,btnEditProfile;
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    FloatingActionButton fab;
+
+    @BindView(R.id.viewpager) ViewPager viewPager;
+    @BindView(R.id.tabs) TabLayout tabLayout;
+    @BindView(R.id.fab) FloatingActionButton fab;
+
     private Boolean exit = false;
 
     boolean check=false;
-    public static SharedPreferences sp;
+    private PreferenceHelper preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_layout);
 
-        fab=(FloatingActionButton) findViewById(R.id.fab);
+        ButterKnife.bind(this);
+        preferences=PreferenceHelper.getInstance(getApplicationContext());
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,27 +64,10 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
-        sp=TimelineActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
-        check=sp.getBoolean("session",false);
+        check=preferences.getBoolean("session",false);
 
-//
-//        /////set Action Bar
-//        final ActionBar actionBar = getSupportActionBar();
-//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View mCustomView = inflater.inflate(R.layout.actionbar_custom_1, null);
-//        actionBar.setCustomView(mCustomView, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//
-//        Toolbar toolbar=(Toolbar)actionBar.getCustomView().getParent();
-//        toolbar.setContentInsetsAbsolute(0, 0);
-//        toolbar.getContentInsetEnd();
-//        toolbar.setPadding(0, 0, 0, 0);
-//
-//        //////////////////
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         setFont();
@@ -101,7 +76,6 @@ public class TimelineActivity extends AppCompatActivity {
     public void setFont()
     {
         Typeface Roboto_Regular=Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        Typeface Lobster_Regular=Typeface.createFromAsset(getAssets(), "fonts/Lobster-Regular.ttf");
 
         ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
@@ -128,7 +102,6 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         btnLogin= menu.findItem(R.id.action_login);
         btnEditProfile=menu.findItem(R.id.action_editprofile);
@@ -170,9 +143,6 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if(id==R.id.action_login)
@@ -188,10 +158,7 @@ public class TimelineActivity extends AppCompatActivity {
                     .setMessage("Are you sure wanna logout?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences sp=TimelineActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
-                            SharedPreferences.Editor editor=sp.edit();
-                            editor.putBoolean("session",false);
-                            editor.apply();
+                            preferences.putBoolean("session",false);
                             startActivity(new Intent(TimelineActivity.this,LoginActivity.class));
                             finish();
                         }

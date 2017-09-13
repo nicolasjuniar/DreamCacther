@@ -11,58 +11,46 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecyclerViewAdapterBookmarks;
-import com.cheteam.dreamcatcher.Timeline.Controller.TimelineAPI;
+import com.cheteam.dreamcatcher.Timeline.API.TimelineAPI;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ServiceGenerator;
-import com.cheteam.dreamcatcher.Timeline.Model.ResponseTimeline;
+import com.cheteam.dreamcatcher.Timeline.Controller.TimelineController;
+import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * Created by MPR on 9/8/2017.
  */
 
-public class FragmentBookmarks extends Fragment {
+public class FragmentBookmarks extends Fragment implements TimelineController.onTimelineResponse {
 
-    private final String TAG = FragmentBookmarks.class.getSimpleName();
-
-    TimelineAPI service;
-    Call<ResponseTimeline> CallBookmark;
-    RecyclerView ListBookmarks;
+    @BindView(R.id.ListBookmarks) RecyclerView ListBookmarks;
     RecyclerViewAdapterBookmarks adapter;
+    TimelineController TC;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_bookmarks_layout, container, false);
-        ListBookmarks = (RecyclerView) view.findViewById(R.id.ListBookmarks);
-        BookmarkPost();
+        ButterKnife.bind(this,view);
+        TC=new TimelineController(this);
+        TC.getTimeline();
         return view;
     }
 
-    public void BookmarkPost(){
-        service= ServiceGenerator.createService(TimelineAPI.class);
-        CallBookmark=service.GetTimeline();
-        CallBookmark.enqueue(new Callback<ResponseTimeline>() {
-            @Override
-            public void onResponse(Response<ResponseTimeline> response) {
-                adapter=new RecyclerViewAdapterBookmarks(response.body().posts,getActivity());
-                ListBookmarks.setAdapter(adapter);
-                ListBookmarks.setLayoutManager(new LinearLayoutManager(getActivity()));
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
-    }
-
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.e(TAG, "onDestroyView Bookmarks");
+    public void getTimelineResponse(boolean error, TimelineResponse response, Throwable t) {
+        if(!error)
+        {
+            adapter=new RecyclerViewAdapterBookmarks(response.posts,getActivity());
+            ListBookmarks.setAdapter(adapter);
+            ListBookmarks.setLayoutManager(new LinearLayoutManager(getActivity()));
+        }
     }
 }

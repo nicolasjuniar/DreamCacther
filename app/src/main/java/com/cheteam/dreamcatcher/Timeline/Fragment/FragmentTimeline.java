@@ -8,66 +8,60 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListCategories;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListPost;
-import com.cheteam.dreamcatcher.Timeline.Controller.TimelineAPI;
+import com.cheteam.dreamcatcher.Timeline.API.TimelineAPI;
+import com.cheteam.dreamcatcher.Timeline.Controller.TimelineController;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
-import com.cheteam.dreamcatcher.Timeline.Model.ResponseTimeline;
-import com.cheteam.dreamcatcher.Timeline.View.TimelineActivity;
+import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 
 import java.util.ArrayList;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Nicolas Juniar on 08/09/2017.
  */
 
-public class FragmentTimeline extends Fragment {
+public class FragmentTimeline extends Fragment implements TimelineController.onTimelineResponse{
 
-    SwipeRefreshLayout swipeRefreshLayout;
-    RecyclerView recyclerView;
-    RecyclerView recyclerView2;
-    ProgressBar progressBar;
+    @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.ListPost) RecyclerView recyclerView;
+    @BindView(R.id.ListCategories) RecyclerView recyclerView2;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.txtEdit) TextView txtEdit;
 
-    ArrayList<ModelTimeline> list;
     RecycleViewAdapterListPost adapter;
 
     ArrayList<String> ListCategories;
     RecycleViewAdapterListCategories adapter2;
-    TextView txtEdit;
 
-    TimelineAPI service;
-    Call<ResponseTimeline> CallTimeline;
+    TimelineController TC;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_timeline_layout,
                 container, false);
 
-        progressBar=(ProgressBar) view.findViewById(R.id.progressBar);
-        swipeRefreshLayout=(SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
-        recyclerView  = (RecyclerView) view.findViewById(R.id.ListPost);
-        recyclerView2=(RecyclerView) view.findViewById(R.id.ListCategories);
-        txtEdit=(TextView) view.findViewById(R.id.txtEdit);
-
-        SetListPost();
+        ButterKnife.bind(this,view);
+        TC=new TimelineController(this);
+        TC.getTimeline();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                SetListPost();
+                TC.getTimeline();
             }
         });
 
@@ -111,25 +105,16 @@ public class FragmentTimeline extends Fragment {
         txtEdit.setTypeface(Roboto_Regular);
     }
 
-    public void SetListPost()
-    {
-        service= ServiceGenerator.createService(TimelineAPI.class);
-        CallTimeline=service.GetTimeline();
-        CallTimeline.enqueue(new Callback<ResponseTimeline>() {
-            @Override
-            public void onResponse(Response<ResponseTimeline> response) {
-                list=response.body().posts;
-                adapter=new RecycleViewAdapterListPost(list,getContext());
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public void getTimelineResponse(boolean error, TimelineResponse response, Throwable t) {
+        if(!error)
+        {
+            adapter=new RecycleViewAdapterListPost(response.posts,getContext());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            progressBar.setVisibility(View.GONE);
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 }

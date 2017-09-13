@@ -4,41 +4,43 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.os.Handler;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.InterestForm.View.InterestFormActivity;
-import com.cheteam.dreamcatcher.Login.Controller.LoginAPI;
+import com.cheteam.dreamcatcher.Login.API.LoginAPI;
+import com.cheteam.dreamcatcher.Login.Controller.LoginController;
 import com.cheteam.dreamcatcher.Login.Model.LoginResponse;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Register.View.RegisterActivity;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.View.TimelineActivity;
-import com.google.gson.Gson;
-import com.squareup.okhttp.ResponseBody;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
-    TextView title1,title2,no_account,join_later,join_now;
-    EditText txtEmail,txtPassword;
-    Button btnLogin;
 
-    LoginAPI service;
-    Call<LoginResponse> CallLogin;
+public class LoginActivity extends AppCompatActivity implements LoginController.OnLoginResponse {
+
+    @BindView(R.id.title1) TextView title1;
+    @BindView(R.id.title2) TextView title2;
+    @BindView(R.id.no_account) TextView no_account;
+    @BindView(R.id.join_later) TextView join_later;
+    @BindView(R.id.join_now) TextView join_now;
+    @BindView(R.id.txtEmail) EditText txtEmail;
+    @BindView(R.id.txtPassword) EditText txtPassword;
+    @BindView(R.id.btnLogin) Button btnLogin;
+
+    LoginController LC;
 
     ProgressDialog progressDialog;
     public static Activity LA;
@@ -47,16 +49,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
+        ButterKnife.bind(this);
         LA=this;
-
-        txtEmail=(EditText) findViewById(R.id.txtEmail);
-        txtPassword=(EditText) findViewById(R.id.txtPassword);
-        title1=(TextView) findViewById(R.id.title1);
-        title2=(TextView) findViewById(R.id.title2);
-        no_account=(TextView) findViewById(R.id.no_account);
-        join_now=(TextView) findViewById(R.id.join_now);
-        join_later=(TextView) findViewById(R.id.join_later);
-        btnLogin=(Button) findViewById(R.id.btnLogin);
+        LC=new LoginController(this);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.setIndeterminate(false);
                     progressDialog.setCancelable(false);
                 }
-                Login(txtEmail.getText().toString());
+                LC.Login();
             }
         });
 
@@ -76,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
-//                finish();
             }
         });
 
@@ -88,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
                 bundle.putBoolean("login",false);
                 intent.putExtras(bundle);
                 startActivity(intent);
-//                finish();
             }
         });
 
@@ -119,45 +112,41 @@ public class LoginActivity extends AppCompatActivity {
         join_now.setTypeface(Lobster_Regular);
     }
 
-    public void Login(final String email)
-    {
-        service= ServiceGenerator.createService(LoginAPI.class);
-        CallLogin=service.Login();
-        CallLogin.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Response<LoginResponse> response) {
-                LoginResponse loginResponse=response.body();
-                if ((progressDialog != null) && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-                Toast.makeText(LoginActivity.this, loginResponse.message, Toast.LENGTH_SHORT).show();
-                Boolean interest=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE).getBoolean("interest",false);
-                if(!interest)
-                {
-                    Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putBoolean("login",true);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-                else if(interest)
-                {
-                    SharedPreferences sp=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
-                    SharedPreferences.Editor editor=sp.edit();
-                    editor.putBoolean("session",true);
-                    editor.apply();
-                    startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
-                    finish();
-                }
+    @Override
+    public void getLoginResponse(boolean error, LoginResponse loginResponse, Throwable t) {
+        if(!error)
+        {
+            LoginResponse response=loginResponse;
+            if ((progressDialog != null) && progressDialog.isShowing()) {
+                progressDialog.dismiss();
             }
+            Toast.makeText(LoginActivity.this, loginResponse.message, Toast.LENGTH_SHORT).show();
+            Boolean interest=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE).getBoolean("interest",false);
+            if(!interest)
+            {
+                Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putBoolean("login",true);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+            else if(interest)
+            {
+                SharedPreferences sp=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putBoolean("session",true);
+                editor.apply();
+                startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
+                finish();
+            }
+        }
 
-            @Override
-            public void onFailure(Throwable t) {
-                if ((progressDialog != null) && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        if(error)
+        {
+            if ((progressDialog != null) && progressDialog.isShowing()) {
+                progressDialog.dismiss();
             }
-        });
+            Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

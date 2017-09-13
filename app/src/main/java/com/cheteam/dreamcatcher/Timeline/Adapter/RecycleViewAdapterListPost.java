@@ -19,6 +19,8 @@ import com.squareup.picasso.Picasso;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -119,21 +121,17 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtTitle,txtTime, txtFullName;
-        CircleImageView AvatarUser;
-        ImageView BgImage;
-        TextView txtCategories;
+        @BindView(R.id.txtTitle) TextView txtTitle;
+        @BindView(R.id.txtTime) TextView txtTime;
+        @BindView(R.id.txtFullName) TextView txtFullName;
+        @BindView(R.id.AvatarUser) CircleImageView AvatarUser;
+        @BindView(R.id.BgImage) ImageView BgImage;
+        @BindView(R.id.txtCategories) TextView txtCategories;
 
         ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            txtTime=(TextView) view.findViewById(R.id.txtTime);
-            txtTitle=(TextView) view.findViewById(R.id.txtTitle);
-            txtFullName=(TextView) view.findViewById(R.id.txtFullName);
-            txtCategories=(TextView) view.findViewById(R.id.txtCategories);
-            AvatarUser=(CircleImageView) view.findViewById(R.id.AvatarUser);
-            BgImage=(ImageView) view.findViewById(R.id.BgImage);
-
+            ButterKnife.bind(this,view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

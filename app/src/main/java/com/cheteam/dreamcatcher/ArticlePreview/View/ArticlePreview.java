@@ -10,102 +10,40 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cheteam.dreamcatcher.AddPost.View.AddPostActivity;
-import com.cheteam.dreamcatcher.ArticlePreview.Controller.ViewArticleApi;
-import com.cheteam.dreamcatcher.ArticlePreview.Model.ArticleModel;
+import com.cheteam.dreamcatcher.ArticlePreview.API.ViewArticleApi;
+import com.cheteam.dreamcatcher.ArticlePreview.Controller.ArticleController;
+import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
 import com.cheteam.dreamcatcher.CommentSection.View.MainComment;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Rahmat Al Hakam on 09/09/2017.
  */
 
-public class ArticlePreview extends AppCompatActivity {
-    TextView tv_title_article, tv_name,tanggal_post,tv_content_article;
-    CircleImageView AvatarUser;
-    ImageView bg_post;
-    ViewArticleApi service;
-    Call<ArticleModel> CallArticle;
+public class ArticlePreview extends AppCompatActivity implements ArticleController.onViewArticleResponse {
+    @BindView(R.id.tv_title_article) TextView tv_title_article;
+    @BindView(R.id.tv_name) TextView tv_name;
+    @BindView(R.id.tanggal_post) TextView tanggal_post;
+    @BindView(R.id.tv_content_article) TextView tv_content_article;
+    @BindView(R.id.AvatarUser) CircleImageView AvatarUser;
+    @BindView(R.id.bg_post) ImageView bg_post;
+    @BindView(R.id.my_toolbar_article_layout) Toolbar myToolbar;
+    ArticleController AC;
 
-
-    public void setArticle(int id_post){
-        service= ServiceGenerator.createService(ViewArticleApi.class);
-        CallArticle=service.getArticle(id_post);
-        CallArticle.enqueue(new Callback<ArticleModel>() {
-            @Override
-            public void onResponse(Response<ArticleModel> response) {
-                ArticleModel model = response.body();
-                tv_title_article.setText(model.post_title);
-                tv_name.setText(model.name);
-                tanggal_post.setText(model.published_at);
-                tv_content_article.setText(model.content);
-                if(model.id_background==1){
-                    bg_post.setBackgroundResource(R.drawable.red_bg);
-                }
-                if(model.id_background==2){
-                    bg_post.setBackgroundResource(R.drawable.green_bg);
-                }
-                if(model.id_background==3){
-                    bg_post.setBackgroundResource(R.drawable.blue_bg);
-                }
-                if(model.id_background==4){
-                    bg_post.setBackgroundResource(R.drawable.yellow_bg);
-                }
-                if(model.id_background==5){
-                    bg_post.setBackgroundResource(R.drawable.violet_bg);
-                }
-                if(model.id_avatar==0){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_0);
-                }
-                if(model.id_avatar==1){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_1);
-                }
-                if(model.id_avatar==2){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_2);
-                }
-                if(model.id_avatar==3){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_3);
-                }
-                if(model.id_avatar==4){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_4);
-                }
-                if(model.id_avatar==5){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_5);
-                }
-                if(model.id_avatar==6){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_6);
-                }
-                if(model.id_avatar==7){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_7);
-                }
-                if(model.id_avatar==8){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_8);
-                }
-                if(model.id_avatar==9){
-                    AvatarUser.setBackgroundResource(R.drawable.avatar_9);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Throwable throwable) {
-
-            }
-        });
-
-    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_layout);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar_article_layout);
+        ButterKnife.bind(this);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("View Post");
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
@@ -113,13 +51,7 @@ public class ArticlePreview extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
 
-        tv_title_article = (TextView) findViewById(R.id.tv_title_article);
-        tv_name = (TextView) findViewById(R.id.tv_name);
-        tanggal_post =  (TextView) findViewById(R.id.tanggal_post);
-        tv_content_article = (TextView) findViewById(R.id.tv_content_article);
-        AvatarUser = (CircleImageView) findViewById(R.id.AvatarUser);
-        bg_post = (ImageView) findViewById(R.id.bg_post);
-        setArticle(1);
+        AC.GetArticle(1);
 
     }
     @Override
@@ -147,5 +79,60 @@ public class ArticlePreview extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void getViewArticleResponse(boolean error, ViewArticleResponse response, Throwable t) {
+        if(!error)
+        {
+            ViewArticleResponse model = response;
+            tv_title_article.setText(model.post_title);
+            tv_name.setText(model.name);
+            tanggal_post.setText(model.published_at);
+            tv_content_article.setText(model.content);
+            if(model.id_background==1){
+                bg_post.setBackgroundResource(R.drawable.red_bg);
+            }
+            if(model.id_background==2){
+                bg_post.setBackgroundResource(R.drawable.green_bg);
+            }
+            if(model.id_background==3){
+                bg_post.setBackgroundResource(R.drawable.blue_bg);
+            }
+            if(model.id_background==4){
+                bg_post.setBackgroundResource(R.drawable.yellow_bg);
+            }
+            if(model.id_background==5){
+                bg_post.setBackgroundResource(R.drawable.violet_bg);
+            }
+            if(model.id_avatar==0){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_0);
+            }
+            if(model.id_avatar==1){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_1);
+            }
+            if(model.id_avatar==2){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_2);
+            }
+            if(model.id_avatar==3){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_3);
+            }
+            if(model.id_avatar==4){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_4);
+            }
+            if(model.id_avatar==5){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_5);
+            }
+            if(model.id_avatar==6){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_6);
+            }
+            if(model.id_avatar==7){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_7);
+            }
+            if(model.id_avatar==8){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_8);
+            }
+            if(model.id_avatar==9){
+                AvatarUser.setBackgroundResource(R.drawable.avatar_9);
+            }
+        }
+    }
 }

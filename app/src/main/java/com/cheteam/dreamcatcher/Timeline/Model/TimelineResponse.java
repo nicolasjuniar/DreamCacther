@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by Nicolas Juniar on 03/09/2017.
  */
 
-public class ResponseTimeline {
+public class TimelineResponse {
     @SerializedName("posts")
     public ArrayList<ModelTimeline> posts;
     @SerializedName("success")

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -53,10 +55,7 @@ public class RecycleViewAdapterListInterest extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(RecycleViewAdapterListInterest.ViewHolder holder, int position) {
-        Typeface Merriweather_Bold=Typeface.createFromAsset(context.getAssets(), "fonts/Merriweather-Bold.ttf");
-        Typeface Lobster_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Lobster-Regular.ttf");
         Typeface RockoFLF=Typeface.createFromAsset(context.getAssets(), "fonts/RockoFLF.ttf");
-        Typeface Roboto_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.txtInterest.setTypeface(RockoFLF);
 
 
@@ -76,13 +75,14 @@ public class RecycleViewAdapterListInterest extends RecyclerView.Adapter<Recycle
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtInterest;
+        @BindView(R.id.txtInterest) TextView txtInterest;
         boolean cek;
 
         ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            txtInterest=(TextView) view.findViewById(R.id.txtInterest);
+
+            ButterKnife.bind(this,view);
             cek=false;
 
             txtInterest.setOnClickListener(new View.OnClickListener() {

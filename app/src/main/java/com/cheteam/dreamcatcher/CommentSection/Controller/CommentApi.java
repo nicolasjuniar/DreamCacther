@@ -1,10 +1,11 @@
 package com.cheteam.dreamcatcher.CommentSection.Controller;
 
-import com.cheteam.dreamcatcher.ArticlePreview.Model.ArticleModel;
+import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
 
-import retrofit.Call;
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+
 
 /**
  * Created by Rahmat Al Hakam on 10/09/2017.
@@ -12,6 +13,6 @@ import retrofit.http.Path;
 
 public interface CommentApi {
     @GET("/v1/posts/{id_post}/comments/{id_comment}")
-    Call<ArticleModel> getArticle(@Path("id_comment") int id_comment,
-                                  @Path("id_post") int id_post);
+    Call<ViewArticleResponse> getArticle(@Path("id_comment") int id_comment,
+                                         @Path("id_post") int id_post);
 }

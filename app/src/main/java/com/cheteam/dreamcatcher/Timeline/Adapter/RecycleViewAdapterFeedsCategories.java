@@ -15,6 +15,9 @@ import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentFeedsCategory;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Nicolas Juniar on 14/11/2016.
  */
@@ -86,14 +89,13 @@ public class RecycleViewAdapterFeedsCategories extends RecyclerView.Adapter<Recy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCategoryName;
-        ImageView bgCategory;
+        @BindView(R.id.txtCategoryName) TextView txtCategoryName;
+        @BindView(R.id.bgCategory) ImageView bgCategory;
 
         ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            txtCategoryName=(TextView) view.findViewById(R.id.txtCategoryName);
-            bgCategory=(ImageView) view.findViewById(R.id.bgCategory);
+            ButterKnife.bind(this,view);
 
             txtCategoryName.setOnClickListener(new View.OnClickListener() {
                 @Override

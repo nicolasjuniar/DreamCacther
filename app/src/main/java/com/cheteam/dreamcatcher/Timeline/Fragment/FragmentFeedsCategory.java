@@ -1,7 +1,6 @@
 package com.cheteam.dreamcatcher.Timeline.Fragment;
 
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,48 +15,47 @@ import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterFeedsCategories;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListPost;
-import com.cheteam.dreamcatcher.Timeline.Controller.TimelineAPI;
+import com.cheteam.dreamcatcher.Timeline.API.TimelineAPI;
+import com.cheteam.dreamcatcher.Timeline.Controller.TimelineController;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
-import com.cheteam.dreamcatcher.Timeline.Model.ResponseTimeline;
+import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 
 import java.util.ArrayList;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * Created by Nicolas Juniar on 09/09/2017.
  */
 
-public class FragmentFeedsCategory extends Fragment {
+public class FragmentFeedsCategory extends Fragment implements TimelineController.onTimelineResponse{
 
     ArrayList<String> ListCategories;
-    RecyclerView recyclerView;
-    RecyclerView recyclerView2;
     RecycleViewAdapterFeedsCategories adapterCategories;
     RecycleViewAdapterListPost adapterPosts;
-    ImageView bgCategory,expand;
-    TextView txtCategoryName;
-
-    TimelineAPI service;
-    ArrayList<ModelTimeline> list;
-    Call<ResponseTimeline> CallTimeline;
+    @BindView(R.id.ListCategories) RecyclerView recyclerView;
+    @BindView(R.id.ListPost) RecyclerView recyclerView2;
+    @BindView(R.id.bgCategory) ImageView bgCategory;
+    @BindView(R.id.expand) ImageView expand;
+    @BindView(R.id.txtCategoryName) TextView txtCategoryName;
+    TimelineController TC;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_categories_layout,
                 container, false);
-        recyclerView=(RecyclerView) view.findViewById(R.id.ListCategories);
-        recyclerView2=(RecyclerView) view.findViewById(R.id.ListPost);
-        bgCategory=(ImageView) view.findViewById(R.id.bgCategory);
-        expand=(ImageView) view.findViewById(R.id.expand);
-        txtCategoryName=(TextView) view.findViewById(R.id.txtCategoryName);
+        ButterKnife.bind(this,view);
         setCategories();
         recyclerView2.setVisibility(View.GONE);
         bgCategory.setVisibility(View.GONE);
         txtCategoryName.setVisibility(View.GONE);
         setFont();
+        TC=new TimelineController(this);
 
         bgCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +77,6 @@ public class FragmentFeedsCategory extends Fragment {
     public void setFont()
     {
         Typeface Roboto_Regular=Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Regular.ttf");
-        Typeface Lobster_Regular=Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lobster-Regular.ttf");
 
         txtCategoryName.setTypeface(Roboto_Regular);
     }
@@ -106,7 +103,7 @@ public class FragmentFeedsCategory extends Fragment {
             bgCategory.setVisibility(View.VISIBLE);
             txtCategoryName.setVisibility(View.VISIBLE);
             expand.setVisibility(View.VISIBLE);
-            setPosts();
+            TC.getTimeline();
             if(category.equalsIgnoreCase("Finance"))
             {
                 txtCategoryName.setText("Finance");
@@ -143,24 +140,13 @@ public class FragmentFeedsCategory extends Fragment {
         }
     }
 
-
-    public void setPosts()
-    {
-        service= ServiceGenerator.createService(TimelineAPI.class);
-        CallTimeline=service.GetTimeline();
-        CallTimeline.enqueue(new Callback<ResponseTimeline>() {
-            @Override
-            public void onResponse(Response<ResponseTimeline> response) {
-                list=response.body().posts;
-                adapterPosts=new RecycleViewAdapterListPost(list,getContext());
-                recyclerView2.setAdapter(adapterPosts);
-                recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+    @Override
+    public void getTimelineResponse(boolean error, TimelineResponse response, Throwable t) {
+        if(!error)
+        {
+            adapterPosts=new RecycleViewAdapterListPost(response.posts,getContext());
+            recyclerView2.setAdapter(adapterPosts);
+            recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 }

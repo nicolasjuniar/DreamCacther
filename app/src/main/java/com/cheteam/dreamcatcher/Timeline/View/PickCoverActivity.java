@@ -12,19 +12,23 @@ import com.cheteam.dreamcatcher.Timeline.Adapter.RecyclerViewAdapterListCover;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Nicolas Juniar on 10/09/2017.
  */
 
 public class PickCoverActivity extends AppCompatActivity {
     RecyclerViewAdapterListCover adapter;
-    RecyclerView recyclerView;
+    @BindView(R.id.ListCover) RecyclerView recyclerView;
     List<String> ListCover;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_cover_layout);
-        recyclerView=(RecyclerView) findViewById(R.id.ListCover);
+        ButterKnife.bind(this);
 
         ListCover=new ArrayList<>();
         ListCover.add("1");

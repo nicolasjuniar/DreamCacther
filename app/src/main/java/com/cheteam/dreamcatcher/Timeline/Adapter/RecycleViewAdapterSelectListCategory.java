@@ -16,6 +16,8 @@ import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -68,13 +70,13 @@ public class RecycleViewAdapterSelectListCategory extends RecyclerView.Adapter<R
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        Button btnCategory;
+        @BindView(R.id.btnCategory) Button btnCategory;
         boolean cek=false;
 
         ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            btnCategory=(Button) view.findViewById(R.id.btnCategory);
+            ButterKnife.bind(this,view);
 
             btnCategory.setOnClickListener(new View.OnClickListener() {
                 @Override

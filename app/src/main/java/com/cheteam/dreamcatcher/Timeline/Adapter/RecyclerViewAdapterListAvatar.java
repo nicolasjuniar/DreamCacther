@@ -13,6 +13,9 @@ import com.cheteam.dreamcatcher.R;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by MPR on 9/9/2017.
  */
@@ -88,13 +91,12 @@ public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<Recycler
     }
 
     public class BookmarksViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView AvatarUser;
+        @BindView(R.id.AvatarUser) ImageView AvatarUser;
 
         BookmarksViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            AvatarUser=(ImageView) view.findViewById(R.id.AvatarUser);
+            ButterKnife.bind(this,view);
             AvatarUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

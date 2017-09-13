@@ -10,36 +10,44 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cheteam.dreamcatcher.ArticlePreview.Controller.ViewArticleApi;
-import com.cheteam.dreamcatcher.ArticlePreview.Model.ArticleModel;
+import com.cheteam.dreamcatcher.ArticlePreview.API.ViewArticleApi;
+import com.cheteam.dreamcatcher.ArticlePreview.Controller.ArticleController;
+import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
  * Created by Rahmat Al Hakam on 09/09/2017.
  */
 
-public class ActivityPreview extends AppCompatActivity{
-    TextView tv_title_preview,tv_name_preview, preview_category, preview_tanggal,tv_content_preview,tv_category_preview;
-    CircleImageView preview_avatar_user;
-    ImageView bg_preview;
-    ViewArticleApi service;
-    ImageView bookmark_icon;
+public class ActivityPreview extends AppCompatActivity implements ArticleController.onViewArticleResponse{
+    @BindView(R.id.tv_title_preview) TextView tv_title_preview;
+    @BindView(R.id.tv_name_preview) TextView tv_name_preview;
+    @BindView(R.id.preview_category) TextView preview_category;
+    @BindView(R.id.preview_tanggal) TextView preview_tanggal;
+    @BindView(R.id.tv_content_preview) TextView tv_content_preview;
+    @BindView(R.id.tv_category_preview) TextView tv_category_preview;
+    @BindView(R.id.preview_avatar_user) CircleImageView preview_avatar_user;
+    @BindView(R.id.bg_preview) ImageView bg_preview;
+    @BindView(R.id.bookmark_icon) ImageView bookmark_icon;
+    @BindView(R.id.my_toolbar_article_preview) Toolbar myToolbar;
     Boolean cek=false;
+    ArticleController AC;
 
-    Call<ArticleModel> CallArticle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_preview);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar_article_preview);
+        ButterKnife.bind(this);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Preview");
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
@@ -47,16 +55,8 @@ public class ActivityPreview extends AppCompatActivity{
         ab.setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
 
-        tv_title_preview = (TextView) findViewById(R.id.tv_title_preview);
-        tv_name_preview = (TextView) findViewById(R.id.tv_name_preview);
-        preview_category = (TextView) findViewById(R.id.preview_category);
-        preview_tanggal = (TextView) findViewById(R.id.preview_tanggal);
-        tv_content_preview = (TextView) findViewById(R.id.tv_content_preview);
-        tv_category_preview = (TextView) findViewById(R.id.tv_category_preview);
-        preview_avatar_user = (CircleImageView) findViewById(R.id.preview_avatar_user);
-        bg_preview = (ImageView) findViewById(R.id.bg_preview);
-        bookmark_icon = (ImageView) findViewById(R.id.bookmark_icon);
-        setArticle(1);
+        AC=new ArticleController(this);
+        AC.GetArticle(1);
 
         bookmark_icon.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp);
 
@@ -79,80 +79,70 @@ public class ActivityPreview extends AppCompatActivity{
 
     }
 
-    public void setArticle(int id_post)
-    {
-        service= ServiceGenerator.createService(ViewArticleApi.class);
-        CallArticle=service.getArticle(id_post);
-        CallArticle.enqueue(new Callback<ArticleModel>() {
-            @Override
-            public void onResponse(Response<ArticleModel> response) {
-                ArticleModel model=response.body();
-                tv_title_preview.setText(model.post_title);
-                tv_name_preview.setText(model.name);
-                preview_category.setText("in");
-                tv_category_preview.setText(model.categories);
-                preview_tanggal.setText(model.published_at);
-                tv_content_preview.setText(model.content);
-                if(model.id_background==1){
-                    bg_preview.setBackgroundResource(R.drawable.red_bg);
-                }
-                if(model.id_background==2){
-                    bg_preview.setBackgroundResource(R.drawable.green_bg);
-                }
-                if(model.id_background==3){
-                    bg_preview.setBackgroundResource(R.drawable.blue_bg);
-                }
-                if(model.id_background==4){
-                    bg_preview.setBackgroundResource(R.drawable.yellow_bg);
-                }
-                if(model.id_background==5){
-                    bg_preview.setBackgroundResource(R.drawable.violet_bg);
-                }
-
-                if(model.id_avatar==0){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_0);
-                }
-                if(model.id_avatar==1){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_1);
-                }
-                if(model.id_avatar==2){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_2);
-                }
-                if(model.id_avatar==3){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_3);
-                }
-                if(model.id_avatar==4){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_4);
-                }
-                if(model.id_avatar==5){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_5);
-                }
-                if(model.id_avatar==6){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_6);
-                }
-                if(model.id_avatar==7){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_7);
-                }
-                if(model.id_avatar==8){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_8);
-                }
-                if(model.id_avatar==9){
-                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_9);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Throwable throwable) {
-
-            }
-        });
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.item_article_preview, menu);
 
         return true;
+    }
+
+    @Override
+    public void getViewArticleResponse(boolean error, ViewArticleResponse response, Throwable t) {
+        if(!error)
+        {
+            ViewArticleResponse model=response;
+            tv_title_preview.setText(model.post_title);
+            tv_name_preview.setText(model.name);
+            preview_category.setText("in");
+            tv_category_preview.setText(model.categories);
+            preview_tanggal.setText(model.published_at);
+            tv_content_preview.setText(model.content);
+            if(model.id_background==1){
+                bg_preview.setBackgroundResource(R.drawable.red_bg);
+            }
+            if(model.id_background==2){
+                bg_preview.setBackgroundResource(R.drawable.green_bg);
+            }
+            if(model.id_background==3){
+                bg_preview.setBackgroundResource(R.drawable.blue_bg);
+            }
+            if(model.id_background==4){
+                bg_preview.setBackgroundResource(R.drawable.yellow_bg);
+            }
+            if(model.id_background==5){
+                bg_preview.setBackgroundResource(R.drawable.violet_bg);
+            }
+
+            if(model.id_avatar==0){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_0);
+            }
+            if(model.id_avatar==1){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_1);
+            }
+            if(model.id_avatar==2){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_2);
+            }
+            if(model.id_avatar==3){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_3);
+            }
+            if(model.id_avatar==4){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_4);
+            }
+            if(model.id_avatar==5){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_5);
+            }
+            if(model.id_avatar==6){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_6);
+            }
+            if(model.id_avatar==7){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_7);
+            }
+            if(model.id_avatar==8){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_8);
+            }
+            if(model.id_avatar==9){
+                preview_avatar_user.setBackgroundResource(R.drawable.avatar_9);
+            }
+        }
     }
 }

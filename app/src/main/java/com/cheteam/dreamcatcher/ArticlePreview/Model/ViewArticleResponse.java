@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Nicolas Juniar on 10/09/2017.
  */
 
-public class ArticleModel {
+public class ViewArticleResponse {
     @SerializedName("id_post")
     public int id_post;
     @SerializedName("name")

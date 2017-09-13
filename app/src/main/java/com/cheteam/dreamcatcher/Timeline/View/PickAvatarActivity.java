@@ -14,19 +14,22 @@ import com.cheteam.dreamcatcher.Timeline.Adapter.RecyclerViewAdapterListCover;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Nicolas Juniar on 10/09/2017.
  */
 
 public class PickAvatarActivity extends AppCompatActivity {
     RecyclerViewAdapterListAvatar adapter;
-    RecyclerView recyclerView;
+    @BindView(R.id.ListAvatar) RecyclerView recyclerView;
     List<Integer> ListAvatar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_avatar_layout);
-        recyclerView=(RecyclerView) findViewById(R.id.ListAvatar);
+        ButterKnife.bind(this);
 
         ListAvatar=new ArrayList<>();
         for(int i=1;i<=9;i++)

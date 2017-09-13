@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -25,22 +27,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class EditProfileActivity extends AppCompatActivity {
-    TextView bio,location,name;
-    EditText txtBio,txtLocation,txtName;
-    CircleImageView add_photo_user,add_photo_cover;
+    @BindView(R.id.bio) TextView bio;
+    @BindView(R.id.location) TextView location;
+    @BindView(R.id.name) TextView name;
+    @BindView(R.id.txtBio) EditText txtBio;
+    @BindView(R.id.txtLocation) EditText txtLocation;
+    @BindView(R.id.txtName) EditText txtName;
+    @BindView(R.id.add_photo_user) CircleImageView add_photo_user;
+    @BindView(R.id.add_photo_cover) CircleImageView add_photo_cover;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile_layout);
-        bio=(TextView) findViewById(R.id.bio);
-        location=(TextView)findViewById(R.id.location);
-        name=(TextView) findViewById(R.id.name);
-        txtBio=(EditText) findViewById(R.id.txtBio);
-        txtLocation=(EditText) findViewById(R.id.txtLocation);
-        txtName=(EditText) findViewById(R.id.txtName);
-        add_photo_user=(CircleImageView) findViewById(R.id.add_photo_user);
-        add_photo_cover=(CircleImageView) findViewById(R.id.add_photo_cover);
+        ButterKnife.bind(this);
 
         add_photo_user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,16 +71,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if(id==R.id.action_done)

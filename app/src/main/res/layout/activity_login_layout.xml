@@ -73,6 +73,8 @@
                     android:id="@+id/txtEmail"
                     android:textSize="20dp"
                     android:textColor="@color/charcoalGrey"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     />
 
                 <EditText
@@ -88,6 +90,8 @@
                     android:hint="Password"
                     android:textColor="@color/charcoalGrey"
                     android:layout_marginBottom="30dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     />
 
             </LinearLayout>

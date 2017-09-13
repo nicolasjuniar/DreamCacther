@@ -16,6 +16,8 @@ import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -77,13 +79,12 @@ public class RecyclerViewAdapterListCover extends RecyclerView.Adapter<RecyclerV
     }
 
     public class BookmarksViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView bgCover;
+        @BindView(R.id.bgCover) ImageView bgCover;
 
         BookmarksViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            bgCover = (ImageView) view.findViewById(R.id.bgCover);
+            ButterKnife.bind(this,view);
             bgCover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

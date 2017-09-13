@@ -1,14 +1,9 @@
 package com.cheteam.dreamcatcher.Register.View;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,46 +13,37 @@ import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
 import com.cheteam.dreamcatcher.R;
-import com.cheteam.dreamcatcher.Register.Controller.RegisterAPI;
+import com.cheteam.dreamcatcher.Register.Controller.RegisterController;
 import com.cheteam.dreamcatcher.Register.Model.RegisterResponse;
-import com.cheteam.dreamcatcher.ServiceGenerator;
-import com.google.gson.Gson;
-import com.squareup.okhttp.ResponseBody;
 
-import org.w3c.dom.Text;
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Nicolas Juniar on 03/09/2017.
  */
 
-public class RegisterActivity extends AppCompatActivity {
-    TextView title1,title2,title3,return1;
-    ImageView btnReturn;
-    EditText txtEmail,txtPassword,txtRepassword,txtName;
-    Button btnRegister;
+public class RegisterActivity extends AppCompatActivity implements RegisterController.onRegisterResponse{
 
-    RegisterAPI service;
-    Call<RegisterResponse> CallRegister;
+    @BindView(R.id.title1) TextView title1;
+    @BindView(R.id.title2) TextView title2;
+    @BindView(R.id.title3) TextView title3;
+    @BindView(R.id.return1) TextView return1;
+    @BindView(R.id.btnReturn) ImageView btnReturn;
+    @BindView(R.id.txtEmail) EditText txtEmail;
+    @BindView(R.id.txtPassword) EditText txtPassword;
+    @BindView(R.id.txtRepassword) EditText txtRepassword;
+    @BindView(R.id.txtName) EditText txtName;
+    @BindView(R.id.btnRegister) Button btnRegister;
 
+    RegisterController RC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_layout);
-        txtEmail=(EditText) findViewById(R.id.txtEmail);
-        return1=(TextView) findViewById(R.id.return1);
-        txtPassword=(EditText) findViewById(R.id.txtPassword);
-        txtRepassword=(EditText) findViewById(R.id.txtRepassword);
-        txtName=(EditText) findViewById(R.id.txtName);
-        title1=(TextView) findViewById(R.id.title1);
-        title2=(TextView) findViewById(R.id.title2);
-        title3=(TextView) findViewById(R.id.title3);
-        btnRegister=(Button) findViewById(R.id.btnRegister);
-        btnReturn=(ImageView) findViewById(R.id.btnReturn);
+        ButterKnife.bind(this);
+        RC=new RegisterController(this);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Register(txtEmail.getText().toString(),txtPassword.getText().toString());
+                    RC.Register();
                 }
             }
         });
@@ -109,21 +95,16 @@ public class RegisterActivity extends AppCompatActivity {
         txtName.setTypeface(Roboto_Regular);
     }
 
-    public void Register(String email,String password)
-    {
-        service= ServiceGenerator.createService(RegisterAPI.class);
-        CallRegister=service.Register();
-        CallRegister.enqueue(new Callback<RegisterResponse>() {
-            @Override
-            public void onResponse(Response<RegisterResponse> response) {
-                Toast.makeText(RegisterActivity.this, response.body().message, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+    @Override
+    public void getRegisterResponse(boolean error, RegisterResponse response, Throwable t) {
+        if(!error)
+        {
+            Toast.makeText(RegisterActivity.this, response.message, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+        }
+        if(error)
+        {
+            Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

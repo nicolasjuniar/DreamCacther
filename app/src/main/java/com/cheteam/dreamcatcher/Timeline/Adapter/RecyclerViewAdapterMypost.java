@@ -15,6 +15,9 @@ import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecyclerViewAdapterMypost extends RecyclerView.Adapter<RecyclerViewAdapterMypost.MypostViewHolder> {
 
     List<ModelTimeline> postlist = Collections.emptyList();
@@ -84,17 +87,15 @@ public class RecyclerViewAdapterMypost extends RecyclerView.Adapter<RecyclerView
 
 
     public class MypostViewHolder extends RecyclerView.ViewHolder {
-
-        TextView txtTitle, txtTime, txtCategories;
-        ImageView BgImage;
+        @BindView(R.id.item_post_title) TextView txtTitle;
+        @BindView(R.id.posttime) TextView txtTime;
+        @BindView(R.id.categories) TextView txtCategories;
+        @BindView(R.id.BgImage) ImageView BgImage;
 
         MypostViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            txtTime = (TextView) view.findViewById(R.id.posttime);
-            txtTitle = (TextView) view.findViewById(R.id.item_post_title);
-            txtCategories = (TextView) view.findViewById(R.id.categories);
-            BgImage = (ImageView) view.findViewById(R.id.BgImage);
+            ButterKnife.bind(this,view);
         }
     }
 }

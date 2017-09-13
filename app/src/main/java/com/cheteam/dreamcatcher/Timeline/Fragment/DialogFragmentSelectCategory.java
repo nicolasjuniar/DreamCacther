@@ -24,9 +24,8 @@ import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterSelectListCat
 
 import java.util.ArrayList;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Nicolas Juniar on 01/11/2016.
@@ -34,10 +33,14 @@ import retrofit.Response;
 
 public class DialogFragmentSelectCategory extends DialogFragment {
 
+    @BindView(R.id.ListCategories) RecyclerView ListCategories;
+    @BindView(R.id.txtApply) TextView txtApply;
+    @BindView(R.id.txtCancel) TextView txtCancel;
+    @BindView(R.id.filter) TextView filter;
+
     RecycleViewAdapterSelectListCategory adapter;
     ArrayList<String> ListCategory;
-    RecyclerView recyclerView;
-    TextView txtApply,txtCancel,filter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,10 +48,7 @@ public class DialogFragmentSelectCategory extends DialogFragment {
         final View view = inflater.inflate(R.layout.dialog_select_category_layout,
                 container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        recyclerView=(RecyclerView) view.findViewById(R.id.ListCategories);
-        txtApply=(TextView) view.findViewById(R.id.txtApply);
-        txtCancel=(TextView) view.findViewById(R.id.txtCancel);
-        filter=(TextView) view.findViewById(R.id.filter);
+        ButterKnife.bind(this,view);
         setListCategories();
         setFont();
 
@@ -58,13 +58,13 @@ public class DialogFragmentSelectCategory extends DialogFragment {
                 dismiss();
             }
         });
-
         txtApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
             }
         });
+
         return view;
     }
 
@@ -85,7 +85,7 @@ public class DialogFragmentSelectCategory extends DialogFragment {
         ListCategory.add("Opportunities");
         ListCategory.add("Courses");
         adapter=new RecycleViewAdapterSelectListCategory(ListCategory,getActivity());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ListCategories.setAdapter(adapter);
+        ListCategories.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

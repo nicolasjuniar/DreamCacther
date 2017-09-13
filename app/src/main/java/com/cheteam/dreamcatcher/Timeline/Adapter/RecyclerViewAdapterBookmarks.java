@@ -15,6 +15,8 @@ import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -108,18 +110,16 @@ public class RecyclerViewAdapterBookmarks extends RecyclerView.Adapter<RecyclerV
 
     public class BookmarksViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtTitle, txtFullName, txtCategories;
-        CircleImageView AvatarUser;
-        ImageView BgImage;
+        @BindView(R.id.item_post_title) TextView txtTitle;
+        @BindView(R.id.fullname) TextView txtFullName;
+        @BindView(R.id.categories) TextView txtCategories;
+        @BindView(R.id.AvatarUser) CircleImageView AvatarUser;
+        @BindView(R.id.BgImage) ImageView BgImage;
 
         BookmarksViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            txtFullName = (TextView) view.findViewById(R.id.fullname);
-            txtTitle = (TextView) view.findViewById(R.id.item_post_title);
-            AvatarUser = (CircleImageView)  view.findViewById(R.id.AvatarUser);
-            txtCategories = (TextView) view.findViewById(R.id.categories);
-            BgImage = (ImageView) view.findViewById(R.id.BgImage);
+            ButterKnife.bind(this,view);
         }
     }
 }

@@ -29,15 +29,17 @@
 
 -dontwarn rx.**
 
+-dontwarn okhttp3.**
 -dontwarn okio.**
+-dontwarn javax.annotation.**
 
 -dontwarn com.squareup.okhttp.**
 -keep class com.squareup.okhttp.** { *; }
 -keep interface com.squareup.okhttp.** { *; }
 
--dontwarn retrofit.**
--dontwarn retrofit.appengine.UrlFetchClient
--keep class retrofit.** { *; }
+-dontwarn retrofit2.**
+-dontwarn retrofit2.appengine.UrlFetchClient
+-keep class retrofit2.** { *; }
 -keepclasseswithmembers class * {
     @retrofit.http.* <methods>;
 }

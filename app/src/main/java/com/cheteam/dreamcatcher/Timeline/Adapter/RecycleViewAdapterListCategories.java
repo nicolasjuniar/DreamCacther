@@ -15,6 +15,8 @@ import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -66,12 +68,12 @@ public class RecycleViewAdapterListCategories extends RecyclerView.Adapter<Recyc
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCategories;
+        @BindView(R.id.txtCategories) TextView txtCategories;
 
         ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            txtCategories=(TextView) view.findViewById(R.id.txtCategories);
+            ButterKnife.bind(this,view);
         }
     }
 }
