@@ -1,11 +1,10 @@
-<!--Layout Edit Post-->
-
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_marginBottom="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <!--layout untuk ADD POST-PREVIEW -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar_article_preview"
         android:layout_width="match_parent"
@@ -29,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="10dp"/>
-            <!--android:background="@drawable/violet_bg"-->
 
         <TextView
             android:id="@+id/tv_title_preview"
@@ -56,9 +54,10 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/preview_avatar_user"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="85dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/preview_category"
+        android:layout_below="@+id/my_toolbar_article_preview"
         android:layout_alignStart="@+id/previewScroll"/>
     <TextView
         android:id="@+id/tv_name_preview"
@@ -69,29 +68,29 @@
         android:layout_marginLeft="10dp"
         android:textSize="20sp"
         android:textStyle="bold" />
-    <TextView
-        android:id="@+id/preview_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal"
-        android:textColor="#fc624d"
-        android:layout_below="@+id/tv_name_preview"
-        android:layout_alignStart="@id/tv_name_preview"
-        />
-    <TextView
-        android:id="@+id/tv_category_preview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/preview_category"
-        android:layout_below="@id/tv_name_preview"
-        android:textSize="14sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal"
-        android:textColor="#4a4a4a"
-        android:layout_marginLeft="5dp"
-        />
+    <!--<TextView-->
+        <!--android:id="@+id/preview_category"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="14sp"-->
+        <!--android:fontFamily="sans-serif"-->
+        <!--android:textStyle="normal"-->
+        <!--android:textColor="#fc624d"-->
+        <!--android:layout_below="@+id/tv_name_preview"-->
+        <!--android:layout_alignStart="@id/tv_name_preview"-->
+        <!--/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/tv_category_preview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_toEndOf="@id/preview_avatar_user"-->
+        <!--android:layout_below="@id/tv_name_preview"-->
+        <!--android:textSize="14sp"-->
+        <!--android:fontFamily="sans-serif"-->
+        <!--android:textStyle="normal"-->
+        <!--android:textColor="#4a4a4a"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--/>-->
     <TextView
         android:id="@+id/preview_tanggal"
         android:layout_width="wrap_content"
@@ -102,7 +101,7 @@
         android:textColor="#000000"
         android:letterSpacing="-0.01"
         android:gravity="end"
-        android:layout_below="@id/preview_category"
+        android:layout_below="@id/tv_name_preview"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="1dp"
         android:layout_marginRight="15dp"

@@ -1,5 +1,6 @@
 package com.cheteam.dreamcatcher.ArticlePreview.View;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,6 +52,7 @@ public class ArticlePreview extends AppCompatActivity implements ArticleControll
         ab.setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
 
+        AC=new ArticleController(this);
         AC.GetArticle(1);
 
     }

@@ -24,11 +24,14 @@ import com.cheteam.dreamcatcher.Timeline.Fragment.DialogFragmentSelectCategory;
 import com.cheteam.dreamcatcher.Timeline.View.EditProfileActivity;
 import com.cheteam.dreamcatcher.Timeline.View.TimelineActivity;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * Created by Rahmat Al Hakam on 08/09/2017.
+ * Layout ADD POST
  */
 
 public class AddPostActivity extends AppCompatActivity {
@@ -36,21 +39,30 @@ public class AddPostActivity extends AppCompatActivity {
     @BindView(R.id.tv_edit_category) TextView tv_edit_category;
     @BindView(R.id.my_toolbar_add_post) Toolbar myToolbar;
 
+    @BindView(R.id.add_post_clickOn_categories) TextView add_post_clickOn_categories;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
         ButterKnife.bind(this);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Edit Post");
+        getSupportActionBar().setTitle("Create New Post");
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
         tv_edit_category=(TextView) findViewById(R.id.tv_edit_category);
+        add_post_clickOn_categories=(TextView) findViewById(R.id.add_post_clickOn_categories);
 
 
         tv_edit_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogFragmentSelectCategory().show(getSupportFragmentManager(),"Select Category");
+            }
+        });
+        add_post_clickOn_categories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DialogFragmentSelectCategory().show(getSupportFragmentManager(),"Select Category");
@@ -60,6 +72,11 @@ public class AddPostActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_post, menu);
+        return true;
+    }
+        @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
         return true;
     }
 
@@ -74,8 +91,9 @@ public class AddPostActivity extends AppCompatActivity {
         {
             Intent intent=new Intent(AddPostActivity.this,ActivityPreview.class);
             startActivity(intent);
-            finish();
         }
+
+
         return super.onOptionsItemSelected(item);
     }
 

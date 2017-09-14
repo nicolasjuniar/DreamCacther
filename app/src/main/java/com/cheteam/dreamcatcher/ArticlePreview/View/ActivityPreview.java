@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,15 +27,16 @@ import retrofit2.Response;
 
 /**
  * Created by Rahmat Al Hakam on 09/09/2017.
+ * Layout untuk EDIT POST
  */
 
 public class ActivityPreview extends AppCompatActivity implements ArticleController.onViewArticleResponse{
     @BindView(R.id.tv_title_preview) TextView tv_title_preview;
     @BindView(R.id.tv_name_preview) TextView tv_name_preview;
-    @BindView(R.id.preview_category) TextView preview_category;
+   //@BindView(R.id.preview_category) TextView preview_category;
     @BindView(R.id.preview_tanggal) TextView preview_tanggal;
     @BindView(R.id.tv_content_preview) TextView tv_content_preview;
-    @BindView(R.id.tv_category_preview) TextView tv_category_preview;
+    //@BindView(R.id.tv_category_preview) TextView tv_category_preview;
     @BindView(R.id.preview_avatar_user) CircleImageView preview_avatar_user;
     @BindView(R.id.bg_preview) ImageView bg_preview;
     @BindView(R.id.bookmark_icon) ImageView bookmark_icon;
@@ -49,10 +51,11 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
         setContentView(R.layout.activity_article_preview);
         ButterKnife.bind(this);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Preview");
+        getSupportActionBar().setTitle("Edit");
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
 
         AC=new ArticleController(this);
@@ -80,11 +83,19 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.item_article_preview, menu);
 
         return true;
     }
+
 
     @Override
     public void getViewArticleResponse(boolean error, ViewArticleResponse response, Throwable t) {
@@ -93,8 +104,8 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
             ViewArticleResponse model=response;
             tv_title_preview.setText(model.post_title);
             tv_name_preview.setText(model.name);
-            preview_category.setText("in");
-            tv_category_preview.setText(model.categories);
+            //preview_category.setText("in");
+            //tv_category_preview.setText(model.categories);
             preview_tanggal.setText(model.published_at);
             tv_content_preview.setText(model.content);
             if(model.id_background==1){
