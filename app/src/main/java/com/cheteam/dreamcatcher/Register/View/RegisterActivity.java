@@ -1,5 +1,6 @@
 package com.cheteam.dreamcatcher.Register.View;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     @BindView(R.id.btnRegister) Button btnRegister;
 
     RegisterController RC;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +50,16 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!txtPassword.getText().toString().equals(txtRepassword.getText().toString()))
+                ClearError();
+                if(CekInput())
                 {
-                    Toast.makeText(RegisterActivity.this, "Password and confirm password not same", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                    if(progressDialog==null)
+                    {
+                        progressDialog=new ProgressDialog(RegisterActivity.this);
+                        progressDialog.setMessage("Trying Login....");
+                        progressDialog.setIndeterminate(false);
+                        progressDialog.setCancelable(false);
+                    }
                     RC.Register();
                 }
             }
@@ -95,8 +101,51 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         txtName.setTypeface(Roboto_Regular);
     }
 
+    public void ClearError()
+    {
+        txtEmail.setError(null);
+        txtPassword.setError(null);
+        txtName.setError(null);
+        txtRepassword.setError(null);
+    }
+
+    public boolean CekInput() {
+        boolean cek = true;
+
+        if (txtEmail.getText().toString().isEmpty()) {
+            txtEmail.setError("Email is invalid");
+            cek = false;
+        } else
+        {
+            txtEmail.setError(null);
+        }
+
+        if (txtPassword.getText().toString().isEmpty()) {
+            txtPassword.setError("Incorrect password");
+            cek = false;
+        } else if(txtPassword.getText().toString().length()<6 || txtPassword.getText().toString().length()>18) {
+            txtPassword.setError("Password must be 6-18 character");
+            cek=false;
+        }else {
+            txtPassword.setError(null);
+        }
+
+        if(!txtRepassword.getText().toString().equalsIgnoreCase(txtPassword.getText().toString())){
+            txtRepassword.setError("Password doesn't match");
+            cek=false;
+        }else {
+            txtRepassword.setError(null);
+        }
+
+        return cek;
+    }
+
     @Override
     public void getRegisterResponse(boolean error, RegisterResponse response, Throwable t) {
+        if ((progressDialog != null) && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+
         if(!error)
         {
             Toast.makeText(RegisterActivity.this, response.message, Toast.LENGTH_SHORT).show();

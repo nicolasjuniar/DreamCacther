@@ -48,67 +48,90 @@
 
 
 
-        <android.support.v7.widget.CardView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/White"
-            android:layout_marginTop="60dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            app:cardCornerRadius="10dp">
-            <LinearLayout
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <EditText
-                    android:backgroundTint="@color/colorAccent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="-10dp"
-                    android:layout_marginRight="20dp"
-                    android:hint="Email"
-                    android:id="@+id/txtEmail"
+                    app:cardBackgroundColor="@color/White"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:elevation="0dp"
+                    android:id="@+id/FormLogin"
+                    app:cardCornerRadius="10dp">
+                    <LinearLayout
+                        android:layout_marginTop="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <EditText
+                                android:backgroundTint="@color/colorAccent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="-10dp"
+                                android:layout_marginRight="20dp"
+                                android:hint="Email"
+                                android:id="@+id/txtEmail"
+                                android:textSize="20dp"
+                                android:textColor="@color/charcoalGrey"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <EditText
+                                android:backgroundTint="@color/colorAccent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="20dp"
+                                android:id="@+id/txtPassword"
+                                android:textSize="20dp"
+                                android:hint="Password"
+                                android:textColor="@color/charcoalGrey"
+                                android:layout_marginBottom="30dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+
+                <Button
+                    android:layout_below="@+id/FormLogin"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-15dp"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/capsule_button_1"
+                    android:text="login"
+                    android:id="@+id/btnLogin"
+                    android:textStyle="bold"
                     android:textSize="20dp"
-                    android:textColor="@color/charcoalGrey"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    />
+                    android:elevation="1dp"
+                    android:textColor="@color/White"/>
+            </RelativeLayout>
+        </FrameLayout>
 
-                <EditText
-                    android:backgroundTint="@color/colorAccent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:id="@+id/txtPassword"
-                    android:textSize="20dp"
-                    android:hint="Password"
-                    android:textColor="@color/charcoalGrey"
-                    android:layout_marginBottom="30dp"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    />
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-
-        <Button
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-20dp"
-            android:layout_width="120dp"
-            android:layout_height="30dp"
-            android:background="@drawable/capsule_button_1"
-            android:text="login"
-            android:id="@+id/btnLogin"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textColor="@color/White"/>
 
 
         <LinearLayout
@@ -134,32 +157,33 @@
                 android:background="@color/Coral" />
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Skip"
                     android:textStyle="bold"
-                    android:layout_marginLeft="50dp"
                     android:textColor="@color/lightBlueGrey"
                     android:id="@+id/join_later"
-                    android:textSize="40dp"/>
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textSize="40sp"/>
 
                 <TextView
-                    android:layout_marginLeft="50dp"
-                    android:layout_toEndOf="@+id/join_later"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:text="Join Now"
+                    android:layout_weight="1"
                     android:textStyle="bold"
+                    android:textAlignment="center"
                     android:textColor="@color/lightBlueGrey"
                     android:id="@+id/join_now"
-                    android:textSize="40dp"/>
-            </RelativeLayout>
+                    android:textSize="40sp"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
