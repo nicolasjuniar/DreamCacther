@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by Nicolas Juniar on 08/09/2017.
  */
 
-public class InterestFormActivity extends AppCompatActivity {
+public class InterestFormActivity extends AppCompatActivity implements RecycleViewAdapterListInterest.onChangeInterest{
 
     @BindView(R.id.next) RelativeLayout next;
     @BindView(R.id.return1) RelativeLayout return1;
@@ -59,21 +59,26 @@ public class InterestFormActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         check=bundle.getBoolean("login",false);
+        listInterest=new ArrayList<>();
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent=new Intent(InterestFormActivity.this,TimelineActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("listinterest",listInterest);
+                intent.putExtras(bundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 if(check)
                 {
                     preferences.putBoolean("session",true);
                     preferences.putBoolean("interest",true);
-                    startActivity(new Intent(InterestFormActivity.this,TimelineActivity.class));
+                    startActivity(intent);
                 }
                 else if(!check)
                 {
-                    startActivity(new Intent(InterestFormActivity.this,TimelineActivity.class));
+                    startActivity(intent);
                 }
-                LoginActivity.LA.finish();
                 finish();
             }
         });
@@ -85,6 +90,20 @@ public class InterestFormActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void showNextButton(boolean show)
+    {
+        if(show)
+        {
+            ok.setVisibility(View.VISIBLE);
+            next.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            ok.setVisibility(View.GONE);
+            next.setVisibility(View.GONE);
+        }
     }
 
     public void setFont()
@@ -101,7 +120,7 @@ public class InterestFormActivity extends AppCompatActivity {
 
     public void setListInterest()
     {
-        listInterest=new ArrayList<>();
+
         list=new ArrayList<>();
         list.add(new ModelInterest("Finances"));
         list.add(new ModelInterest("Skills"));
@@ -109,8 +128,22 @@ public class InterestFormActivity extends AppCompatActivity {
         list.add(new ModelInterest("Opportunities"));
         list.add(new ModelInterest("Courses"));
 
-        adapter=new RecycleViewAdapterListInterest(list,InterestFormActivity.this,listInterest,next,ok);
+        adapter=new RecycleViewAdapterListInterest(list,InterestFormActivity.this,this);
         ListInterest.setAdapter(adapter);
         ListInterest.setLayoutManager(new LinearLayoutManager(InterestFormActivity.this));
+    }
+
+    @Override
+    public void addInterest(String interest) {
+        listInterest.add(interest);
+        if(listInterest.size()>=3)
+            showNextButton(true);
+    }
+
+    @Override
+    public void removeInterest(String interest) {
+        listInterest.remove(interest);
+        if(listInterest.size()<3)
+            showNextButton(false);
     }
 }

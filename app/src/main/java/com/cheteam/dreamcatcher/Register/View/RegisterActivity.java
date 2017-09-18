@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     @BindView(R.id.title1) TextView title1;
     @BindView(R.id.title2) TextView title2;
-    @BindView(R.id.title3) TextView title3;
     @BindView(R.id.return1) TextView return1;
     @BindView(R.id.btnReturn) ImageView btnReturn;
     @BindView(R.id.txtEmail) EditText txtEmail;
@@ -46,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         setContentView(R.layout.activity_register_layout);
         ButterKnife.bind(this);
         RC=new RegisterController(this);
+
+        btnRegister.bringToFront();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +96,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         txtRepassword.setTypeface(Roboto_Regular);
         title1.setTypeface(Lobster_Regular);
         title2.setTypeface(justAnotherHand);
-        title3.setTypeface(RockoFLF);
         btnRegister.setTypeface(Lobster_Regular);
         return1.setTypeface(RockoFLF);
         txtName.setTypeface(Roboto_Regular);
@@ -111,6 +111,15 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     public boolean CekInput() {
         boolean cek = true;
+
+        if (txtName.getText().toString().isEmpty()) {
+            txtName.setError("Name can't be empty");
+            cek = false;
+        } else
+        {
+            txtName.setError(null);
+        }
+
 
         if (txtEmail.getText().toString().isEmpty()) {
             txtEmail.setError("Email is invalid");

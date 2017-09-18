@@ -32,16 +32,13 @@ public class RecycleViewAdapterListInterest extends RecyclerView.Adapter<Recycle
     List<ModelInterest> list = Collections.emptyList();
     Context context;
     public View view;
-    List<String> ListInterest;
-    RelativeLayout next;
-    ImageView ok;
 
-    public RecycleViewAdapterListInterest(List<ModelInterest> list, Context context, List<String> ListInterest, RelativeLayout next,ImageView ok) {
+    onChangeInterest listener;
+
+    public RecycleViewAdapterListInterest(List<ModelInterest> list, Context context, onChangeInterest listener) {
         this.context = context;
         this.list = list;
-        this.ListInterest=ListInterest;
-        this.next=next;
-        this.ok=ok;
+        this.listener=listener;
     }
 
 
@@ -58,7 +55,6 @@ public class RecycleViewAdapterListInterest extends RecyclerView.Adapter<Recycle
         Typeface RockoFLF=Typeface.createFromAsset(context.getAssets(), "fonts/RockoFLF.ttf");
         holder.txtInterest.setTypeface(RockoFLF);
 
-
         ModelInterest model=list.get(position);
         holder.txtInterest.setText(model.interest);
     }
@@ -71,6 +67,12 @@ public class RecycleViewAdapterListInterest extends RecyclerView.Adapter<Recycle
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public interface onChangeInterest
+    {
+        void addInterest(String interest);
+        void removeInterest(String interest);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -92,23 +94,13 @@ public class RecycleViewAdapterListInterest extends RecyclerView.Adapter<Recycle
                     {
                         cek=true;
                         txtInterest.setTextColor(context.getResources().getColor(R.color.colar));
-                        ListInterest.add(txtInterest.getText().toString());
-                        if(ListInterest.size()>=3)
-                        {
-                            ok.setVisibility(View.VISIBLE);
-                            next.setVisibility(View.VISIBLE);
-                        }
+                        listener.addInterest(txtInterest.getText().toString());
                     }
                     else if(cek)
                     {
                         cek=false;
                         txtInterest.setTextColor(context.getResources().getColor(R.color.duckEggBlue));
-                        ListInterest.remove(txtInterest.getText().toString());
-                        if(ListInterest.size()<3)
-                        {
-                            ok.setVisibility(View.GONE);
-                            next.setVisibility(View.INVISIBLE);
-                        }
+                        listener.removeInterest(txtInterest.getText().toString());
                     }
 
                 }

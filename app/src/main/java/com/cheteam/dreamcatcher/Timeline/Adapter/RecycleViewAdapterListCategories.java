@@ -36,6 +36,9 @@ public class RecycleViewAdapterListCategories extends RecyclerView.Adapter<Recyc
         this.list = list;
     }
 
+    public void setListCategories(List<String> list) {
+        this.list=list;
+    }
 
     @Override
     public RecycleViewAdapterListCategories.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

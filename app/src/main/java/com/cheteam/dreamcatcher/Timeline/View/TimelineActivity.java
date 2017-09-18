@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,8 @@ import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentProfile;
 import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentTimeline;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ViewPagerAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +51,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     boolean check=false;
     private PreferenceHelper preferences;
-
+    ArrayList<String> listinterest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,9 @@ public class TimelineActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         preferences=PreferenceHelper.getInstance(getApplicationContext());
+
+        Intent intent = getIntent();
+        listinterest=intent.getStringArrayListExtra("listinterest");
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +99,11 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentTimeline(), "Home");
+        FragmentTimeline fragmentTimeline = new FragmentTimeline();
+        Bundle bundle = new Bundle();
+        fragmentTimeline.setArguments(bundle);
+        bundle.putStringArrayList("listinterest",listinterest);
+        adapter.addFragment(fragmentTimeline, "Home");
         adapter.addFragment(new FragmentFeedsCategory(), "Categories");
         adapter.addFragment(new FragmentProfile(), "Profile");
         viewPager.setAdapter(adapter);

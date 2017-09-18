@@ -43,15 +43,15 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     LoginController LC;
 
     ProgressDialog progressDialog;
-    public static Activity LA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
         ButterKnife.bind(this);
-        LA=this;
         LC=new LoginController(this);
+
+        btnLogin.bringToFront();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
