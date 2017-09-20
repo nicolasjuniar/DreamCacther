@@ -1,5 +1,6 @@
 package com.cheteam.dreamcatcher.AddPost.View;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,76 +11,74 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import com.cheteam.dreamcatcher.ArticlePreview.View.ActivityPreview;
+
+import com.cheteam.dreamcatcher.ArticlePreview.View.EditPostPreview;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.Fragment.DialogFragmentSelectCategory;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Rahmat Al Hakam on 08/09/2017.
- * Layout ADD POST
+ * Created by Rahmat Al Hakam on 16/09/2017.
+ * Layout Edit Post yang sesuai dengan zeplin
  */
 
-public class AddPostActivity extends AppCompatActivity {
-
-    @BindView(R.id.tv_edit_category) TextView tv_edit_category;
-    @BindView(R.id.my_toolbar_add_post) Toolbar myToolbar;
-    @BindView(R.id.add_post_clickOn_categories) TextView add_post_clickOn_categories;
+public class EditPostActivity extends AppCompatActivity{
+    @BindView(R.id.et_title_ep) TextView et_title_ep;
+    @BindView(R.id.toolbar_ep) Toolbar myToolbar;
+    @BindView(R.id.tv_add_category_ep) TextView tv_add_category_ep;
+    @BindView(R.id.tv_edit_category_ep) TextView tv_edit_category_ep;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_post);
+        setContentView(R.layout.activity_edit_post);
         ButterKnife.bind(this);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Create New Post");
+        getSupportActionBar().setTitle("Edit Post");
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
-        tv_edit_category=(TextView) findViewById(R.id.tv_edit_category);
-        add_post_clickOn_categories=(TextView) findViewById(R.id.add_post_clickOn_categories);
 
+        tv_add_category_ep = (TextView) findViewById(R.id.tv_add_category_ep);
+        tv_edit_category_ep= (TextView) findViewById(R.id.tv_edit_category_ep);
 
-        tv_edit_category.setOnClickListener(new View.OnClickListener() {
+        tv_add_category_ep.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 new DialogFragmentSelectCategory().show(getSupportFragmentManager(),"Select Category");
             }
         });
-        add_post_clickOn_categories.setOnClickListener(new View.OnClickListener() {
+        tv_edit_category_ep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DialogFragmentSelectCategory().show(getSupportFragmentManager(),"Select Category");
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_post, menu);
         return true;
     }
-    @Override
-    public boolean onSupportNavigateUp(){
-        onBackPressed();
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        if(id==R.id.add_post_menu)
-        {
-            Intent intent=new Intent(AddPostActivity.this,ActivityPreview.class);
+        if(id==R.id.add_post_menu){
+            Intent intent = new Intent(EditPostActivity.this,EditPostPreview.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
 }

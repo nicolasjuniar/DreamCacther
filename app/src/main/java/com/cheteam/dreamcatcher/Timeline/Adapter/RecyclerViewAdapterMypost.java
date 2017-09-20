@@ -1,6 +1,7 @@
 package com.cheteam.dreamcatcher.Timeline.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cheteam.dreamcatcher.ArticlePreview.View.ArticlePreview;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 
@@ -17,6 +19,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class RecyclerViewAdapterMypost extends RecyclerView.Adapter<RecyclerViewAdapterMypost.MypostViewHolder> {
 
@@ -96,6 +100,14 @@ public class RecyclerViewAdapterMypost extends RecyclerView.Adapter<RecyclerView
             super(itemView);
             view = itemView;
             ButterKnife.bind(this,view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent myactivity = new Intent(context, ArticlePreview.class);
+                    myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                    context.getApplicationContext().startActivity(myactivity);
+                }
+            });
         }
     }
 }

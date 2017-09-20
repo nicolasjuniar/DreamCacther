@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="10dp">
+    <!--OWN POST-->
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar_article_layout"
@@ -17,117 +17,101 @@
         android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         />
-    <RelativeLayout
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/AvatarUser"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_below="@id/my_toolbar_article_layout"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_below="@id/my_toolbar_article_layout"
+        android:layout_toEndOf="@+id/AvatarUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="#4a4a4a"
+        android:letterSpacing="-0.01"
+        android:layout_marginStart="5dp"
+        />
+    <TextView
+        android:id="@+id/tanggal_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_toEndOf="@id/AvatarUser"
+        android:layout_marginStart="5dp"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic"
+        android:textColor="#4a4a4a"
+        android:letterSpacing="-0.05"
+        />
+    <TextView
+        android:id="@+id/tv_category_av"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_toolbar_article_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="normal"
+        android:textColor="#18587a"
+        android:letterSpacing="-0.01"
+        android:text="Skills"
+        />
+    <RelativeLayout
         android:id="@+id/fragment_top"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/AvatarUser"
+        android:layout_marginTop="11dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp">
         <ImageView
             android:id="@+id/bg_post"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-
+            android:layout_height="match_parent"
             />
         <TextView
             android:id="@+id/tv_title_article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="#80000000"
-            android:shadowDy="2"
-            android:shadowRadius="4"
             android:textSize="20sp"
-            android:fontFamily="sans-serif"
-            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
             android:textColor="#ffffff"
             android:letterSpacing="-0.01"
             android:gravity="center_horizontal"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="50dp"
-            android:textAlignment="center"
-            />
-
-
+            android:text="fhjaskd"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/AvatarUser"
-        android:layout_marginTop="-25dp"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@+id/fragment_top"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        />
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_below="@id/fragment_top"
-        android:layout_toEndOf="@+id/AvatarUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-medium"
-        android:textStyle="normal"
-        android:textColor="#4a4a4a"
-        android:layout_marginLeft="10dp"
-        />
-    <!--<TextView-->
-        <!--android:id="@+id/comment_post"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textColor="#9b9b9b"-->
-        <!--android:letterSpacing="-0.01"-->
-        <!--android:gravity="end"-->
-        <!--android:text="add comment …"-->
-        <!--android:layout_below="@+id/fragment_top"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--/>-->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:fontFamily="sans-serif-thin"
-        android:textStyle="normal"
-        android:textColor="#4a4a4a"
-        android:letterSpacing="-0.01"
-        android:gravity="end"
-        android:id="@+id/tanggal_post"
-        android:layout_below="@+id/AvatarUser"
-        android:layout_alignEnd="@+id/scrollView2"
-        />
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@+id/tanggal_post"
-        android:layout_marginTop="10dp"
-        android:id="@+id/scrollView2">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_content_article"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#4a4a4a"
-                android:letterSpacing="-0.04"
-
-                />
-        </RelativeLayout>
-
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_below="@+id/fragment_top">
+        <TextView
+            android:id="@+id/tv_content_article"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#4a4a4a"
+            android:letterSpacing="-0.01"
+            android:lineSpacingExtra="2sp"
+            />
     </ScrollView>
-
-
-
-
-
 </RelativeLayout>
