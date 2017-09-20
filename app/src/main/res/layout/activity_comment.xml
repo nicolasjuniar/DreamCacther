@@ -10,20 +10,15 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
+        app:theme="@style/MyToolbarStyle"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"/>
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/my_toolbar_activity_comment"
-        android:id="@+id/list_comment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
     <android.support.v7.widget.CardView
-        android:layout_below="@+id/list_comment"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:cardCornerRadius="5dp"
@@ -49,6 +44,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"/>
             <ImageButton
+                android:id="@+id/ib_send_icon_ac"
                 android:layout_width="wrap_content"
                 android:background="@color/White"
                 android:layout_height="wrap_content"
@@ -58,5 +54,11 @@
                 />
         </LinearLayout>
     </android.support.v7.widget.CardView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/my_toolbar_activity_comment"
+        android:id="@+id/list_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

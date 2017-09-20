@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cheteam.dreamcatcher.AddPost.View.EditPostActivity;
 import com.cheteam.dreamcatcher.ArticlePreview.API.ViewArticleApi;
 import com.cheteam.dreamcatcher.ArticlePreview.Controller.ArticleController;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
@@ -27,6 +28,7 @@ import retrofit2.Response;
 
 /**
  * Created by Rahmat Al Hakam on 09/09/2017.
+ * Layout untuk OWN POST dan POP UP
  */
 
 public class ArticlePreview extends AppCompatActivity implements ArticleController.onViewArticleResponse {
@@ -77,8 +79,22 @@ public class ArticlePreview extends AppCompatActivity implements ArticleControll
             startActivity(intent);
             finish();
         }
+        else if(id==R.id.edit_action_bar){
+            Intent intent=new Intent(this, EditPostActivity.class);
+            startActivity(intent);
+        }
+        else if(id==R.id.delete_action_bar){
+            onBackPressed();
+        }
+        else if(id==android.R.id.home){
+            onBackPressed();
+        }
+
         return super.onOptionsItemSelected(item);
+
+
     }
+
 
 
     @Override

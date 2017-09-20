@@ -3,7 +3,7 @@
     <item
         android:id="@+id/comment_action_bar"
         android:orderInCategory="1"
-        android:title="Comment(s)"
+        android:title="Comment"
         app:showAsAction="never" />
     <item
         android:id="@+id/edit_action_bar"

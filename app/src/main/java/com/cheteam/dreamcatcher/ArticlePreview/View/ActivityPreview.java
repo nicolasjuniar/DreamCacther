@@ -1,5 +1,6 @@
 package com.cheteam.dreamcatcher.ArticlePreview.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cheteam.dreamcatcher.AddPost.View.AddPostActivity;
 import com.cheteam.dreamcatcher.ArticlePreview.API.ViewArticleApi;
 import com.cheteam.dreamcatcher.ArticlePreview.Controller.ArticleController;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
@@ -27,7 +29,7 @@ import retrofit2.Response;
 
 /**
  * Created by Rahmat Al Hakam on 09/09/2017.
- * Layout untuk EDIT POST
+ * Layout untuk ADD POST-PREVIEW
  */
 
 public class ActivityPreview extends AppCompatActivity implements ArticleController.onViewArticleResponse{
@@ -84,6 +86,9 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         onBackPressed();
         return true;
     }

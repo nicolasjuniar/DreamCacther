@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cheteam.dreamcatcher.ArticlePreview.View.ArticlePreview;
+import com.cheteam.dreamcatcher.ArticlePreview.View.ViewPost;
 import com.cheteam.dreamcatcher.SplashScreenActivity;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.R;
@@ -135,8 +136,8 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent myactivity = new Intent(context, ArticlePreview.class);
-                    myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                    Intent myactivity = new Intent(context, ViewPost.class);
+                    //myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
                     context.getApplicationContext().startActivity(myactivity);
                 }
             });
