@@ -1,12 +1,9 @@
-package com.cheteam.dreamcatcher.Register.Controller;
+package com.cheteam.dreamcatcher.Register.API;
 
 import com.cheteam.dreamcatcher.Register.Model.RegisterResponse;
-import com.squareup.okhttp.ResponseBody;
 
-import retrofit.Call;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.POST;
+import retrofit2.Call;
+import retrofit2.http.POST;
 
 /**
  * Created by Nicolas Juniar on 03/09/2017.

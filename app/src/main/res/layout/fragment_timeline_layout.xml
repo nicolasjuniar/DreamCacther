@@ -9,7 +9,38 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:id="@+id/layout1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ListCategories"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Edit"
+                android:textSize="14sp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/icon_change_category"
+                android:tint="@color/colorPrimary"
+                android:id="@+id/txtEdit"/>
+        </LinearLayout>
         <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/layout1"
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,6 +50,8 @@
                 android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/ListPost"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
