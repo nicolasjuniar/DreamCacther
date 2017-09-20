@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.InterestForm.Adapter.RecycleViewAdapterListInterest;
@@ -46,6 +48,7 @@ public class InterestFormActivity extends AppCompatActivity implements RecycleVi
     ArrayList<String> listInterest;
     Boolean check;
     private PreferenceHelper preferences;
+    private Boolean exit = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +63,10 @@ public class InterestFormActivity extends AppCompatActivity implements RecycleVi
         Bundle bundle = getIntent().getExtras();
         check=bundle.getBoolean("login",false);
         listInterest=new ArrayList<>();
+        if(check)
+        {
+            return1.setVisibility(View.GONE);
+        }
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +97,32 @@ public class InterestFormActivity extends AppCompatActivity implements RecycleVi
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(check)
+        {
+            if (exit) {
+                finish(); // finish activity
+            } else {
+                Toast.makeText(this, "Press Back again to Exit.",
+                        Toast.LENGTH_SHORT).show();
+                exit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        exit = false;
+                    }
+                }, 3 * 1000);
+
+            }
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+
     }
 
     public void showNextButton(boolean show)

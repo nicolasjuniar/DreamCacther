@@ -62,6 +62,13 @@ public class TimelineActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         listinterest=intent.getStringArrayListExtra("listinterest");
+        if(listinterest==null||listinterest.isEmpty())
+        {
+            listinterest=new ArrayList<>();
+            listinterest.add("Finances");
+            listinterest.add("Skills");
+            listinterest.add("Facilities");
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

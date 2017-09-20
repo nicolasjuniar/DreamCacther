@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.InterestForm.View.InterestFormActivity;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Register.Controller.RegisterController;
@@ -111,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     public boolean CekInput() {
         boolean cek = true;
+        String regex = "^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$";
 
         if (txtName.getText().toString().isEmpty()) {
             txtName.setError("Name can't be empty");
@@ -122,8 +124,11 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
 
         if (txtEmail.getText().toString().isEmpty()) {
-            txtEmail.setError("Email is invalid");
+            txtEmail.setError("Email can't be empty");
             cek = false;
+        } else if(!txtEmail.getText().toString().matches(regex))
+        {
+          txtEmail.setError("Email is invalid");
         } else
         {
             txtEmail.setError(null);
@@ -158,7 +163,11 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         if(!error)
         {
             Toast.makeText(RegisterActivity.this, response.message, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+            Intent intent=new Intent(RegisterActivity.this,InterestFormActivity.class);
+            Bundle bundle=new Bundle();
+            bundle.putBoolean("login",true);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
         if(error)
         {

@@ -142,8 +142,8 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 editor.putBoolean("session",true);
                 editor.apply();
                 startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
-                finish();
             }
+            finish();
         }
 
         if(error)

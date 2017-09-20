@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
     @BindView(R.id.ListPost) RecyclerView recyclerView;
     @BindView(R.id.ListCategories) RecyclerView recyclerView2;
     @BindView(R.id.progressBar) ProgressBar progressBar;
-    @BindView(R.id.txtEdit) TextView txtEdit;
+    @BindView(R.id.txtEdit) ImageView txtEdit;
 
     RecycleViewAdapterListPost adapter;
 
@@ -65,7 +66,6 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         });
 
         SetListInterest();
-        setFont();
 
         txtEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,12 +98,6 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         adapter2=new RecycleViewAdapterListCategories(ListInterest,getContext());
         recyclerView2.setAdapter(adapter2);
         recyclerView2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-    }
-
-    public void setFont()
-    {
-        Typeface Roboto_Regular=Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
-        txtEdit.setTypeface(Roboto_Regular);
     }
 
 

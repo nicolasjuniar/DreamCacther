@@ -68,6 +68,7 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         holder.txtTitle.setText(model.post_title);
         holder.txtFullName.setText(model.name);
         holder.txtCategories.setText(model.categories);
+        holder.txtTime.setText(model.published_at);
         if(model.id_background==1)
         {
             holder.BgImage.setBackgroundResource(R.drawable.red_bg);
