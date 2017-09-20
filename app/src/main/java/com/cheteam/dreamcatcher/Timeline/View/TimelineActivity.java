@@ -1,15 +1,12 @@
 package com.cheteam.dreamcatcher.Timeline.View;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +36,7 @@ import butterknife.ButterKnife;
  * Created by Nicolas Juniar on 31/08/2017.
  */
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity{
 
     MenuItem btnLogin,btnLogout,btnEditProfile;
 
@@ -79,11 +76,65 @@ public class TimelineActivity extends AppCompatActivity {
 
         check=preferences.getBoolean("session",false);
 
-
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab){
+                int position = tab.getPosition();
+                if(!check)
+                {
+                    setTab("not_login");
+                }
+                if(check)
+                {
+                    if(position==0 || position==1)
+                    {
+                        setTab("login");
+                    }
+                    else
+                    {
+                        setTab("login_tab_profil");
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         setFont();
+    }
+
+    public void setTab(String status)
+    {
+        if(status.equalsIgnoreCase("not_login"))
+        {
+            btnLogin.setVisible(true);
+            btnLogout.setVisible(false);
+            btnEditProfile.setVisible(false);
+        }
+        if(status.equalsIgnoreCase("login"))
+        {
+            btnLogin.setVisible(false);
+            btnLogout.setVisible(false);
+            btnEditProfile.setVisible(false);
+        }
+        if(status.equalsIgnoreCase("login_tab_profil"))
+        {
+            btnLogin.setVisible(false);
+            btnLogout.setVisible(true);
+            btnEditProfile.setVisible(true);
+        }
+
+
     }
 
     public void setFont()
@@ -124,17 +175,13 @@ public class TimelineActivity extends AppCompatActivity {
         btnEditProfile=menu.findItem(R.id.action_editprofile);
         btnLogout=menu.findItem(R.id.action_logout);
 
-        if(check)
-        {
-            btnLogin.setVisible(false);
-            btnLogout.setVisible(true);
-            btnEditProfile.setVisible(true);
-        }
         if(!check)
         {
-            btnLogin.setVisible(true);
-            btnLogout.setVisible(false);
-            btnEditProfile.setVisible(false);
+            setTab("not_login");
+        }
+        if(check)
+        {
+            setTab("login");
         }
         return true;
     }

@@ -75,7 +75,7 @@ public class InterestFormActivity extends AppCompatActivity implements RecycleVi
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("listinterest",listInterest);
                 intent.putExtras(bundle);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 if(check)
                 {
                     preferences.putBoolean("session",true);

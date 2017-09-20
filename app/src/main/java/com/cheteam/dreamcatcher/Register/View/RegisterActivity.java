@@ -62,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
                         progressDialog.setIndeterminate(false);
                         progressDialog.setCancelable(false);
                     }
+                    progressDialog.show();
                     RC.Register();
                 }
             }
@@ -168,6 +169,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
             bundle.putBoolean("login",true);
             intent.putExtras(bundle);
             startActivity(intent);
+            finish();
         }
         if(error)
         {

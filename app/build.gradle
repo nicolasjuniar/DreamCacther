@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 ext.majorVersion=0
-ext.minorVersion=0
-ext.patchVersion=2
+ext.minorVersion=1
+ext.patchVersion=0
 ext.preRelease= "beta"
 
 android {

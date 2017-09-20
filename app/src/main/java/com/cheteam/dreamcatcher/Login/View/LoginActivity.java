@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.InterestForm.View.InterestFormActivity;
 import com.cheteam.dreamcatcher.Login.API.LoginAPI;
 import com.cheteam.dreamcatcher.Login.Controller.LoginController;
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     LoginController LC;
 
     ProgressDialog progressDialog;
+    PreferenceHelper preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,8 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             }
         });
 
+        preferences=PreferenceHelper.getInstance(getApplicationContext());
+
         setFont();
     }
 
@@ -126,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         {
             LoginResponse response=loginResponse;
             Toast.makeText(LoginActivity.this, loginResponse.message, Toast.LENGTH_SHORT).show();
-            Boolean interest=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE).getBoolean("interest",false);
+            Boolean interest=preferences.getBoolean("interest",false);
             if(!interest)
             {
                 Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
@@ -137,10 +141,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             }
             else if(interest)
             {
-                SharedPreferences sp=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor=sp.edit();
-                editor.putBoolean("session",true);
-                editor.apply();
+                preferences.putBoolean("session",true);
                 startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
             }
             finish();

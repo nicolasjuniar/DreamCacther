@@ -70,9 +70,6 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         txtEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ListInterest.add("sadsadsa");
-//                adapter2.setListCategories(ListInterest);
-//                adapter2.notifyDataSetChanged();
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("listinterest",ListInterest);
                 DialogFragmentSelectCategory selectCategory = new DialogFragmentSelectCategory();
