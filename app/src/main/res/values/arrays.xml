@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dialog_choice_array">
+        <item>Finances</item>
+        <item>Skills</item>
+        <item>Facilities</item>
+        <item>Opportunities</item>
+        <item>Courses</item>
+    </string-array>
+</resources>
