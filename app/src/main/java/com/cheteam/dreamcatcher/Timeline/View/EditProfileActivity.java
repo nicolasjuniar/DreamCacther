@@ -7,8 +7,10 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
+import com.cheteam.dreamcatcher.Login.View.LoginActivity;
 import com.cheteam.dreamcatcher.R;
 
 import butterknife.BindView;
@@ -35,12 +39,17 @@ public class EditProfileActivity extends AppCompatActivity {
     @BindView(R.id.txtName) EditText txtName;
     @BindView(R.id.add_photo_user) CircleImageView add_photo_user;
     @BindView(R.id.add_photo_cover) CircleImageView add_photo_cover;
+    private PreferenceHelper preferences;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile_layout);
         ButterKnife.bind(this);
+        preferences= PreferenceHelper.getInstance(getApplicationContext());
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         add_photo_user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,11 +87,33 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        switch (id){
+            case android.R.id.home: onBackPressed();
+                break;
+            case R.id.action_logout:
+                new AlertDialog.Builder(this)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure wanna logout?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                preferences.putBoolean("session",false);
+                                startActivity(new Intent(EditProfileActivity.this,LoginActivity.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-        if(id==R.id.action_done)
-        {
-            finish();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                break;
+
         }
+
         return super.onOptionsItemSelected(item);
     }
+
 }

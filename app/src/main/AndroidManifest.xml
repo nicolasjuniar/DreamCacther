@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.cheteam.dreamcatcher">
+    package="com.cheteam.dreamcatcher">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -27,37 +27,39 @@
             android:name=".Register.View.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Timeline.View.TimelineActivity"
-                  android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".InterestForm.View.InterestFormActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Timeline.View.EditProfileActivity"
-                  android:label="Edit Profile"/>
+            android:label="Edit Profile"/>
         <activity android:name=".Timeline.View.PickCoverActivity"
-                  android:label="Select Cover Profile"/>
+            android:label="Pick Cover Profile"
+            />
         <activity android:name=".Timeline.View.PickAvatarActivity"
-                  android:label="Select Avatar Profile"/>
+            android:label="Pick Avatar Profile"
+            />
         <activity android:name=".AddPost.View.AddPostActivity"
-                  android:theme="@style/AppTheme.NoActionBar"
-                  android:label="Add Post"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Add Post"/>
         <activity android:name=".ArticlePreview.View.ArticlePreview"
-                  android:label="Article Preview"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="Article Preview"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ArticlePreview.View.ActivityPreview"
-                  android:label="Article Preview"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="Article Preview"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".CommentSection.View.MainComment"
-                  android:label="Comment"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="Comment"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ArticlePreview.View.ViewPost"
-                  android:label="View Post"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="View Post"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ArticlePreview.View.EditPostPreview"
-                  android:label="Edit Post"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="Edit Post"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AddPost.View.EditPostActivity"
-                  android:label="Edit Post"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="Edit Post"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
