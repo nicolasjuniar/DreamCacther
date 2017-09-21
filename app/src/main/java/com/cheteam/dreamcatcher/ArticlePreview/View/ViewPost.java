@@ -34,8 +34,9 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
     @BindView(R.id.tv_content_vp) TextView tv_content_vp;
     @BindView(R.id.toolbar_view_post) Toolbar myToolbar;
     @BindView(R.id.bookmark_icon_vp) ImageView bookmark_icon_vp;
+    @BindView(R.id.tv_category_vp) TextView tv_category_vp;
     Boolean cek=false;
-    ArticleController AC;
+    ArticleController mArticleController;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,12 +46,12 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("View Post");
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
-        AC=new ArticleController(this);
-        AC.GetArticle(1);
+        mArticleController =new ArticleController(this);
+        mArticleController.GetArticle(1);
         bookmark_icon_vp.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp);
 
         bookmark_icon_vp.setOnClickListener(new View.OnClickListener() {
@@ -101,53 +102,56 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
             tv_title_view_post.setText(model.post_title);
             tv_date_vp.setText(model.published_at);
             tv_content_vp.setText(model.content);
-            if(model.id_background==1){
-                bg_view_post.setBackgroundResource(R.drawable.red_bg);
+            tv_category_vp.setText(model.categories);
+            switch (model.id_background){
+                case 1:
+                    bg_view_post.setBackgroundResource(R.drawable.red_bg);
+                    break;
+                case 2:
+                    bg_view_post.setBackgroundResource(R.drawable.green_bg);
+                    break;
+                case 3:
+                    bg_view_post.setBackgroundResource(R.drawable.blue_bg);
+                    break;
+                case 4:
+                    bg_view_post.setBackgroundResource(R.drawable.yellow_bg);
+                    break;
+                case 5:
+                    bg_view_post.setBackgroundResource(R.drawable.violet_bg);
+                    break;
             }
-            if(model.id_background==2){
-                bg_view_post.setBackgroundResource(R.drawable.green_bg);
-            }
-            if(model.id_background==3){
-                bg_view_post.setBackgroundResource(R.drawable.blue_bg);
-            }
-            if(model.id_background==4){
-                bg_view_post.setBackgroundResource(R.drawable.yellow_bg);
-            }
-            if(model.id_background==5){
-                bg_view_post.setBackgroundResource(R.drawable.violet_bg);
-            }
-            if(model.id_avatar==0){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_0);
-            }
-            if(model.id_avatar==1){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_1);
-            }
-            if(model.id_avatar==2){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_2);
-            }
-            if(model.id_avatar==3){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_3);
-            }
-            if(model.id_avatar==4){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_4);
-            }
-            if(model.id_avatar==5){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_5);
-            }
-            if(model.id_avatar==6){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_6);
-            }
-            if(model.id_avatar==7){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_7);
-            }
-            if(model.id_avatar==8){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_8);
-            }
-            if(model.id_avatar==9){
-                avatar_vp.setBackgroundResource(R.drawable.avatar_9);
+            switch (model.id_avatar){
+                case 0:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_0);
+                    break;
+                case 1:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_1);
+                    break;
+                case 2:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_2);
+                    break;
+                case 3:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_3);
+                    break;
+                case 4:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_4);
+                    break;
+                case 5:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_5);
+                    break;
+                case 6:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_6);
+                    break;
+                case 7:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_7);
+                    break;
+                case 8:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_8);
+                    break;
+                case 9:
+                    avatar_vp.setBackgroundResource(R.drawable.avatar_9);
+                    break;
             }
         }
     }
-
-
 }

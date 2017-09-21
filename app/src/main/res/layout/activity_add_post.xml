@@ -16,29 +16,30 @@
         android:layout_below="@+id/my_toolbar_add_post"
         android:id="@+id/add_post_title"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/layout_100_dp"
         android:theme="@style/MyToolbarStyle"
         android:background="@drawable/blue_bg"
-        android:hint="Insert Title"
+        android:hint="@string/hint_title"
         android:textAllCaps="false"
         android:textSize="25sp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"
         android:gravity="center_horizontal|center"
-        android:letterSpacing="-0.08"/>
+        android:letterSpacing="-0.01"/>
     <TextView
         android:id="@+id/add_post_choose_bg_info"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="Choose Your Background"
+        android:text="@string/choose_bg"
         android:layout_below="@+id/add_post_title"
-        android:textColor="#6d6d72"
-        android:background="#c8c7cc"
+        android:textColor="@color/text_color_ep"
+        android:background="@color/grey_custom"
         android:textAllCaps="true"
         android:textSize="13sp"
-        android:letterSpacing="-0.08"
+        android:letterSpacing="-0.01"
         android:gravity="start|center_vertical"
-        android:paddingStart="15dp"/>
+        android:paddingStart="@dimen/margin_padding_15"
+        android:paddingEnd="@dimen/zero_dp"/>
     <!--<android.support.v7.app.AlertController.RecycleListView-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
@@ -46,7 +47,7 @@
     <LinearLayout
         android:id="@+id/add_post_bgs"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/layout_40"
         android:layout_below="@id/add_post_choose_bg_info">
         <ImageButton
             android:layout_width="match_parent"
@@ -80,89 +81,54 @@
             android:clickable="true"
             />
     </LinearLayout>
-    <TextView
+
+    <LinearLayout
         android:id="@+id/add_post_add_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal"
-        android:gravity="start"
-        android:textColor="#6d6d72"
-        android:letterSpacing="-0.08"
-        android:text="Select Category"
+        android:background="@color/grey_custom"
         android:layout_below="@id/add_post_bgs"
-        android:paddingStart="15dp"
-        android:background="#c8c7cc"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:textAllCaps="true"
-        />
-    <TextView
-        android:id="@+id/add_post_clickOn_categories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_post_add_category"
-        android:textSize="16sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal"
-        android:textColor="#61000000"
-        android:lineSpacingExtra="8sp"
-        android:text="ex. Finances, etc"
-        android:paddingBottom="3dp"
-        android:paddingTop="5dp"
-        android:paddingLeft="16dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal"
-        android:textColor="#9b9b9b"
-        android:paddingBottom="3dp"
-        android:paddingTop="5dp"
-        android:paddingStart="0dp"
-        android:paddingEnd="16dp"
-        android:text="edit"
-        android:id="@+id/tv_edit_category"
-        android:layout_below="@+id/add_post_add_category"
-        android:layout_alignParentEnd="true" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/add_post_insert_body_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_post_clickOn_categories"
-        android:textSize="13sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal"
-        android:gravity="start"
-        android:textColor="#6d6d72"
-        android:letterSpacing="-0.08"
-        android:text="Insert Body"
-        android:paddingStart="15dp"
-        android:paddingEnd="0dp"
-        android:background="#c8c7cc"
-        android:paddingTop="8dp"
-        android:paddingBottom="7dp"
-        android:textAllCaps="true"
-        />
+        <TextView
+            android:id="@+id/add_post_add_category_"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:gravity="start"
+            android:letterSpacing="-0.01"
+            android:paddingBottom="@dimen/padding8dp"
+            android:paddingStart="@dimen/margin_padding_15"
+            android:paddingTop="@dimen/padding8dp"
+            android:text="@string/Select_Category"
+            android:textAllCaps="true"
+            android:textColor="@color/text_color_ep"
+            android:textSize="@dimen/text_13sp"
+            android:textStyle="normal"
+            />
+
+        <ImageView
+            android:id="@+id/iv_icon_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_next"
+            android:layout_marginEnd="@dimen/lay_mar_pad_10dp"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
     <EditText
         android:id="@+id/et_content_add_post"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/add_post_insert_body_info"
+        android:layout_below="@+id/add_post_add_category"
         android:textSize="14sp"
         android:fontFamily="sans-serif"
         android:textStyle="normal"
-        android:textColor="#9b9b9b"
+        android:textColor="@color/Black"
         android:gravity="start"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="8dp"
-        android:letterSpacing="-0.08"
+        android:layout_margin="@dimen/lay_mar_pad_10dp"
+        android:letterSpacing="-0.01"
         android:hint="Insert text here …"
-        android:textColorHint="#9b9b9b"/>
-
+        android:textColorHint="@color/grey_custom"/>
 </RelativeLayout>

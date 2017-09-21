@@ -24,6 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Rahmat Al Hakam on 17/09/2017.
  */
 
+
 public class EditPostPreview extends AppCompatActivity implements ArticleController.onViewArticleResponse{
     @BindView(R.id.bg_epp) ImageView bg_epp;
     @BindView(R.id.tv_title_epp) TextView tv_title_epp;
@@ -36,7 +37,7 @@ public class EditPostPreview extends AppCompatActivity implements ArticleControl
     @BindView(R.id.toolbar_epp) Toolbar myToolbar;
     @BindView(R.id.bookmark_icon_epp) ImageButton bookmark_icon_epp;
     Boolean cek=false;
-    ArticleController AC;
+    ArticleController mArticleController;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,12 +47,12 @@ public class EditPostPreview extends AppCompatActivity implements ArticleControl
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("View Post");
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
-        AC=new ArticleController(this);
-        AC.GetArticle(1);
+        mArticleController =new ArticleController(this);
+        mArticleController.GetArticle(1);
         bookmark_icon_epp.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp);
 
         bookmark_icon_epp.setOnClickListener(new View.OnClickListener() {
@@ -79,36 +80,56 @@ public class EditPostPreview extends AppCompatActivity implements ArticleControl
             tv_title_epp.setText(model.post_title);
             tv_date_epp.setText(model.published_at);
             tv_content_epp.setText(model.content);
-            if(model.id_background==1)
-                bg_epp.setBackgroundResource(R.drawable.red_bg);
-            if(model.id_background==2)
-                bg_epp.setBackgroundResource(R.drawable.green_bg);
-            if(model.id_background==3)
-                bg_epp.setBackgroundResource(R.drawable.blue_bg);
-            if(model.id_background==4)
-                bg_epp.setBackgroundResource(R.drawable.yellow_bg);
-            if(model.id_background==5)
-                bg_epp.setBackgroundResource(R.drawable.violet_bg);
-            if(model.id_avatar==0)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_0);
-            if(model.id_avatar==1)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_1);
-            if(model.id_avatar==2)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_2);
-            if(model.id_avatar==3)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_3);
-            if(model.id_avatar==4)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_4);
-            if(model.id_avatar==5)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_5);
-            if(model.id_avatar==6)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_6);
-            if(model.id_avatar==7)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_7);
-            if(model.id_avatar==8)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_8);
-            if(model.id_avatar==9)
-                civ_avatar_epp.setBackgroundResource(R.drawable.avatar_9);
+            //bg_epp dan civ_avatar_epp
+            switch (model.id_background){
+                case 1:
+                    bg_epp.setBackgroundResource(R.drawable.red_bg);
+                    break;
+                case 2:
+                    bg_epp.setBackgroundResource(R.drawable.green_bg);
+                    break;
+                case 3:
+                    bg_epp.setBackgroundResource(R.drawable.blue_bg);
+                    break;
+                case 4:
+                    bg_epp.setBackgroundResource(R.drawable.yellow_bg);
+                    break;
+                case 5:
+                    bg_epp.setBackgroundResource(R.drawable.violet_bg);
+                    break;
+            }
+            switch (model.id_avatar){
+                case 0:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_0);
+                    break;
+                case 1:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_1);
+                    break;
+                case 2:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_2);
+                    break;
+                case 3:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_3);
+                    break;
+                case 4:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_4);
+                    break;
+                case 5:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_5);
+                    break;
+                case 6:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_6);
+                    break;
+                case 7:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_7);
+                    break;
+                case 8:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_8);
+                    break;
+                case 9:
+                    civ_avatar_epp.setBackgroundResource(R.drawable.avatar_9);
+                    break;
+            }
         }
     }
 

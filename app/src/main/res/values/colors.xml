@@ -2,15 +2,19 @@
 <resources>
     <color name="colorPrimary">#18587a</color>
     <color name="colorPrimaryDark">#18587a</color>
-    <color name="colorAccent">#4a4a4a</color>
-
+    <color name="grey_custom">#c8c7cc</color>
+    <color name="text_color_ep">#6d6d72</color>
     <color name="colar">#fc624d</color>
+    <color name="color_9b9b9b">#9b9b9b</color>
+    <color name="colorAccent">#4a4a4a</color>
     <color name="duckEggBlue">#ddf0fb</color>
     <color name="charcoalGrey">#4a4a4a</color>
     <color name="lightBlueGrey">#addce4</color>
     <color name="brightBlue">#0076ff</color>
     <color name="pale_grey">#efeff4</color>
-
+    <color name="white_custom">#f0f0f0</color>
+    <color name="red_custom">#d50000</color>
+    <color name="teal">#009688</color>
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>
@@ -151,4 +155,6 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
+    <color name="light_navy">#18587a</color>
+
 </resources>
