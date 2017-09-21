@@ -8,43 +8,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cheteam.dreamcatcher.AddPost.View.AddPostActivity;
-import com.cheteam.dreamcatcher.ArticlePreview.API.ViewArticleApi;
 import com.cheteam.dreamcatcher.ArticlePreview.Controller.ArticleController;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
+import com.cheteam.dreamcatcher.CommentSection.View.MainComment;
 import com.cheteam.dreamcatcher.R;
-import com.cheteam.dreamcatcher.ServiceGenerator;
+import com.cheteam.dreamcatcher.Timeline.View.TimelineActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**
  * Created by Rahmat Al Hakam on 09/09/2017.
- * Layout untuk ADD POST-PREVIEW
+ * Layout untuk PREVIEW SUBMIT
  */
 
 public class ActivityPreview extends AppCompatActivity implements ArticleController.onViewArticleResponse{
     @BindView(R.id.tv_title_preview) TextView tv_title_preview;
     @BindView(R.id.tv_name_preview) TextView tv_name_preview;
-   //@BindView(R.id.preview_category) TextView preview_category;
+    @BindView(R.id.preview_category) TextView preview_category;
     @BindView(R.id.preview_tanggal) TextView preview_tanggal;
     @BindView(R.id.tv_content_preview) TextView tv_content_preview;
-    //@BindView(R.id.tv_category_preview) TextView tv_category_preview;
     @BindView(R.id.preview_avatar_user) CircleImageView preview_avatar_user;
     @BindView(R.id.bg_preview) ImageView bg_preview;
-    @BindView(R.id.bookmark_icon) ImageView bookmark_icon;
     @BindView(R.id.my_toolbar_article_preview) Toolbar myToolbar;
-    Boolean cek=false;
-    ArticleController AC;
+    ArticleController mArticleController;
 
 
     @Override
@@ -53,44 +45,33 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
         setContentView(R.layout.activity_article_preview);
         ButterKnife.bind(this);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Edit");
+        getSupportActionBar().setTitle("Preview");
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
 
-        AC=new ArticleController(this);
-        AC.GetArticle(1);
-
-        bookmark_icon.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp);
-
-        bookmark_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!cek)
-                {
-                    cek=true;
-                    bookmark_icon.setBackgroundResource(R.drawable.icon_bookmark);
-                }
-                else if(cek)
-                {
-                    cek=false;
-                    bookmark_icon.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp);
-                }
-            }
-        });
+        mArticleController =new ArticleController(this);
+        mArticleController.GetArticle(1);
 
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        onBackPressed();
-        return true;
+        int id = item.getItemId();
+        switch (id){
+            case android.R.id.home: onBackPressed();
+                break;
+            case R.id.app_changes:
+                Intent intent= new Intent(this, TimelineActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -109,55 +90,57 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
             ViewArticleResponse model=response;
             tv_title_preview.setText(model.post_title);
             tv_name_preview.setText(model.name);
-            //preview_category.setText("in");
-            //tv_category_preview.setText(model.categories);
+            preview_category.setText(model.categories);
             preview_tanggal.setText(model.published_at);
             tv_content_preview.setText(model.content);
-            if(model.id_background==1){
-                bg_preview.setBackgroundResource(R.drawable.red_bg);
+            switch (model.id_background){
+                case 1:
+                    bg_preview.setBackgroundResource(R.drawable.red_bg);
+                    break;
+                case 2:
+                    bg_preview.setBackgroundResource(R.drawable.green_bg);
+                    break;
+                case 3:
+                    bg_preview.setBackgroundResource(R.drawable.blue_bg);
+                    break;
+                case 4:
+                    bg_preview.setBackgroundResource(R.drawable.yellow_bg);
+                    break;
+                case 5:
+                    bg_preview.setBackgroundResource(R.drawable.violet_bg);
+                    break;
             }
-            if(model.id_background==2){
-                bg_preview.setBackgroundResource(R.drawable.green_bg);
-            }
-            if(model.id_background==3){
-                bg_preview.setBackgroundResource(R.drawable.blue_bg);
-            }
-            if(model.id_background==4){
-                bg_preview.setBackgroundResource(R.drawable.yellow_bg);
-            }
-            if(model.id_background==5){
-                bg_preview.setBackgroundResource(R.drawable.violet_bg);
-            }
-
-            if(model.id_avatar==0){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_0);
-            }
-            if(model.id_avatar==1){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_1);
-            }
-            if(model.id_avatar==2){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_2);
-            }
-            if(model.id_avatar==3){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_3);
-            }
-            if(model.id_avatar==4){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_4);
-            }
-            if(model.id_avatar==5){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_5);
-            }
-            if(model.id_avatar==6){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_6);
-            }
-            if(model.id_avatar==7){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_7);
-            }
-            if(model.id_avatar==8){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_8);
-            }
-            if(model.id_avatar==9){
-                preview_avatar_user.setBackgroundResource(R.drawable.avatar_9);
+            switch (model.id_avatar){
+                case 0:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_0);
+                    break;
+                case 1:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_1);
+                    break;
+                case 2:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_2);
+                    break;
+                case 3:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_3);
+                    break;
+                case 4:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_4);
+                    break;
+                case 5:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_5);
+                    break;
+                case 6:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_6);
+                    break;
+                case 7:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_7);
+                    break;
+                case 8:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_8);
+                    break;
+                case 9:
+                    preview_avatar_user.setBackgroundResource(R.drawable.avatar_9);
+                    break;
             }
         }
     }

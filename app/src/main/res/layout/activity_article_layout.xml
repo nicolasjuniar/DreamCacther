@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="@dimen/lay_mar_pad_10dp">
     <!--OWN POST-->
 
     <android.support.v7.widget.Toolbar
@@ -19,11 +19,11 @@
         />
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/AvatarUser"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/lay_mar_pad_10dp"
+        android:layout_marginStart="@dimen/lay_mar_pad_10dp"
         android:layout_below="@id/my_toolbar_article_layout"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/avatar_30dp"
+        android:layout_height="@dimen/avatar_30dp"
         />
     <TextView
         android:id="@+id/tv_name"
@@ -31,13 +31,13 @@
         android:layout_toEndOf="@+id/AvatarUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
+        android:layout_marginTop="@dimen/lay_mar_pad_10dp"
+        android:textSize="@dimen/text_16sp"
         android:fontFamily="sans-serif"
         android:textStyle="bold"
         android:textColor="#4a4a4a"
         android:letterSpacing="-0.01"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="@dimen/mar_pad_lay_5dp"
         />
     <TextView
         android:id="@+id/tanggal_post"
@@ -45,12 +45,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_name"
         android:layout_toEndOf="@id/AvatarUser"
-        android:layout_marginStart="5dp"
-        android:textSize="12sp"
+        android:layout_marginStart="@dimen/mar_pad_lay_5dp"
+        android:textSize="@dimen/text_12sp"
         android:fontFamily="sans-serif-light"
         android:textStyle="italic"
-        android:textColor="#4a4a4a"
-        android:letterSpacing="-0.05"
+        android:textColor="@color/charcoalGrey"
+        android:letterSpacing="-0.01"
         />
     <TextView
         android:id="@+id/tv_category_av"
@@ -58,24 +58,23 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/my_toolbar_article_layout"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="10dp"
-        android:textSize="16sp"
+        android:layout_marginTop="@dimen/margin_padding_15"
+        android:layout_marginEnd="@dimen/lay_mar_pad_10dp"
+        android:textSize="@dimen/text_16sp"
         android:fontFamily="sans-serif-medium"
         android:textStyle="normal"
-        android:textColor="#18587a"
+        android:textColor="@color/light_navy"
         android:letterSpacing="-0.01"
-        android:text="Skills"
         />
     <RelativeLayout
         android:id="@+id/fragment_top"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/layout_100_dp"
         android:layout_below="@id/AvatarUser"
-        android:layout_marginTop="11dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginTop="@dimen/lay_mar_pad_10dp"
+        android:layout_marginStart="@dimen/lay_mar_pad_10dp"
+        android:layout_marginEnd="@dimen/lay_mar_pad_10dp"
+        android:layout_marginBottom="@dimen/marg_pad_20dp">
         <ImageView
             android:id="@+id/bg_post"
             android:layout_width="match_parent"
@@ -85,13 +84,12 @@
             android:id="@+id/tv_title_article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_20sp"
             android:fontFamily="sans-serif-medium"
             android:textStyle="normal"
-            android:textColor="#ffffff"
+            android:textColor="@color/White"
             android:letterSpacing="-0.01"
             android:gravity="center_horizontal"
-            android:text="fhjaskd"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
@@ -99,17 +97,17 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="@dimen/margin_padding_15"
+        android:layout_marginEnd="@dimen/margin_padding_15"
         android:layout_below="@+id/fragment_top">
         <TextView
             android:id="@+id/tv_content_article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_14sp"
             android:fontFamily="sans-serif"
             android:textStyle="normal"
-            android:textColor="#4a4a4a"
+            android:textColor="@color/charcoalGrey"
             android:letterSpacing="-0.01"
             android:lineSpacingExtra="2sp"
             />
