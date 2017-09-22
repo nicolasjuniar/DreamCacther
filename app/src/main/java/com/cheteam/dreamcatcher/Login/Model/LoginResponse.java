@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class LoginResponse {
+    @SerializedName("message")
+    public String message;
+    @SerializedName("success")
+    public boolean success;
+    @SerializedName("status_code")
+    public int status_code;
     @SerializedName("token")
     public String token;
     @SerializedName("email")
     public String email;
-    @SerializedName("success")
-    public String success;
-    @SerializedName("message")
-    public String message;
-    @SerializedName("status_code")
-    public String status_code;
 }

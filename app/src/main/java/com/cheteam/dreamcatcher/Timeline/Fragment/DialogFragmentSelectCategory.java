@@ -33,6 +33,7 @@ public class DialogFragmentSelectCategory extends DialogFragment implements ICha
     @BindView(R.id.txtApply) TextView txtApply;
     @BindView(R.id.txtCancel) TextView txtCancel;
     @BindView(R.id.filter) TextView filter;
+    @BindView(R.id.category) TextView category;
 
     RecycleViewAdapterSelectListCategory adapter;
     ArrayList<ModelCategory>  ListCategory;
@@ -82,6 +83,7 @@ public class DialogFragmentSelectCategory extends DialogFragment implements ICha
         txtApply.setTypeface(Roboto_Regular);
         txtCancel.setTypeface(Roboto_Regular);
         filter.setTypeface(Roboto_Regular);
+        category.setTypeface(Roboto_Regular);
     }
 
     public void setListCategories()
@@ -99,7 +101,7 @@ public class DialogFragmentSelectCategory extends DialogFragment implements ICha
                 ListCategory.get(index).setCek(true);
             }
         }
-        adapter=new RecycleViewAdapterSelectListCategory(ListCategory,getActivity(),this);
+        adapter=new RecycleViewAdapterSelectListCategory(ListCategory,getActivity(),this,cekListCategory.size());
         ListCategories.setAdapter(adapter);
         ListCategories.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -112,5 +114,18 @@ public class DialogFragmentSelectCategory extends DialogFragment implements ICha
     @Override
     public void removeCategory(String category) {
         cekListCategory.remove(category);
+    }
+
+    @Override
+    public void setApplyOption(boolean set) {
+        txtApply.setClickable(set);
+        if(set)
+        {
+            txtApply.setTextColor(getActivity().getResources().getColor(R.color.dialog_true));
+        }
+        else
+        {
+            txtApply.setTextColor(getActivity().getResources().getColor(R.color.dialog_false));
+        }
     }
 }

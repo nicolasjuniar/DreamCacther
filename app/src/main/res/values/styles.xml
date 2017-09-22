@@ -6,14 +6,28 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:screenOrientation">portrait</item>
 
         <item name="android:textColorHint">@color/colorAccent</item>
         <item name="actionOverflowButtonStyle">@style/OverFlow</item>
+
+        <item name="colorControlActivated">#009688</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#f1f1f1
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#c6c5c5
+        </item>
     </style>
 
     <style name="MyToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/White</item>
         <item name="android:textColorPrimary">@color/White</item>
+        <item name="android:screenOrientation">portrait</item>
+
+        <item name="colorSwitchThumbNormal">#009688</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -23,9 +37,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:screenOrientation">portrait</item>
+
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="android:textColorHint">@color/colorAccent</item>
+
+        <item name="colorSwitchThumbNormal">#009688</item>
     </style>
 
     <style name="OverFlow" parent="@android:style/Widget.Holo.ActionButton.Overflow">

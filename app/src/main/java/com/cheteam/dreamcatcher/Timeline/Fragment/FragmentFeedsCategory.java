@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.NetworkUtils;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterFeedsCategories;
@@ -44,6 +46,7 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
     @BindView(R.id.expand) ImageView expand;
     @BindView(R.id.txtCategoryName) TextView txtCategoryName;
     TimelineController TC;
+    NetworkUtils network;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,14 +59,13 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
         txtCategoryName.setVisibility(View.GONE);
         setFont();
         TC=new TimelineController(this);
-
+        network=new NetworkUtils(getActivity());
         bgCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setListPosts("list","");
             }
         });
-
         txtCategoryName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +105,7 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
             bgCategory.setVisibility(View.VISIBLE);
             txtCategoryName.setVisibility(View.VISIBLE);
             expand.setVisibility(View.VISIBLE);
-            TC.getTimeline();
+            fetchTimeline();
             if(category.equalsIgnoreCase("Finance"))
             {
                 txtCategoryName.setText("Finance");
@@ -137,6 +139,18 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
             bgCategory.setVisibility(View.GONE);
             txtCategoryName.setVisibility(View.GONE);
             expand.setVisibility(View.GONE);
+        }
+    }
+
+    public void fetchTimeline()
+    {
+        if(network.isConnected())
+        {
+            TC.getTimeline();
+        }
+        else
+        {
+            Toast.makeText(getActivity(), "phone is not connected to internet", Toast.LENGTH_SHORT).show();
         }
     }
 
