@@ -49,30 +49,35 @@
         android:layout_height="@dimen/layout_40"
         android:layout_below="@id/tv_choose_bg_ep">
         <ImageButton
+            android:id="@+id/bg_1_ep"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/bg_courses"
             android:clickable="true"/>
         <ImageButton
+            android:id="@+id/bg_2_ep"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
             android:background="@drawable/bg_facilities"/>
         <ImageButton
+            android:id="@+id/bg_3_ep"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
             android:background="@drawable/bg_finances"/>
         <ImageButton
+            android:id="@+id/bg_4_ep"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
             android:background="@drawable/bg_opportunities"/>
         <ImageButton
+            android:id="@+id/bg_5_ep"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
