@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.cheteam.dreamcatcher.R;
+import com.cheteam.dreamcatcher.Timeline.View.EditProfileActivity;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by MPR on 9/9/2017.
@@ -30,10 +32,12 @@ public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<Recycler
     Context context;
     View view;
     int selectedItem = 0;
+    setupAvaPhoto listener;
 
-    public RecyclerViewAdapterListAvatar(List<Integer> ListAvatar, Context context) {
+    public RecyclerViewAdapterListAvatar(List<Integer> ListAvatar, Context context,setupAvaPhoto listener) {
         this.context = context;
         this.ListAvatar = ListAvatar;
+        this.listener=listener;
     }
 
     @Override
@@ -57,6 +61,7 @@ public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<Recycler
             public void onClick(View v) {
                 selectedItem=id_avatar;
                 notifyDataSetChanged();
+                listener.getAvaId(selectedItem);
             }
         });
         if(id_avatar==1)
@@ -115,13 +120,9 @@ public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<Recycler
             super(itemView);
             view = itemView;
             ButterKnife.bind(this,view);
-            AvatarUser.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
         }
+    }
+    public interface setupAvaPhoto {
+        public void getAvaId(int id);
     }
 }

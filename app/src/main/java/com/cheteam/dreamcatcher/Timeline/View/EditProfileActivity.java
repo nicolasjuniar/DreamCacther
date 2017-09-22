@@ -49,7 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Nicolas Juniar on 10/09/2017.
  */
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity implements RecyclerViewAdapterListAvatar.setupAvaPhoto{
     @BindView(R.id.bio) TextView bio;
     @BindView(R.id.location) TextView location;
     @BindView(R.id.name) TextView name;
@@ -271,6 +271,45 @@ public class EditProfileActivity extends AppCompatActivity {
         if (requestCode == 1){
             if(resultCode == RESULT_OK){
             }
+        }
+    }
+    @Override
+    public void getAvaId (int id){
+        if(id==1)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_1);
+        }
+        if(id==2)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_2);
+        }
+        if(id==3)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_3);
+        }
+        if(id==4)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_4);
+        }
+        if(id==5)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_5);
+        }
+        if(id==6)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_6);
+        }
+        if(id==7)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_7);
+        }
+        if(id==8)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_8);
+        }
+        if(id==9)
+        {
+            edit_avatar_user.setImageResource(R.drawable.avatar_9);
         }
     }
 }

@@ -67,6 +67,7 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         setFont();
+
         preferences=PreferenceHelper.getInstance(getActivity());
 
         PC=new ProfileController(this);

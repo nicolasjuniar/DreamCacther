@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cheteam.dreamcatcher.ArticlePreview.View.ActivityPreview;
-import com.cheteam.dreamcatcher.ArticlePreview.View.ArticlePreview;
 import com.cheteam.dreamcatcher.ArticlePreview.View.ViewPost;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
+import com.cheteam.dreamcatcher.Timeline.View.OtherUserActivity;
 
 import java.util.Collections;
 import java.util.List;
@@ -126,12 +125,20 @@ public class RecyclerViewAdapterBookmarks extends RecyclerView.Adapter<RecyclerV
             super(itemView);
             view = itemView;
             ButterKnife.bind(this,view);
-            view.setOnClickListener(new View.OnClickListener() {
+            BgImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent myactivity = new Intent(context, ViewPost.class);
                     myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
                     context.getApplicationContext().startActivity(myactivity);
+                }
+            });
+            AvatarUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent fragment = new Intent(context,OtherUserActivity.class);
+                    fragment.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                    context.getApplicationContext().startActivity(fragment);
                 }
             });
         }

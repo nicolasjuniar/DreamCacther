@@ -243,5 +243,4 @@ public class TimelineActivity extends AppCompatActivity{
 
         return super.onOptionsItemSelected(item);
     }
-
 }

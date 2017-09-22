@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 
 public class PickAvatarActivity extends AppCompatActivity {
     RecyclerViewAdapterListAvatar adapter;
+    RecyclerViewAdapterListAvatar.setupAvaPhoto setupAvaPhoto;
     @BindView(R.id.ListAvatar) RecyclerView recyclerView;
 
     List<Integer> ListAvatar;
@@ -45,7 +46,7 @@ public class PickAvatarActivity extends AppCompatActivity {
             ListAvatar.add(i);
         }
 
-        adapter=new RecyclerViewAdapterListAvatar(ListAvatar,PickAvatarActivity.this);
+        adapter=new RecyclerViewAdapterListAvatar(ListAvatar,PickAvatarActivity.this,setupAvaPhoto);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
     }
@@ -58,14 +59,5 @@ public class PickAvatarActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    @Override
-    public void onBackPressed(){
-        int position= recyclerView.getId();
-        Intent intent = new Intent(this,recyclerView.getClass());
-        Bundle bundle = new Bundle();
-        bundle.putInt("COVERID", position);
-        intent.putExtras(bundle);
-        setResult(RESULT_OK,intent);
-        super.onBackPressed();
-    }
+
 }
