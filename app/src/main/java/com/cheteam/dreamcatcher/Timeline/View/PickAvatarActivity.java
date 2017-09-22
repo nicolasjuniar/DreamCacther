@@ -1,5 +1,7 @@
 package com.cheteam.dreamcatcher.Timeline.View;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -55,5 +57,15 @@ public class PickAvatarActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed(){
+        int position= recyclerView.getId();
+        Intent intent = new Intent(this,recyclerView.getClass());
+        Bundle bundle = new Bundle();
+        bundle.putInt("COVERID", position);
+        intent.putExtras(bundle);
+        setResult(RESULT_OK,intent);
+        super.onBackPressed();
     }
 }

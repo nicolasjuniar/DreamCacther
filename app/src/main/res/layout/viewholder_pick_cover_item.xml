@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp">
+    android:orientation="vertical"
+    android:layout_width="340dp"
+    android:layout_height="80dp"
+    android:background="@drawable/row_selected_bg"
+    android:id="@+id/CoverHighlight"
+    android:layout_marginBottom="5dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_width="340dp"
+        android:layout_height="80dp"
         android:background="@drawable/cover_1"
         android:id="@+id/bgCover"
         />

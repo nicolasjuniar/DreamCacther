@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cheteam.dreamcatcher.R;
@@ -29,6 +30,7 @@ public class RecyclerViewAdapterListCover extends RecyclerView.Adapter<RecyclerV
     List<String> ListCover = Collections.emptyList();
     Context context;
     View view;
+    int selectedItem =-1;
 
     public RecyclerViewAdapterListCover(List<String> ListCover, Context context) {
         this.context = context;
@@ -44,8 +46,20 @@ public class RecyclerViewAdapterListCover extends RecyclerView.Adapter<RecyclerV
     }
 
     @Override
-    public void onBindViewHolder(BookmarksViewHolder holder, int position) {
-        String id_cover=ListCover.get(position);
+    public void onBindViewHolder(BookmarksViewHolder holder, final int position) {
+        final String id_cover=ListCover.get(position);
+        if (selectedItem==position) {
+            holder.coverHighlight.setSelected(true);
+        }else {
+            holder.coverHighlight.setSelected(false);
+        }
+        holder.bgCover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedItem=position;
+                notifyDataSetChanged();
+            }
+        });
         if(id_cover.equalsIgnoreCase("1"))
         {
             holder.bgCover.setBackgroundResource(R.drawable.cover_6);
@@ -80,17 +94,13 @@ public class RecyclerViewAdapterListCover extends RecyclerView.Adapter<RecyclerV
 
     public class BookmarksViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.bgCover) ImageView bgCover;
+        @BindView(R.id.CoverHighlight)LinearLayout coverHighlight;
 
         BookmarksViewHolder(View itemView) {
             super(itemView);
             view = itemView;
             ButterKnife.bind(this,view);
-            bgCover.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((Activity)context).finish();
-                }
-            });
+
         }
     }
 }

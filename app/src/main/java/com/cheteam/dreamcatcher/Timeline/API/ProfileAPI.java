@@ -11,6 +11,6 @@ import retrofit2.http.GET;
  */
 
 public interface ProfileAPI {
-    @GET("v1/profile")
+    @GET("v1/ownprofile")
     Call<ProfileResponse> GetProfile();
 }

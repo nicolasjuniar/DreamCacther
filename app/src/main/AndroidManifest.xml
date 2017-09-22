@@ -34,11 +34,9 @@
         <activity android:name=".Timeline.View.EditProfileActivity"
             android:label="Edit Profile"/>
         <activity android:name=".Timeline.View.PickCoverActivity"
-            android:label="Pick Cover Profile"
-            />
+            android:label="Pick Cover Profile"/>
         <activity android:name=".Timeline.View.PickAvatarActivity"
-            android:label="Pick Avatar Profile"
-            />
+            android:label="Pick Avatar Profile"/>
         <activity android:name=".AddPost.View.AddPostActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="Add Post"/>

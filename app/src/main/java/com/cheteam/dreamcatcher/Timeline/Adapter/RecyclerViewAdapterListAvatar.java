@@ -3,13 +3,17 @@ package com.cheteam.dreamcatcher.Timeline.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.cheteam.dreamcatcher.R;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,11 +24,12 @@ import butterknife.ButterKnife;
  * Created by MPR on 9/9/2017.
  */
 
-public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<RecyclerViewAdapterListAvatar.BookmarksViewHolder>{
+public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<RecyclerViewAdapterListAvatar.BookmarksViewHolder> {
 
     List<Integer> ListAvatar = Collections.emptyList();
     Context context;
     View view;
+    int selectedItem = 0;
 
     public RecyclerViewAdapterListAvatar(List<Integer> ListAvatar, Context context) {
         this.context = context;
@@ -40,8 +45,20 @@ public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<Recycler
     }
 
     @Override
-    public void onBindViewHolder(BookmarksViewHolder holder, int position) {
-        int id_avatar=ListAvatar.get(position);
+    public void onBindViewHolder(BookmarksViewHolder holder, final int position) {
+        final int id_avatar=ListAvatar.get(position);
+        if (selectedItem == id_avatar) {
+            holder.MyHighlight.setSelected(true);
+        }else {
+            holder.MyHighlight.setSelected(false);
+        }
+        holder.AvatarUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedItem=id_avatar;
+                notifyDataSetChanged();
+            }
+        });
         if(id_avatar==1)
         {
             holder.AvatarUser.setImageResource(R.drawable.avatar_1);
@@ -90,8 +107,9 @@ public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<Recycler
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public class BookmarksViewHolder extends RecyclerView.ViewHolder {
+    public class BookmarksViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.AvatarUser) ImageView AvatarUser;
+        @BindView(R.id.MyHighlight)LinearLayout MyHighlight;
 
         BookmarksViewHolder(View itemView) {
             super(itemView);
@@ -99,10 +117,11 @@ public class RecyclerViewAdapterListAvatar extends RecyclerView.Adapter<Recycler
             ButterKnife.bind(this,view);
             AvatarUser.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    ((Activity)context).finish();
+                public void onClick(View v) {
+
                 }
             });
+
         }
     }
 }
