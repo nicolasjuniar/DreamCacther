@@ -17,6 +17,7 @@ import com.cheteam.dreamcatcher.Login.View.LoginActivity;
 import com.cheteam.dreamcatcher.NetworkUtils;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Register.Controller.RegisterController;
+import com.cheteam.dreamcatcher.Register.Model.RegisterRequest;
 import com.cheteam.dreamcatcher.Register.Model.RegisterResponse;
 
 import butterknife.BindView;
@@ -69,7 +70,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
                             progressDialog.setCancelable(false);
                         }
                         progressDialog.show();
-                        RC.Register();
+                        RegisterRequest body=new RegisterRequest(txtName.getText().toString(),txtEmail.getText().toString(),txtPassword.getText().toString());
+                        RC.Register(body);
                     }
                     else
                     {
@@ -178,13 +180,20 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
         if(!error)
         {
-            Toast.makeText(RegisterActivity.this, response.message, Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(RegisterActivity.this,InterestFormActivity.class);
-            Bundle bundle=new Bundle();
-            bundle.putBoolean("login",true);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            finish();
+            if(response.success)
+            {
+                Toast.makeText(RegisterActivity.this, "Register Successful", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(RegisterActivity.this,InterestFormActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putBoolean("login",true);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+            else
+            {
+                Toast.makeText(this, "Email already registered", Toast.LENGTH_SHORT).show();
+            }
         }
         if(error)
         {

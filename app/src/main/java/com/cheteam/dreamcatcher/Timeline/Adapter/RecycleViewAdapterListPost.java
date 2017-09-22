@@ -57,9 +57,6 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
 
     @Override
     public void onBindViewHolder(RecycleViewAdapterListPost.ViewHolder holder, int position) {
-        Typeface Merriweather_Bold=Typeface.createFromAsset(context.getAssets(), "fonts/Merriweather-Bold.ttf");
-        Typeface Lobster_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Lobster-Regular.ttf");
-        Typeface RockoFLF=Typeface.createFromAsset(context.getAssets(), "fonts/RockoFLF.ttf");
         Typeface Roboto_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.txtTitle.setTypeface(Roboto_Regular);
         holder.txtFullName.setTypeface(Roboto_Regular);
@@ -117,6 +114,11 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
 
         switch (model.id_avatar)
         {
+            case 0:
+            {
+                holder.AvatarUser.setImageResource(R.drawable.avatar_0);
+                break;
+            }
             case 1:
             {
                 holder.AvatarUser.setImageResource(R.drawable.avatar_1);

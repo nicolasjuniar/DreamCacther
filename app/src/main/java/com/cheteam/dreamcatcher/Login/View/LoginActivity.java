@@ -80,7 +80,9 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                             progressDialog.setCancelable(false);
                         }
                         progressDialog.show();
-                        LC.Login(new LoginRequest("nico@gmail.com","123456"));
+                        String email=txtEmail.getText().toString();
+                        String password=txtPassword.getText().toString();
+                        LC.Login(new LoginRequest(email,password));
                     }
                     else
                     {
@@ -138,29 +140,42 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     }
 
     @Override
-    public void getLoginResponse(boolean error, LoginResponse loginResponse, Throwable t) {
+    public void getLoginResponse(boolean error, Response<LoginResponse> response , Throwable t) {
         if ((progressDialog != null) && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
         if(!error)
         {
-            LoginResponse response=loginResponse;
-            Toast.makeText(LoginActivity.this, new Gson().toJson(response.message), Toast.LENGTH_SHORT).show();
-//            Boolean interest=preferences.getBoolean("interest",false);
-//            if(!interest)
-//            {
-//                Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
-//                Bundle bundle=new Bundle();
-//                bundle.putBoolean("login",true);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//            else if(interest)
-//            {
-//                preferences.putBoolean("session",true);
-//                startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
-//            }
-//            finish();
+            if(response.code()==400)
+            {
+                Toast.makeText(this, "Email is not registeed", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                LoginResponse loginResponse=response.body();
+
+                if(response.body().success)
+                {
+                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    Boolean interest=preferences.getBoolean("interest",false);
+                    if(!interest)
+                    {
+                        Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
+                        Bundle bundle=new Bundle();
+                        bundle.putBoolean("login",true);
+                        bundle.putString("token",loginResponse.token);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                    else if(interest)
+                    {
+                        preferences.putBoolean("session",true);
+                        startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
+                    }
+                    finish();
+                }
+            }
+
         }
 
         if(error)
@@ -186,6 +201,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         } else if(!txtEmail.getText().toString().matches(regex))
         {
             txtEmail.setError("Email is invalid");
+            cek= false;
         } else
         {
             txtEmail.setError(null);
