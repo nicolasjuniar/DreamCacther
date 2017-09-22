@@ -12,7 +12,8 @@
 
         <FrameLayout
             android:layout_below="@+id/AvatarUser"
-            android:layout_width = "wrap_content"
+            android:id="@+id/Content"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true">
@@ -22,7 +23,9 @@
                 android:id="@+id/BgImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:src="@drawable/green_bg"
                 android:layout_gravity="center"
+                android:scaleType="fitXY"
                 />
 
             <TextView
@@ -37,15 +40,7 @@
                 android:textColor="@color/White"
                 android:text="Tes Tes Tes Tes Tes Tes Tes Tes Tes Tes Tes Tes"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtTime"
-                android:text="few hours ago"
-                android:textColor="@color/White"
-                android:layout_gravity="bottom|right"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"/>
+
         </FrameLayout>
 
         <TextView
@@ -80,6 +75,18 @@
             android:layout_marginRight="5dp"
             android:id="@+id/txtCategories"
             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTime"
+            android:text="few hours ago"
+            android:layout_marginTop="5dp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/Content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"/>
 
     </RelativeLayout>
 </RelativeLayout>

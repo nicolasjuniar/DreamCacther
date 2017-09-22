@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.InterestForm.View.InterestFormActivity;
 import com.cheteam.dreamcatcher.Login.API.LoginAPI;
 import com.cheteam.dreamcatcher.Login.Controller.LoginController;
@@ -43,27 +44,33 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     LoginController LC;
 
     ProgressDialog progressDialog;
-    public static Activity LA;
+    PreferenceHelper preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
         ButterKnife.bind(this);
-        LA=this;
         LC=new LoginController(this);
+
+        btnLogin.bringToFront();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(progressDialog==null)
+                ClearError();
+                if(CekInput())
                 {
-                    progressDialog=new ProgressDialog(LoginActivity.this);
-                    progressDialog.setMessage("Trying Login....");
-                    progressDialog.setIndeterminate(false);
-                    progressDialog.setCancelable(false);
+                    if(progressDialog==null)
+                    {
+                        progressDialog=new ProgressDialog(LoginActivity.this);
+                        progressDialog.setMessage("Trying Login....");
+                        progressDialog.setIndeterminate(false);
+                        progressDialog.setCancelable(false);
+                    }
+                    progressDialog.show();
+                    LC.Login();
                 }
-                LC.Login();
             }
         });
 
@@ -84,6 +91,8 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 startActivity(intent);
             }
         });
+
+        preferences=PreferenceHelper.getInstance(getApplicationContext());
 
         setFont();
     }
@@ -114,14 +123,14 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
 
     @Override
     public void getLoginResponse(boolean error, LoginResponse loginResponse, Throwable t) {
+        if ((progressDialog != null) && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
         if(!error)
         {
             LoginResponse response=loginResponse;
-            if ((progressDialog != null) && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
             Toast.makeText(LoginActivity.this, loginResponse.message, Toast.LENGTH_SHORT).show();
-            Boolean interest=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE).getBoolean("interest",false);
+            Boolean interest=preferences.getBoolean("interest",false);
             if(!interest)
             {
                 Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
@@ -132,21 +141,43 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             }
             else if(interest)
             {
-                SharedPreferences sp=LoginActivity.this.getSharedPreferences("MyShared", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor=sp.edit();
-                editor.putBoolean("session",true);
-                editor.apply();
+                preferences.putBoolean("session",true);
                 startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
-                finish();
             }
+            finish();
         }
 
         if(error)
         {
-            if ((progressDialog != null) && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
             Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void ClearError()
+    {
+        txtEmail.setError(null);
+        txtPassword.setError(null);
+    }
+
+    public boolean CekInput() {
+        boolean cek = true;
+
+        if (txtEmail.getText().toString().isEmpty()) {
+            txtEmail.setError("Email is invalid");
+            cek = false;
+        } else
+        {
+            txtEmail.setError(null);
+        }
+
+        if (txtPassword.getText().toString().isEmpty()) {
+            txtPassword.setError("Incorrect password");
+            cek = false;
+        } else
+        {
+            txtPassword.setError(null);
+        }
+
+        return cek;
     }
 }

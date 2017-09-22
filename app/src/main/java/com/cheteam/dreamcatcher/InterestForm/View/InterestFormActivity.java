@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.InterestForm.Adapter.RecycleViewAdapterListInterest;
@@ -30,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by Nicolas Juniar on 08/09/2017.
  */
 
-public class InterestFormActivity extends AppCompatActivity {
+public class InterestFormActivity extends AppCompatActivity implements RecycleViewAdapterListInterest.onChangeInterest{
 
     @BindView(R.id.next) RelativeLayout next;
     @BindView(R.id.return1) RelativeLayout return1;
@@ -46,6 +48,7 @@ public class InterestFormActivity extends AppCompatActivity {
     ArrayList<String> listInterest;
     Boolean check;
     private PreferenceHelper preferences;
+    private Boolean exit = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,21 +62,30 @@ public class InterestFormActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         check=bundle.getBoolean("login",false);
+        listInterest=new ArrayList<>();
+        if(check)
+        {
+            return1.setVisibility(View.GONE);
+        }
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent=new Intent(InterestFormActivity.this,TimelineActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("listinterest",listInterest);
+                intent.putExtras(bundle);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 if(check)
                 {
                     preferences.putBoolean("session",true);
                     preferences.putBoolean("interest",true);
-                    startActivity(new Intent(InterestFormActivity.this,TimelineActivity.class));
+                    startActivity(intent);
                 }
                 else if(!check)
                 {
-                    startActivity(new Intent(InterestFormActivity.this,TimelineActivity.class));
+                    startActivity(intent);
                 }
-                LoginActivity.LA.finish();
                 finish();
             }
         });
@@ -85,6 +97,46 @@ public class InterestFormActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(check)
+        {
+            if (exit) {
+                finish(); // finish activity
+            } else {
+                Toast.makeText(this, "Press Back again to Exit.",
+                        Toast.LENGTH_SHORT).show();
+                exit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        exit = false;
+                    }
+                }, 3 * 1000);
+
+            }
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+
+    }
+
+    public void showNextButton(boolean show)
+    {
+        if(show)
+        {
+            ok.setVisibility(View.VISIBLE);
+            next.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            ok.setVisibility(View.GONE);
+            next.setVisibility(View.GONE);
+        }
     }
 
     public void setFont()
@@ -101,7 +153,7 @@ public class InterestFormActivity extends AppCompatActivity {
 
     public void setListInterest()
     {
-        listInterest=new ArrayList<>();
+
         list=new ArrayList<>();
         list.add(new ModelInterest("Finances"));
         list.add(new ModelInterest("Skills"));
@@ -109,8 +161,22 @@ public class InterestFormActivity extends AppCompatActivity {
         list.add(new ModelInterest("Opportunities"));
         list.add(new ModelInterest("Courses"));
 
-        adapter=new RecycleViewAdapterListInterest(list,InterestFormActivity.this,listInterest,next,ok);
+        adapter=new RecycleViewAdapterListInterest(list,InterestFormActivity.this,this);
         ListInterest.setAdapter(adapter);
         ListInterest.setLayoutManager(new LinearLayoutManager(InterestFormActivity.this));
+    }
+
+    @Override
+    public void addInterest(String interest) {
+        listInterest.add(interest);
+        if(listInterest.size()>=3)
+            showNextButton(true);
+    }
+
+    @Override
+    public void removeInterest(String interest) {
+        listInterest.remove(interest);
+        if(listInterest.size()<3)
+            showNextButton(false);
     }
 }

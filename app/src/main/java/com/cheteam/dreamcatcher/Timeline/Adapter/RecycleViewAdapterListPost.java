@@ -3,6 +3,7 @@ package com.cheteam.dreamcatcher.Timeline.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,12 @@ import com.cheteam.dreamcatcher.ArticlePreview.View.ViewPost;
 import com.cheteam.dreamcatcher.SplashScreenActivity;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.R;
-import com.squareup.picasso.Picasso;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,45 +71,77 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         holder.txtTitle.setText(model.post_title);
         holder.txtFullName.setText(model.name);
         holder.txtCategories.setText(model.categories);
-        if(model.id_background==1)
-        {
-            holder.BgImage.setBackgroundResource(R.drawable.red_bg);
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            Date past = format.parse(model.published_at);
+            Date now = new Date();
+
+            String ms=TimeUnit.MILLISECONDS.toMillis(now.getTime() - past.getTime()) + " milliseconds ago";
+            ms=TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " minutes ago";
+            ms=TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " hours ago";
+            ms=TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " days ago";
+            holder.txtTime.setText(ms);
         }
-        if(model.id_background==2)
-        {
-            holder.BgImage.setBackgroundResource(R.drawable.green_bg);
+        catch (Exception j){
+            j.printStackTrace();
         }
-        if(model.id_background==3)
+        holder.BgImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        switch(model.id_background)
         {
-            holder.BgImage.setBackgroundResource(R.drawable.blue_bg);
+            case 1:
+            {
+                holder.BgImage.setImageResource(R.drawable.red_bg);
+                break;
+            }
+            case 2:
+            {
+                holder.BgImage.setImageResource(R.drawable.green_bg);
+                break;
+            }
+            case 3:
+            {
+                holder.BgImage.setImageResource(R.drawable.blue_bg);
+                break;
+            }
+            case 4:
+            {
+                holder.BgImage.setImageResource(R.drawable.violet_bg);
+                break;
+            }
+            case 5:
+            {
+                holder.BgImage.setImageResource(R.drawable.violet_bg);
+                break;
+            }
         }
-        if(model.id_background==4)
+
+        switch (model.id_avatar)
         {
-            holder.BgImage.setBackgroundResource(R.drawable.yellow_bg);
-        }
-        if(model.id_background==5)
-        {
-            holder.BgImage.setBackgroundResource(R.drawable.violet_bg);
-        }
-        if(model.id_avatar==1)
-        {
-            holder.AvatarUser.setImageResource(R.drawable.avatar_1);
-        }
-        if(model.id_avatar==2)
-        {
-            holder.AvatarUser.setImageResource(R.drawable.avatar_2);
-        }
-        if(model.id_avatar==3)
-        {
-            holder.AvatarUser.setImageResource(R.drawable.avatar_3);
-        }
-        if(model.id_avatar==4)
-        {
-            holder.AvatarUser.setImageResource(R.drawable.avatar_4);
-        }
-        if(model.id_avatar==5)
-        {
-            holder.AvatarUser.setImageResource(R.drawable.avatar_5);
+            case 1:
+            {
+                holder.AvatarUser.setImageResource(R.drawable.avatar_1);
+                break;
+            }
+            case 2:
+            {
+                holder.AvatarUser.setImageResource(R.drawable.avatar_2);
+                break;
+            }
+            case 3:
+            {
+                holder.AvatarUser.setImageResource(R.drawable.avatar_3);
+                break;
+            }
+            case 4:
+            {
+                holder.AvatarUser.setImageResource(R.drawable.avatar_4);
+                break;
+            }
+            case 5:
+            {
+                holder.AvatarUser.setImageResource(R.drawable.avatar_5);
+                break;
+            }
         }
     }
 
@@ -137,7 +172,7 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
                 @Override
                 public void onClick(View view) {
                     Intent myactivity = new Intent(context, ViewPost.class);
-                    //myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                    myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
                     context.getApplicationContext().startActivity(myactivity);
                 }
             });

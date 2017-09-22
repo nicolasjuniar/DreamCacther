@@ -1,5 +1,6 @@
 package com.cheteam.dreamcatcher.Register.View;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.InterestForm.View.InterestFormActivity;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Register.Controller.RegisterController;
@@ -27,7 +29,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     @BindView(R.id.title1) TextView title1;
     @BindView(R.id.title2) TextView title2;
-    @BindView(R.id.title3) TextView title3;
     @BindView(R.id.return1) TextView return1;
     @BindView(R.id.btnReturn) ImageView btnReturn;
     @BindView(R.id.txtEmail) EditText txtEmail;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     @BindView(R.id.btnRegister) Button btnRegister;
 
     RegisterController RC;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +47,22 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         ButterKnife.bind(this);
         RC=new RegisterController(this);
 
+        btnRegister.bringToFront();
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!txtPassword.getText().toString().equals(txtRepassword.getText().toString()))
+                ClearError();
+                if(CekInput())
                 {
-                    Toast.makeText(RegisterActivity.this, "Password and confirm password not same", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                    if(progressDialog==null)
+                    {
+                        progressDialog=new ProgressDialog(RegisterActivity.this);
+                        progressDialog.setMessage("Trying Login....");
+                        progressDialog.setIndeterminate(false);
+                        progressDialog.setCancelable(false);
+                    }
+                    progressDialog.show();
                     RC.Register();
                 }
             }
@@ -89,18 +98,78 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         txtRepassword.setTypeface(Roboto_Regular);
         title1.setTypeface(Lobster_Regular);
         title2.setTypeface(justAnotherHand);
-        title3.setTypeface(RockoFLF);
         btnRegister.setTypeface(Lobster_Regular);
         return1.setTypeface(RockoFLF);
         txtName.setTypeface(Roboto_Regular);
     }
 
+    public void ClearError()
+    {
+        txtEmail.setError(null);
+        txtPassword.setError(null);
+        txtName.setError(null);
+        txtRepassword.setError(null);
+    }
+
+    public boolean CekInput() {
+        boolean cek = true;
+        String regex = "^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$";
+
+        if (txtName.getText().toString().isEmpty()) {
+            txtName.setError("Name can't be empty");
+            cek = false;
+        } else
+        {
+            txtName.setError(null);
+        }
+
+
+        if (txtEmail.getText().toString().isEmpty()) {
+            txtEmail.setError("Email can't be empty");
+            cek = false;
+        } else if(!txtEmail.getText().toString().matches(regex))
+        {
+          txtEmail.setError("Email is invalid");
+        } else
+        {
+            txtEmail.setError(null);
+        }
+
+        if (txtPassword.getText().toString().isEmpty()) {
+            txtPassword.setError("Incorrect password");
+            cek = false;
+        } else if(txtPassword.getText().toString().length()<6 || txtPassword.getText().toString().length()>18) {
+            txtPassword.setError("Password must be 6-18 character");
+            cek=false;
+        }else {
+            txtPassword.setError(null);
+        }
+
+        if(!txtRepassword.getText().toString().equalsIgnoreCase(txtPassword.getText().toString())){
+            txtRepassword.setError("Password doesn't match");
+            cek=false;
+        }else {
+            txtRepassword.setError(null);
+        }
+
+        return cek;
+    }
+
     @Override
     public void getRegisterResponse(boolean error, RegisterResponse response, Throwable t) {
+        if ((progressDialog != null) && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+
         if(!error)
         {
             Toast.makeText(RegisterActivity.this, response.message, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+            Intent intent=new Intent(RegisterActivity.this,InterestFormActivity.class);
+            Bundle bundle=new Bundle();
+            bundle.putBoolean("login",true);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
         }
         if(error)
         {

@@ -24,7 +24,7 @@ public class ProfileController {
     public void GetProfile()
     {
         service= ServiceGenerator.createService(ProfileAPI.class);
-        CallProfileResponse=service.GetProfile();
+        CallProfileResponse=service.getProfile();
         CallProfileResponse.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {

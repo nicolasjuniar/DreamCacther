@@ -1,8 +1,6 @@
 package com.cheteam.dreamcatcher.Timeline.Fragment;
 
 import android.support.v4.app.DialogFragment;
-import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,16 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterSelectListCategory;
+import com.cheteam.dreamcatcher.Timeline.Interface.IChangeCategory;
+import com.cheteam.dreamcatcher.Timeline.Interface.ISetCategory;
+import com.cheteam.dreamcatcher.Timeline.Model.ModelCategory;
 
 import java.util.ArrayList;
 
@@ -31,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by Nicolas Juniar on 01/11/2016.
  */
 
-public class DialogFragmentSelectCategory extends DialogFragment {
+public class DialogFragmentSelectCategory extends DialogFragment implements IChangeCategory {
 
     @BindView(R.id.ListCategories) RecyclerView ListCategories;
     @BindView(R.id.txtApply) TextView txtApply;
@@ -39,8 +35,10 @@ public class DialogFragmentSelectCategory extends DialogFragment {
     @BindView(R.id.filter) TextView filter;
 
     RecycleViewAdapterSelectListCategory adapter;
-    ArrayList<String> ListCategory;
-
+    ArrayList<ModelCategory>  ListCategory;
+    ArrayList<String> cekListCategory;
+    ArrayList<String> ListInterest;
+    ISetCategory listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +47,12 @@ public class DialogFragmentSelectCategory extends DialogFragment {
                 container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         ButterKnife.bind(this,view);
-        setListCategories();
         setFont();
+        Bundle arguments = getArguments();
+        ListInterest=arguments.getStringArrayList("listinterest");
+        cekListCategory=new ArrayList<>();
+        cekListCategory.addAll(ListInterest);
+        setListCategories();
 
         txtCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,11 +63,17 @@ public class DialogFragmentSelectCategory extends DialogFragment {
         txtApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listener.setCategory(cekListCategory);
                 dismiss();
             }
         });
 
         return view;
+    }
+
+    public void setListener(ISetCategory listener)
+    {
+        this.listener=listener;
     }
 
     public void setFont()
@@ -79,13 +87,30 @@ public class DialogFragmentSelectCategory extends DialogFragment {
     public void setListCategories()
     {
         ListCategory=new ArrayList<>();
-        ListCategory.add("Finances");
-        ListCategory.add("Skills");
-        ListCategory.add("Facilities");
-        ListCategory.add("Opportunities");
-        ListCategory.add("Courses");
-        adapter=new RecycleViewAdapterSelectListCategory(ListCategory,getActivity());
+        ListCategory.add(new ModelCategory("Finances",false));
+        ListCategory.add(new ModelCategory("Skills",false));
+        ListCategory.add(new ModelCategory("Facilities",false));
+        ListCategory.add(new ModelCategory("Opportunities",false));
+        ListCategory.add(new ModelCategory("Courses",false));
+        for (String category: cekListCategory) {
+            if(ListCategory.contains(new ModelCategory(category,false)))
+            {
+                int index=ListCategory.indexOf(new ModelCategory(category,false));
+                ListCategory.get(index).setCek(true);
+            }
+        }
+        adapter=new RecycleViewAdapterSelectListCategory(ListCategory,getActivity(),this);
         ListCategories.setAdapter(adapter);
         ListCategories.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    @Override
+    public void addCategory(String category) {
+        cekListCategory.add(category);
+    }
+
+    @Override
+    public void removeCategory(String category) {
+        cekListCategory.remove(category);
     }
 }

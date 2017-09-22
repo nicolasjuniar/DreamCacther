@@ -10,41 +10,38 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cheteam.dreamcatcher.R;
-import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListCategories;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListPost;
-import com.cheteam.dreamcatcher.Timeline.API.TimelineAPI;
 import com.cheteam.dreamcatcher.Timeline.Controller.TimelineController;
-import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
+import com.cheteam.dreamcatcher.Timeline.Interface.IChangeCategory;
+import com.cheteam.dreamcatcher.Timeline.Interface.ISetCategory;
 import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Nicolas Juniar on 08/09/2017.
  */
 
-public class FragmentTimeline extends Fragment implements TimelineController.onTimelineResponse{
+public class FragmentTimeline extends Fragment implements TimelineController.onTimelineResponse,ISetCategory {
 
     @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.ListPost) RecyclerView recyclerView;
     @BindView(R.id.ListCategories) RecyclerView recyclerView2;
     @BindView(R.id.progressBar) ProgressBar progressBar;
-    @BindView(R.id.txtEdit) TextView txtEdit;
+    @BindView(R.id.txtEdit) ImageView txtEdit;
 
     RecycleViewAdapterListPost adapter;
 
-    ArrayList<String> ListCategories;
+    ArrayList<String> ListInterest;
     RecycleViewAdapterListCategories adapter2;
 
     TimelineController TC;
@@ -58,6 +55,9 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         TC=new TimelineController(this);
         TC.getTimeline();
 
+        Bundle arguments = getArguments();
+        ListInterest=arguments.getStringArrayList("listinterest");
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -65,13 +65,17 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
             }
         });
 
-        SetListCategories();
-        setFont();
+        SetListInterest();
 
         txtEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DialogFragmentSelectCategory().show(getFragmentManager(),"Select Category");
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("listinterest",ListInterest);
+                DialogFragmentSelectCategory selectCategory = new DialogFragmentSelectCategory();
+                selectCategory.setArguments(bundle);
+                selectCategory.setListener(FragmentTimeline.this);
+                selectCategory.show(getFragmentManager(),"Select Category");
             }
         });
 
@@ -86,23 +90,11 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         return view;
     }
 
-    public void SetListCategories()
+    public void SetListInterest()
     {
-        ListCategories=new ArrayList<>();
-        ListCategories.add("Finances");
-        ListCategories.add("Facilities");
-        ListCategories.add("Opportunities");
-        ListCategories.add("Skills");
-        ListCategories.add("Courses");
-        adapter2=new RecycleViewAdapterListCategories(ListCategories,getContext());
+        adapter2=new RecycleViewAdapterListCategories(ListInterest,getContext());
         recyclerView2.setAdapter(adapter2);
         recyclerView2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-    }
-
-    public void setFont()
-    {
-        Typeface Roboto_Regular=Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
-        txtEdit.setTypeface(Roboto_Regular);
     }
 
 
@@ -116,5 +108,13 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
             progressBar.setVisibility(View.GONE);
             swipeRefreshLayout.setRefreshing(false);
         }
+    }
+
+    @Override
+    public void setCategory(ArrayList<String> ListInterest) {
+        this.ListInterest=ListInterest;
+        adapter2.setListCategories(this.ListInterest);
+        adapter2.notifyDataSetChanged();
+
     }
 }

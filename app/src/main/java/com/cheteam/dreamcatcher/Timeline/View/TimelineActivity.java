@@ -1,9 +1,7 @@
 package com.cheteam.dreamcatcher.Timeline.View;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +26,8 @@ import com.cheteam.dreamcatcher.Timeline.Fragment.FragmentTimeline;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.ViewPagerAdapter;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  * Created by Nicolas Juniar on 31/08/2017.
  */
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity{
 
     MenuItem btnLogin,btnLogout,btnEditProfile;
 
@@ -48,7 +48,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     boolean check=false;
     private PreferenceHelper preferences;
-
+    ArrayList<String> listinterest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +56,16 @@ public class TimelineActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         preferences=PreferenceHelper.getInstance(getApplicationContext());
+
+        Intent intent = getIntent();
+        listinterest=intent.getStringArrayListExtra("listinterest");
+        if(listinterest==null||listinterest.isEmpty())
+        {
+            listinterest=new ArrayList<>();
+            listinterest.add("Finances");
+            listinterest.add("Skills");
+            listinterest.add("Facilities");
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,11 +76,65 @@ public class TimelineActivity extends AppCompatActivity {
 
         check=preferences.getBoolean("session",false);
 
-
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab){
+                int position = tab.getPosition();
+                if(!check)
+                {
+                    setTab("not_login");
+                }
+                if(check)
+                {
+                    if(position==0 || position==1)
+                    {
+                        setTab("login");
+                    }
+                    else
+                    {
+                        setTab("login_tab_profil");
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         setFont();
+    }
+
+    public void setTab(String status)
+    {
+        if(status.equalsIgnoreCase("not_login"))
+        {
+            btnLogin.setVisible(true);
+            btnLogout.setVisible(false);
+            btnEditProfile.setVisible(false);
+        }
+        if(status.equalsIgnoreCase("login"))
+        {
+            btnLogin.setVisible(false);
+            btnLogout.setVisible(false);
+            btnEditProfile.setVisible(false);
+        }
+        if(status.equalsIgnoreCase("login_tab_profil"))
+        {
+            btnLogin.setVisible(false);
+            btnLogout.setVisible(true);
+            btnEditProfile.setVisible(true);
+        }
+
+
     }
 
     public void setFont()
@@ -93,7 +157,11 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentTimeline(), "Home");
+        FragmentTimeline fragmentTimeline = new FragmentTimeline();
+        Bundle bundle = new Bundle();
+        fragmentTimeline.setArguments(bundle);
+        bundle.putStringArrayList("listinterest",listinterest);
+        adapter.addFragment(fragmentTimeline, "Home");
         adapter.addFragment(new FragmentFeedsCategory(), "Categories");
         adapter.addFragment(new FragmentProfile(), "Profile");
         viewPager.setAdapter(adapter);
@@ -107,17 +175,13 @@ public class TimelineActivity extends AppCompatActivity {
         btnEditProfile=menu.findItem(R.id.action_editprofile);
         btnLogout=menu.findItem(R.id.action_logout);
 
-        if(check)
-        {
-            btnLogin.setVisible(false);
-            btnLogout.setVisible(true);
-            btnEditProfile.setVisible(true);
-        }
         if(!check)
         {
-            btnLogin.setVisible(true);
-            btnLogout.setVisible(false);
-            btnEditProfile.setVisible(false);
+            setTab("not_login");
+        }
+        if(check)
+        {
+            setTab("login");
         }
         return true;
     }

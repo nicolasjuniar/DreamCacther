@@ -36,6 +36,9 @@ public class RecycleViewAdapterListCategories extends RecyclerView.Adapter<Recyc
         this.list = list;
     }
 
+    public void setListCategories(List<String> list) {
+        this.list=list;
+    }
 
     @Override
     public RecycleViewAdapterListCategories.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,9 +50,6 @@ public class RecycleViewAdapterListCategories extends RecyclerView.Adapter<Recyc
 
     @Override
     public void onBindViewHolder(RecycleViewAdapterListCategories.ViewHolder holder, int position) {
-        Typeface Merriweather_Bold=Typeface.createFromAsset(context.getAssets(), "fonts/Merriweather-Bold.ttf");
-        Typeface Lobster_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Lobster-Regular.ttf");
-        Typeface RockoFLF=Typeface.createFromAsset(context.getAssets(), "fonts/RockoFLF.ttf");
         Typeface Roboto_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.txtCategories.setTypeface(Roboto_Regular);
 

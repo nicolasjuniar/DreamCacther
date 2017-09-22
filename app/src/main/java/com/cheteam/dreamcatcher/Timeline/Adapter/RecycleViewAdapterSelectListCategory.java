@@ -7,18 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cheteam.dreamcatcher.R;
-import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
+import com.cheteam.dreamcatcher.Timeline.Interface.IChangeCategory;
+import com.cheteam.dreamcatcher.Timeline.Model.ModelCategory;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Nicolas Juniar on 14/11/2016.
@@ -26,15 +23,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecycleViewAdapterSelectListCategory extends RecyclerView.Adapter<RecycleViewAdapterSelectListCategory.ViewHolder> {
 
-    List<String> list = Collections.emptyList();
+    ArrayList<ModelCategory> ListCategory;
     Context context;
-
-
     public View view;
+    private IChangeCategory listener;
 
-    public RecycleViewAdapterSelectListCategory(List<String> list, Context context) {
+    public RecycleViewAdapterSelectListCategory(ArrayList<ModelCategory> ListCategory, Context context, IChangeCategory listener) {
         this.context = context;
-        this.list = list;
+        this.ListCategory=ListCategory;
+        this.listener = listener;
     }
 
 
@@ -48,25 +45,35 @@ public class RecycleViewAdapterSelectListCategory extends RecyclerView.Adapter<R
 
     @Override
     public void onBindViewHolder(RecycleViewAdapterSelectListCategory.ViewHolder holder, int position) {
-        Typeface Merriweather_Bold=Typeface.createFromAsset(context.getAssets(), "fonts/Merriweather-Bold.ttf");
-        Typeface Lobster_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Lobster-Regular.ttf");
-        Typeface RockoFLF=Typeface.createFromAsset(context.getAssets(), "fonts/RockoFLF.ttf");
         Typeface Roboto_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.btnCategory.setTypeface(Roboto_Regular);
 
-        holder.btnCategory.setText(list.get(position));
-
+        ModelCategory model=ListCategory.get(position);
+        holder.btnCategory.setText(model.getCategory());
+        holder.cek=model.isCek();
+        if(model.isCek())
+        {
+            holder.btnCategory.setBackground(context.getResources().getDrawable(R.drawable.button_blue));
+            holder.btnCategory.setTextColor(context.getResources().getColor(R.color.White));
+        }
+        else
+        {
+            holder.btnCategory.setBackground(context.getResources().getDrawable(R.drawable.button_white));
+            holder.btnCategory.setTextColor(context.getResources().getColor(R.color.Black));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return ListCategory.size();
     }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -86,12 +93,14 @@ public class RecycleViewAdapterSelectListCategory extends RecyclerView.Adapter<R
                         cek=true;
                         btnCategory.setBackground(context.getResources().getDrawable(R.drawable.button_blue));
                         btnCategory.setTextColor(context.getResources().getColor(R.color.White));
+                        listener.addCategory(btnCategory.getText().toString());
                     }
                     else if(cek)
                     {
                         cek=false;
                         btnCategory.setBackground(context.getResources().getDrawable(R.drawable.button_white));
                         btnCategory.setTextColor(context.getResources().getColor(R.color.Black));
+                        listener.removeCategory(btnCategory.getText().toString());
                     }
                 }
             });

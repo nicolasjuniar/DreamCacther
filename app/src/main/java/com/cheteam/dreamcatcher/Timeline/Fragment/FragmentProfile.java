@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,7 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.AvatarUser) CircleImageView AvatarUser;
+    @BindView(R.id.collapsing_profile) CollapsingToolbarLayout collapsed_profile;
 
     RecyclerViewAdapterMypost adapter;
     private PreferenceHelper preferences;
@@ -60,6 +63,7 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
                 container, false);
 
         ButterKnife.bind(this,view);
+        setUpCollapsingProfile();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         setFont();
@@ -200,5 +204,11 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
                 AvatarUser.setImageResource(R.drawable.avatar_5);
             }
         }
+    }
+
+    private void setUpCollapsingProfile(){
+        final CollapsingToolbarLayout collapsingProfile = collapsed_profile;
+        collapsingProfile.setTitleEnabled(false);
+
     }
 }

@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+ext.majorVersion=0
+ext.minorVersion=1
+ext.patchVersion=0
+ext.preRelease= "beta"
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -8,9 +13,8 @@ android {
         defaultConfig.applicationId = "com.cheteam.dreamcatcher"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-
+        versionCode generateVersionCode()
+        versionName generateVersionName()
     }
 
     signingConfigs {
@@ -44,6 +48,18 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+}
+
+private Integer generateVersionCode() {
+    return ext.majorVersion * 10000 + ext.minorVersion * 100 + ext.patchVersion
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.majorVersion}.${ext.minorVersion}.${ext.patchVersion}"
+    if (ext.preRelease != null && !ext.preRelease.isEmpty()) {
+        versionName = versionName + "-" + ext.preRelease;
+    }
+    return versionName;
 }
 
 dependencies {
