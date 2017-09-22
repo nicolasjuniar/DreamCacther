@@ -21,7 +21,7 @@
         android:id="@+id/title1"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="70dp"/>
+        android:layout_marginTop="50dp"/>
 
     <View
         android:layout_width="200dp"
@@ -44,82 +44,8 @@
         android:id="@+id/title2"
         android:textSize="25dp" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/FormLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/White"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title2"
-        android:layout_marginTop="100dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/txtEmail"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorAccent"
-                    android:hint="Email"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@color/charcoalGrey"
-                    android:textSize="20dp" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/txtPassword"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@color/charcoalGrey"
-                    android:textSize="20dp" />
-            </android.support.design.widget.TextInputLayout>
-
-        </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
-
-
-    <Button
-        app:layout_constraintTop_toBottomOf="@+id/FormLogin"
-        app:layout_constraintBottom_toBottomOf="@+id/FormLogin"
-        android:layout_below="@+id/FormLogin"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_width="120dp"
-        android:layout_height="30dp"
-        android:background="@drawable/capsule_button_1"
-        android:text="Sign In"
-        android:id="@+id/btnLogin"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:textAllCaps="false"
-        android:textColor="@color/White"
-        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:layout_marginTop="20dp"
@@ -178,5 +104,84 @@
 
             />
     </LinearLayout>
+
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/FormLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        app:cardBackgroundColor="@color/White"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtEmail"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/charcoalGrey"
+                    android:textSize="20dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtPassword"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/charcoalGrey"
+                    android:textSize="20dp" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <Button
+        app:layout_constraintTop_toBottomOf="@+id/FormLogin"
+        app:layout_constraintBottom_toBottomOf="@+id/FormLogin"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:background="@drawable/capsule_button_1"
+        android:text="Sign In"
+        android:id="@+id/btnLogin"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/White"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

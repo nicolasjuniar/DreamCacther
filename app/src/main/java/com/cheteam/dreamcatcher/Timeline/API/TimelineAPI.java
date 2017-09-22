@@ -5,6 +5,8 @@ import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Header;
+import retrofit2.http.Path;
 
 
 /**
@@ -12,8 +14,9 @@ import retrofit2.http.POST;
  */
 
 public interface TimelineAPI {
-    @GET("v1/posts")
+    @GET("v1/posts/")
     Call<TimelineResponse> GetTimeline();
 
-
+    @GET("v1/categories/{category}")
+    Call<TimelineResponse> GetTimelineByCategory(@Path("category") String id_category);
 }

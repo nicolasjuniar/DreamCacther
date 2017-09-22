@@ -3,6 +3,7 @@ package com.cheteam.dreamcatcher.Timeline.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,32 +15,28 @@ import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.NetworkUtils;
 import com.cheteam.dreamcatcher.R;
-import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterFeedsCategories;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListPost;
-import com.cheteam.dreamcatcher.Timeline.API.TimelineAPI;
 import com.cheteam.dreamcatcher.Timeline.Controller.TimelineController;
-import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**
  * Created by Nicolas Juniar on 09/09/2017.
  */
 
-public class FragmentFeedsCategory extends Fragment implements TimelineController.onTimelineResponse{
+public class FragmentFeedsCategory extends Fragment implements TimelineController.onTimelineCategoryResponse{
 
     ArrayList<String> ListCategories;
     RecycleViewAdapterFeedsCategories adapterCategories;
     RecycleViewAdapterListPost adapterPosts;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.ListCategories) RecyclerView recyclerView;
     @BindView(R.id.ListPost) RecyclerView recyclerView2;
     @BindView(R.id.bgCategory) ImageView bgCategory;
@@ -60,6 +57,22 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
         setFont();
         TC=new TimelineController(this);
         network=new NetworkUtils(getActivity());
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchTimeline(txtCategoryName.getText().toString());
+            }
+        });
+
+        recyclerView2.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int topRowVerticalPosition =
+                        (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
+                swipeRefreshLayout.setEnabled(topRowVerticalPosition >= 0);
+            }
+        });
+
         bgCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,31 +118,35 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
             bgCategory.setVisibility(View.VISIBLE);
             txtCategoryName.setVisibility(View.VISIBLE);
             expand.setVisibility(View.VISIBLE);
-            fetchTimeline();
-            if(category.equalsIgnoreCase("Finance"))
+            fetchTimeline(category);
+            txtCategoryName.setText(category);
+            switch (category)
             {
-                txtCategoryName.setText("Finance");
-                bgCategory.setBackgroundResource(R.drawable.bg_finances);
-            }
-            if(category.equalsIgnoreCase("Courses"))
-            {
-                txtCategoryName.setText("Courses");
-                bgCategory.setBackgroundResource(R.drawable.bg_finances);
-            }
-            if(category.equalsIgnoreCase("Skills"))
-            {
-                txtCategoryName.setText("Skills");
-                bgCategory.setBackgroundResource(R.drawable.bg_skills);
-            }
-            if(category.equalsIgnoreCase("Facilities"))
-            {
-                txtCategoryName.setText("Facilities");
-                bgCategory.setBackgroundResource(R.drawable.bg_facilities);
-            }
-            if(category.equalsIgnoreCase("Opportunities"))
-            {
-                txtCategoryName.setText("Opportunities");
-                bgCategory.setBackgroundResource(R.drawable.bg_finances);
+                case "Finances":
+                {
+                    bgCategory.setBackgroundResource(R.drawable.bg_finances);
+                    break;
+                }
+                case "Courses":
+                {
+                    bgCategory.setBackgroundResource(R.drawable.bg_finances);
+                    break;
+                }
+                case "Skills":
+                {
+                    bgCategory.setBackgroundResource(R.drawable.bg_skills);
+                    break;
+                }
+                case "Facilities" :
+                {
+                    bgCategory.setBackgroundResource(R.drawable.bg_facilities);
+                    break;
+                }
+                case "Oppotunities" :
+                {
+                    bgCategory.setBackgroundResource(R.drawable.bg_finances);
+                    break;
+                }
             }
         }
         if(status.equalsIgnoreCase("list"))
@@ -142,11 +159,11 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
         }
     }
 
-    public void fetchTimeline()
+    public void fetchTimeline(String category)
     {
         if(network.isConnected())
         {
-            TC.getTimeline();
+            TC.getTimelineByCategory(category);
         }
         else
         {
@@ -155,7 +172,7 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
     }
 
     @Override
-    public void getTimelineResponse(boolean error, TimelineResponse response, Throwable t) {
+    public void getTimelineByCategoryResponse(boolean error, TimelineResponse response, Throwable t) {
         if(!error)
         {
             adapterPosts=new RecycleViewAdapterListPost(response.posts,getContext());
