@@ -13,8 +13,8 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         />
     <EditText
-        android:layout_below="@+id/my_toolbar_add_post"
         android:id="@+id/add_post_title"
+        android:layout_below="@+id/my_toolbar_add_post"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_100_dp"
         android:theme="@style/MyToolbarStyle"
@@ -49,31 +49,38 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_40"
         android:layout_below="@id/add_post_choose_bg_info">
+
         <ImageButton
+            android:id="@+id/ib_bg_1_ap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/red_bg"
             android:clickable="true"/>
+
         <ImageButton
+            android:id="@+id/ib_bg_2_ap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
             android:background="@drawable/green_bg"/>
         <ImageButton
+            android:id="@+id/ib_bg_3_ap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
             android:background="@drawable/blue_bg"/>
         <ImageButton
+            android:id="@+id/ib_bg_4_ap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
             android:background="@drawable/yellow_bg"/>
         <ImageButton
+            android:id="@+id/ib_bg_5_ap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
