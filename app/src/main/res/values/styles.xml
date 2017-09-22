@@ -28,6 +28,17 @@
         <item name="android:textColorHint">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.CustomCategory">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/radio_button</item>
+
+        <item name="colorControlActivated">@color/radio_button</item>
+        <item name="colorControlHighlight">@color/radio_button</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+    </style>
     <style name="OverFlow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
         <item name="android:src">@drawable/icon_setting</item>
         <item name="android:tint">@color/White</item>

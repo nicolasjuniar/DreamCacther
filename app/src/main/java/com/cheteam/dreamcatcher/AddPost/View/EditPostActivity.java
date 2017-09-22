@@ -30,7 +30,6 @@ import butterknife.OnClick;
  */
 
 public class EditPostActivity extends AppCompatActivity{
-    @BindView(R.id.et_title_ep) TextView et_title_ep;
     @BindView(R.id.toolbar_ep) Toolbar myToolbar;
     @BindView(R.id.ll_select_category_ep) LinearLayout ll_select_category_ep;
 
@@ -62,6 +61,26 @@ public class EditPostActivity extends AppCompatActivity{
                         .show();
             }
         });
+        bg_3_ep.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                et_title_ep.setBackgroundResource(R.drawable.blue_bg);
+            }
+        });
+        bg_4_ep.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                et_title_ep.setBackgroundResource(R.drawable.yellow_bg);
+            }
+        });
+        bg_5_ep.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                et_title_ep.setBackgroundResource(R.drawable.violet_bg);
+            }
+        });
+
+
     }
 
     @Override

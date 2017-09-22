@@ -24,6 +24,7 @@ import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Rahmat Al Hakam on 08/09/2017.
@@ -35,7 +36,6 @@ public class AddPostActivity extends AppCompatActivity  {
     @BindView(R.id.my_toolbar_add_post) Toolbar myToolbar;
     @BindView(R.id.iv_icon_next) ImageView iv_icon_next;
     @BindView(R.id.add_post_add_category) LinearLayout add_post_add_category;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +64,7 @@ public class AddPostActivity extends AppCompatActivity  {
                         .show();
             }
         });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
