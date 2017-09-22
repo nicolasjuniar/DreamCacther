@@ -8,193 +8,175 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     >
-    <requestFocus
-        android:layout_height="0dp"
-        android:layout_width="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp" />
+    <requestFocus />
+
+    <TextView
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dreamcatcher"
+        android:textColor="@color/duckEggBlue"
+        android:textSize="30dp"
+        android:id="@+id/title1"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="70dp"/>
+
+    <View
+        android:layout_width="200dp"
+        android:layout_height="5dp"
+        android:id="@+id/line1"
+        android:background="@color/Coral"
+        app:layout_constraintTop_toBottomOf="@id/title1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/line1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What is a &quot;dreamer&quot; really need"
+        android:textStyle="bold"
+        android:textColor="@color/White"
+        android:id="@+id/title2"
+        android:textSize="25dp" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/FormLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/White"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title2"
+        android:layout_marginTop="100dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/txtEmail"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorAccent"
+                    android:hint="Email"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/charcoalGrey"
+                    android:textSize="20dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtPassword"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/charcoalGrey"
+                    android:textSize="20dp" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <Button
+        app:layout_constraintTop_toBottomOf="@+id/FormLogin"
+        app:layout_constraintBottom_toBottomOf="@+id/FormLogin"
+        android:layout_below="@+id/FormLogin"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:background="@drawable/capsule_button_1"
+        android:text="Sign In"
+        android:id="@+id/btnLogin"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/White"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Have no account yet?"
+        android:textColor="@color/White"
+        android:textSize="20dp"
+        android:id="@+id/no_account"
+        android:textStyle="bold"/>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@+id/no_account"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="200dp"
+        android:layout_height="5dp"
+        android:background="@color/Coral"
+        android:id="@+id/line2"/>
+
+
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="551dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
-        <LinearLayout
-            android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/line2"
+        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/join_later"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dreamcatcher"
-                android:textColor="@color/duckEggBlue"
-                android:textSize="30dp"
-                android:id="@+id/title1"
-                android:textStyle="bold"
-                />
+            android:layout_weight="1"
+            android:text="Skip"
+            android:textColor="@color/lightBlueGrey"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
 
-            <View
-                android:layout_gravity="center_horizontal"
-                android:layout_width="200dp"
-                android:layout_height="5dp"
-                android:background="@color/Coral" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="What is a &quot;dreamer&quot; really need"
-                android:textStyle="bold"
-                android:textColor="@color/White"
-                android:id="@+id/title2"
-                android:textSize="25dp"/>
-        </LinearLayout>
-
-
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/White"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:elevation="0dp"
-                    android:id="@+id/FormLogin"
-                    app:cardCornerRadius="10dp">
-                    <LinearLayout
-                        android:layout_marginTop="30dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <EditText
-                                android:backgroundTint="@color/colorAccent"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="-10dp"
-                                android:layout_marginRight="20dp"
-                                android:hint="Email"
-                                android:id="@+id/txtEmail"
-                                android:textSize="20dp"
-                                android:inputType="textEmailAddress"
-                                android:textColor="@color/charcoalGrey"
-                                android:maxLines="1"
-                                android:singleLine="true"
-                                />
-                        </android.support.design.widget.TextInputLayout>
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <EditText
-                                android:backgroundTint="@color/colorAccent"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="textPassword"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginRight="20dp"
-                                android:id="@+id/txtPassword"
-                                android:textSize="20dp"
-                                android:hint="Password"
-                                android:textColor="@color/charcoalGrey"
-                                android:layout_marginBottom="30dp"
-                                android:maxLines="1"
-                                android:singleLine="true"
-                                />
-                        </android.support.design.widget.TextInputLayout>
-
-                    </LinearLayout>
-
-
-                </android.support.v7.widget.CardView>
-
-
-                <Button
-                    android:layout_below="@+id/FormLogin"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="-15dp"
-                    android:layout_width="120dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/capsule_button_1"
-                    android:text="Sign In"
-                    android:id="@+id/btnLogin"
-                    android:textStyle="bold"
-                    android:textSize="20dp"
-                    android:elevation="1dp"
-                    android:textAllCaps="false"
-                    android:textColor="@color/White"/>
-            </RelativeLayout>
-        </FrameLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Have no account yet?"
-                android:textColor="@color/White"
-                android:textSize="20dp"
-                android:id="@+id/no_account"
-                android:textStyle="bold"
-                />
+            android:text="Join Now"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/lightBlueGrey"
+            android:id="@+id/join_now"
+            android:textSize="30sp"
 
-            <View
-                android:layout_gravity="center_horizontal"
-                android:layout_width="200dp"
-                android:layout_height="5dp"
-                android:background="@color/Coral" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:id="@+id/join_later"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:text="Skip"
-                    android:textAlignment="center"
-                    android:textColor="@color/lightBlueGrey"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Join Now"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textColor="@color/lightBlueGrey"
-                    android:id="@+id/join_now"
-                    android:textSize="30sp"/>
-            </LinearLayout>
-        </LinearLayout>
+            />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

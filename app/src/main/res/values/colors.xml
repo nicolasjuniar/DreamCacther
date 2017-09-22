@@ -16,6 +16,10 @@
     <color name="white_custom">#f0f0f0</color>
     <color name="red_custom">#d50000</color>
     <color name="teal">#009688</color>
+
+    <color name="dialog_true">#009688</color>
+    <color name="dialog_false">#9b9b9b</color>
+
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>

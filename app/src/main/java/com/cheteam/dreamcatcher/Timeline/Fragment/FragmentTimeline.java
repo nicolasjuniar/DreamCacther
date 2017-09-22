@@ -13,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.Login.View.LoginActivity;
+import com.cheteam.dreamcatcher.NetworkUtils;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListCategories;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListPost;
@@ -46,6 +49,8 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
 
     TimelineController TC;
 
+    NetworkUtils network;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_timeline_layout,
@@ -53,7 +58,10 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
 
         ButterKnife.bind(this,view);
         TC=new TimelineController(this);
-        TC.getTimeline();
+
+        network=new NetworkUtils(getActivity());
+
+        fetchTimeline();
 
         Bundle arguments = getArguments();
         ListInterest=arguments.getStringArrayList("listinterest");
@@ -61,7 +69,7 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                TC.getTimeline();
+                fetchTimeline();
             }
         });
 
@@ -90,6 +98,20 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         return view;
     }
 
+    public void fetchTimeline()
+    {
+        if(network.isConnected())
+        {
+            TC.getTimeline();
+        }
+        else
+        {
+            progressBar.setVisibility(View.GONE);
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getActivity(), "phone is not connected to internet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void SetListInterest()
     {
         adapter2=new RecycleViewAdapterListCategories(ListInterest,getContext());
@@ -105,9 +127,9 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
             adapter=new RecycleViewAdapterListPost(response.posts,getContext());
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            progressBar.setVisibility(View.GONE);
-            swipeRefreshLayout.setRefreshing(false);
         }
+        progressBar.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

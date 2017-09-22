@@ -1,7 +1,9 @@
 package com.cheteam.dreamcatcher.Login.API;
 
+import com.cheteam.dreamcatcher.Login.Model.LoginRequest;
 import com.cheteam.dreamcatcher.Login.Model.LoginResponse;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
@@ -9,6 +11,6 @@ import retrofit2.http.POST;
  */
 
 public interface LoginAPI {
-    @POST("v1/login")
-    Call<LoginResponse> Login();
+    @POST("v1/login/")
+    Call<LoginResponse> Login(@Body LoginRequest body);
 }

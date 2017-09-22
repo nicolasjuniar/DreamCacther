@@ -7,4 +7,5 @@ package com.cheteam.dreamcatcher.Timeline.Interface;
 public interface IChangeCategory {
     void addCategory(String category);
     void removeCategory(String category);
+    void setApplyOption(boolean set);
 }

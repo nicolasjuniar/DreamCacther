@@ -78,7 +78,6 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
             }
         });
         return view;

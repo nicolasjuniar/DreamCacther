@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 
 public class TimelineActivity extends AppCompatActivity{
 
-    MenuItem btnLogin,btnLogout,btnEditProfile;
+    MenuItem btnLogout,btnEditProfile;
 
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.tabs) TabLayout tabLayout;
@@ -117,19 +117,19 @@ public class TimelineActivity extends AppCompatActivity{
     {
         if(status.equalsIgnoreCase("not_login"))
         {
-            btnLogin.setVisible(true);
+            fab.setVisibility(View.GONE);
             btnLogout.setVisible(false);
             btnEditProfile.setVisible(false);
         }
         if(status.equalsIgnoreCase("login"))
         {
-            btnLogin.setVisible(false);
+            fab.setVisibility(View.VISIBLE);
             btnLogout.setVisible(false);
             btnEditProfile.setVisible(false);
         }
         if(status.equalsIgnoreCase("login_tab_profil"))
         {
-            btnLogin.setVisible(false);
+            fab.setVisibility(View.VISIBLE);
             btnLogout.setVisible(true);
             btnEditProfile.setVisible(true);
         }
@@ -171,7 +171,6 @@ public class TimelineActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        btnLogin= menu.findItem(R.id.action_login);
         btnEditProfile=menu.findItem(R.id.action_editprofile);
         btnLogout=menu.findItem(R.id.action_logout);
 
@@ -189,7 +188,7 @@ public class TimelineActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         if (exit) {
-            finish(); // finish activity
+            finish();
         } else {
             Toast.makeText(this, "Press Back again to Exit.",
                     Toast.LENGTH_SHORT).show();
@@ -209,12 +208,6 @@ public class TimelineActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id==R.id.action_login)
-        {
-            Intent intent=new Intent(TimelineActivity.this,LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
         if(id==R.id.action_logout)
         {
             new AlertDialog.Builder(this)

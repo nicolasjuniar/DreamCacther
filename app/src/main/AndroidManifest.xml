@@ -3,6 +3,7 @@
     package="com.cheteam.dreamcatcher">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashScreenActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,44 +24,57 @@
         </activity>
         <activity
             android:name=".Login.View.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Register.View.RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Timeline.View.TimelineActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".InterestForm.View.InterestFormActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity android:name=".Timeline.View.EditProfileActivity"
-            android:label="Edit Profile"/>
+            android:label="Edit Profile"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Timeline.View.PickCoverActivity"
-            android:label="Pick Cover Profile"
-            />
+            android:label="Select Cover Profile"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Timeline.View.PickAvatarActivity"
-            android:label="Pick Avatar Profile"
-            />
+            android:label="Select Avatar Profile"
+            android:screenOrientation="portrait"/>
         <activity android:name=".AddPost.View.AddPostActivity"
-                  android:theme="@style/AppTheme.CustomCategory"
-                  android:label="Add Post"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Add Post"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ArticlePreview.View.ArticlePreview"
             android:label="Article Preview"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ArticlePreview.View.ActivityPreview"
             android:label="Article Preview"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity android:name=".CommentSection.View.MainComment"
             android:label="Comment"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ArticlePreview.View.ViewPost"
             android:label="View Post"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ArticlePreview.View.EditPostPreview"
             android:label="Edit Post"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".AddPost.View.EditPostActivity"
-                  android:label="Edit Post"
-                  android:theme="@style/AppTheme.CustomCategory"/>
+            android:label="Edit Post"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
