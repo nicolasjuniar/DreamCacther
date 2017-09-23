@@ -114,7 +114,7 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
         if(status.equalsIgnoreCase("detail"))
         {
             recyclerView.setVisibility(View.GONE);
-            recyclerView2.setVisibility(View.VISIBLE);
+            recyclerView2.setVisibility(View.GONE);
             bgCategory.setVisibility(View.VISIBLE);
             txtCategoryName.setVisibility(View.VISIBLE);
             expand.setVisibility(View.VISIBLE);
@@ -178,6 +178,8 @@ public class FragmentFeedsCategory extends Fragment implements TimelineControlle
             adapterPosts=new RecycleViewAdapterListPost(response.posts,getContext());
             recyclerView2.setAdapter(adapterPosts);
             recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView2.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 }
