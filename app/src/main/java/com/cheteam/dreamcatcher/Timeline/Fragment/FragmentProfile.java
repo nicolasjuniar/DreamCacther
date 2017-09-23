@@ -56,6 +56,7 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
     RecyclerViewAdapterMypost adapter;
     private PreferenceHelper preferences;
     ProfileController PC;
+    String token;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,10 +70,10 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
         setFont();
         preferences=PreferenceHelper.getInstance(getActivity());
 
-        PC=new ProfileController(this);
-        //PC.GetProfile();
-
         setContent(preferences.getBoolean("session",false));
+        token=preferences.getString("token","");
+        PC=new ProfileController(this);
+        PC.GetProfile(token);
 
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +89,12 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
         if(login)
         {
             txtLogin.setVisibility(View.GONE);
-            LayoutProfile.setVisibility(View.VISIBLE);
+            collapsed_profile.setVisibility(View.VISIBLE);
         }
         else if(!login)
         {
             txtLogin.setVisibility(View.VISIBLE);
-            LayoutProfile.setVisibility(View.GONE);
+            collapsed_profile.setVisibility(View.GONE);
         }
     }
 

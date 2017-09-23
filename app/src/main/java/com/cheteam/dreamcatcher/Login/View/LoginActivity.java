@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -157,8 +158,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 if(response.body().success)
                 {
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Boolean interest=preferences.getBoolean("interest",false);
-                    if(!interest)
+                    if(loginResponse.categories==null)
                     {
                         Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
                         Bundle bundle=new Bundle();
@@ -168,8 +168,9 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
-                    else if(interest)
+                    else
                     {
+                        savePreferences(response.body());
                         preferences.putBoolean("session",true);
                         startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
                     }

@@ -31,4 +31,8 @@ public class ProfileResponse {
     public String message;
     @SerializedName("status_code")
     public int status_code;
+    @SerializedName("email")
+    public String email;
+    @SerializedName("token")
+    public String token;
 }

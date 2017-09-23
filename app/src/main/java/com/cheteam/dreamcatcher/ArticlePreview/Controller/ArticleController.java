@@ -39,6 +39,10 @@ public class ArticleController {
         this.listener2 = listener3;
     }
 
+    public ArticleController(onViewArticleResponse listener, onAddBookmarkResponse listener2) {
+        this.listener = listener;
+        this.listener2 = listener2;
+    }
 
     public ArticleController(onViewArticleResponse listener3) {
         this.listener = listener;
@@ -64,7 +68,7 @@ public class ArticleController {
     public void addBookmark(BookmarkRequest body, String token)
     {
         service2=ServiceGenerator.createService(ViewArticleApi.class);
-        CallBookmark=service2.Bookmark(body,token);
+        CallBookmark=service2.addBookmark(body,token);
         CallBookmark.enqueue(new Callback<BookmarkResponse>() {
             @Override
             public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
@@ -74,6 +78,23 @@ public class ArticleController {
             @Override
             public void onFailure(Call<BookmarkResponse> call, Throwable t) {
                 listener2.getAddBookmarkResponse(true,null,t);
+            }
+        });
+    }
+
+    public void removeBookmark(int id_post, String token)
+    {
+        service2=ServiceGenerator.createService(ViewArticleApi.class);
+        CallBookmark=service2.removeBookmark(id_post,token);
+        CallBookmark.enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                listener2.removeBookmarkResponse(false,response.body(),null);
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                listener2.removeBookmarkResponse(true,null,t);
             }
         });
     }
@@ -102,5 +123,6 @@ public class ArticleController {
 
     public interface onAddBookmarkResponse {
         void getAddBookmarkResponse(boolean error, BookmarkResponse response,Throwable t);
+        void removeBookmarkResponse(boolean error, BookmarkResponse response,Throwable t);
     }
 }

@@ -8,7 +8,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class BookmarkRequest {
     @SerializedName("id_user")
-    public int id_user;
+    private int id_user;
     @SerializedName("id_post")
-    public int id_post;
+    private int id_post;
+
+    public BookmarkRequest(int id_user, int id_post) {
+        this.id_user = id_user;
+        this.id_post = id_post;
+    }
 }
