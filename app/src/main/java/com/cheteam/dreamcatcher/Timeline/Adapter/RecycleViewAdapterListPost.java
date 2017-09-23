@@ -3,6 +3,7 @@ package com.cheteam.dreamcatcher.Timeline.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -85,6 +86,7 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         holder.txtCategories.setText(model.categories);
         holder.txtTime.setText(convertTime(model.published_at));
         holder.BgImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        holder.id_post=model.id_post;
         switch(model.id_background)
         {
             case 1:
@@ -167,6 +169,7 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         @BindView(R.id.AvatarUser) CircleImageView AvatarUser;
         @BindView(R.id.BgImage) ImageView BgImage;
         @BindView(R.id.txtCategories) TextView txtCategories;
+        int id_post;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -176,6 +179,9 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
                 @Override
                 public void onClick(View view) {
                     Intent myactivity = new Intent(context, ViewPost.class);
+                    Bundle b=new Bundle();
+                    b.putInt("id_post",id_post);
+                    myactivity.putExtras(b);
                     myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
                     context.getApplicationContext().startActivity(myactivity);
                 }

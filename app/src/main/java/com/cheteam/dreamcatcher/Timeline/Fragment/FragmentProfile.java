@@ -66,7 +66,7 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
         preferences=PreferenceHelper.getInstance(getActivity());
 
         PC=new ProfileController(this);
-        PC.GetProfile();
+        //PC.GetProfile();
 
         setContent(preferences.getBoolean("session",false));
 
