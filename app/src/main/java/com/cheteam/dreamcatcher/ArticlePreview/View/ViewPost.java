@@ -15,7 +15,12 @@ import android.widget.TextView;
 import com.cheteam.dreamcatcher.ArticlePreview.Controller.ArticleController;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
 import com.cheteam.dreamcatcher.CommentSection.View.MainComment;
+import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +42,9 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
     @BindView(R.id.tv_category_vp) TextView tv_category_vp;
     Boolean cek=false;
     ArticleController mArticleController;
+    ArticleController AC;
+    Bundle b;
+    PreferenceHelper prefences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,9 +58,20 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
         actionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
-        mArticleController =new ArticleController(this);
-        mArticleController.GetArticle(1);
+        AC=new ArticleController(this);
+        b=getIntent().getExtras();
+        AC.GetArticle(b.getInt("id_post"));
         bookmark_icon_vp.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp);
+        prefences=PreferenceHelper.getInstance(getApplicationContext());
+
+        if(prefences.getBoolean("session",false))
+        {
+            bookmark_icon_vp.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            bookmark_icon_vp.setVisibility(View.GONE);
+        }
 
         bookmark_icon_vp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +88,20 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
                 }
             }
         });
+    }
+
+    public String convertTime(String published_at)
+    {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+        Date date = null;
+        try {
+            date = originalFormat.parse(published_at);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String formattedDate = targetFormat.format(date);
+        return formattedDate;
     }
 
     @Override
@@ -100,7 +133,7 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
             ViewArticleResponse model = response;
             tv_name_vp.setText(model.name);
             tv_title_view_post.setText(model.post_title);
-            tv_date_vp.setText(model.published_at);
+            tv_date_vp.setText(convertTime(model.published_at));
             tv_content_vp.setText(model.content);
             tv_category_vp.setText(model.categories);
             switch (model.id_background){
@@ -120,7 +153,7 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
                     bg_view_post.setBackgroundResource(R.drawable.violet_bg);
                     break;
             }
-            switch (model.id_avatar){
+            switch (model.id_avatar) {
                 case 0:
                     avatar_vp.setBackgroundResource(R.drawable.avatar_0);
                     break;
@@ -151,6 +184,51 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
                 case 9:
                     avatar_vp.setBackgroundResource(R.drawable.avatar_9);
                     break;
+            }
+            if(model.id_background==1){
+                bg_view_post.setBackgroundResource(R.drawable.red_bg);
+            }
+            if(model.id_background==2){
+                bg_view_post.setBackgroundResource(R.drawable.green_bg);
+            }
+            if(model.id_background==3){
+                bg_view_post.setBackgroundResource(R.drawable.blue_bg);
+            }
+            if(model.id_background==4){
+                bg_view_post.setBackgroundResource(R.drawable.yellow_bg);
+            }
+            if(model.id_background==5){
+                bg_view_post.setBackgroundResource(R.drawable.violet_bg);
+            }
+            if(model.id_avatar==0){
+                avatar_vp.setImageResource(R.drawable.avatar_0);
+            }
+            if(model.id_avatar==1){
+                avatar_vp.setImageResource(R.drawable.avatar_1);
+            }
+            if(model.id_avatar==2){
+                avatar_vp.setImageResource(R.drawable.avatar_2);
+            }
+            if(model.id_avatar==3){
+                avatar_vp.setImageResource(R.drawable.avatar_3);
+            }
+            if(model.id_avatar==4){
+                avatar_vp.setImageResource(R.drawable.avatar_4);
+            }
+            if(model.id_avatar==5){
+                avatar_vp.setImageResource(R.drawable.avatar_5);
+            }
+            if(model.id_avatar==6){
+                avatar_vp.setImageResource(R.drawable.avatar_6);
+            }
+            if(model.id_avatar==7){
+                avatar_vp.setImageResource(R.drawable.avatar_7);
+            }
+            if(model.id_avatar==8){
+                avatar_vp.setImageResource(R.drawable.avatar_8);
+            }
+            if(model.id_avatar==9){
+                avatar_vp.setImageResource(R.drawable.avatar_9);
             }
         }
     }

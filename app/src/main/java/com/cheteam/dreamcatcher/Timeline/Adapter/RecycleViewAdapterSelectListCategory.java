@@ -3,10 +3,15 @@ package com.cheteam.dreamcatcher.Timeline.Adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.Interface.IChangeCategory;
@@ -27,11 +32,13 @@ public class RecycleViewAdapterSelectListCategory extends RecyclerView.Adapter<R
     Context context;
     public View view;
     private IChangeCategory listener;
+    int totalInterest;
 
-    public RecycleViewAdapterSelectListCategory(ArrayList<ModelCategory> ListCategory, Context context, IChangeCategory listener) {
+    public RecycleViewAdapterSelectListCategory(ArrayList<ModelCategory> ListCategory, Context context, IChangeCategory listener, int totalInterest) {
         this.context = context;
         this.ListCategory=ListCategory;
         this.listener = listener;
+        this.totalInterest=totalInterest;
     }
 
 
@@ -46,21 +53,11 @@ public class RecycleViewAdapterSelectListCategory extends RecyclerView.Adapter<R
     @Override
     public void onBindViewHolder(RecycleViewAdapterSelectListCategory.ViewHolder holder, int position) {
         Typeface Roboto_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
-        holder.btnCategory.setTypeface(Roboto_Regular);
+        holder.txtCategory.setTypeface(Roboto_Regular);
 
         ModelCategory model=ListCategory.get(position);
-        holder.btnCategory.setText(model.getCategory());
-        holder.cek=model.isCek();
-        if(model.isCek())
-        {
-            holder.btnCategory.setBackground(context.getResources().getDrawable(R.drawable.button_blue));
-            holder.btnCategory.setTextColor(context.getResources().getColor(R.color.White));
-        }
-        else
-        {
-            holder.btnCategory.setBackground(context.getResources().getDrawable(R.drawable.button_white));
-            holder.btnCategory.setTextColor(context.getResources().getColor(R.color.Black));
-        }
+        holder.txtCategory.setText(model.getCategory());
+        holder.btnSwitch.setChecked(model.isCek());
     }
 
     @Override
@@ -77,30 +74,34 @@ public class RecycleViewAdapterSelectListCategory extends RecyclerView.Adapter<R
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.btnCategory) Button btnCategory;
-        boolean cek=false;
+        @BindView(R.id.txtCategory) TextView txtCategory;
+        @BindView(R.id.btnSwitch) SwitchCompat btnSwitch;
 
         ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
             ButterKnife.bind(this,view);
 
-            btnCategory.setOnClickListener(new View.OnClickListener() {
+            btnSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(!cek)
+                    if(btnSwitch.isChecked())
                     {
-                        cek=true;
-                        btnCategory.setBackground(context.getResources().getDrawable(R.drawable.button_blue));
-                        btnCategory.setTextColor(context.getResources().getColor(R.color.White));
-                        listener.addCategory(btnCategory.getText().toString());
+                        listener.addCategory(txtCategory.getText().toString());
+                        totalInterest++;
+                        if(totalInterest>=3)
+                        {
+                            listener.setApplyOption(true);
+                        }
                     }
-                    else if(cek)
+                    else
                     {
-                        cek=false;
-                        btnCategory.setBackground(context.getResources().getDrawable(R.drawable.button_white));
-                        btnCategory.setTextColor(context.getResources().getColor(R.color.Black));
-                        listener.removeCategory(btnCategory.getText().toString());
+                        listener.removeCategory(txtCategory.getText().toString());
+                        totalInterest--;
+                        if(totalInterest<3)
+                        {
+                            listener.setApplyOption(false);
+                        }
                     }
                 }
             });

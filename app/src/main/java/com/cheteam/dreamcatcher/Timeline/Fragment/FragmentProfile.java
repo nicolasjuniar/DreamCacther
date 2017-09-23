@@ -70,7 +70,7 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
         preferences=PreferenceHelper.getInstance(getActivity());
 
         PC=new ProfileController(this);
-        PC.GetProfile();
+        //PC.GetProfile();
 
         setContent(preferences.getBoolean("session",false));
 
@@ -78,7 +78,6 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
             }
         });
         return view;

@@ -13,13 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.Login.View.LoginActivity;
+import com.cheteam.dreamcatcher.NetworkUtils;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListCategories;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListPost;
 import com.cheteam.dreamcatcher.Timeline.Controller.TimelineController;
 import com.cheteam.dreamcatcher.Timeline.Interface.IChangeCategory;
 import com.cheteam.dreamcatcher.Timeline.Interface.ISetCategory;
+import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 
 import java.util.ArrayList;
@@ -42,9 +46,13 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
     RecycleViewAdapterListPost adapter;
 
     ArrayList<String> ListInterest;
+    ArrayList<ModelTimeline> ListPost;
+    ArrayList<ModelTimeline> ListPost2;
     RecycleViewAdapterListCategories adapter2;
 
     TimelineController TC;
+
+    NetworkUtils network;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,7 +61,8 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
 
         ButterKnife.bind(this,view);
         TC=new TimelineController(this);
-        TC.getTimeline();
+
+        network=new NetworkUtils(getActivity());
 
         Bundle arguments = getArguments();
         ListInterest=arguments.getStringArrayList("listinterest");
@@ -61,11 +70,13 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                TC.getTimeline();
+                fetchTimeline();
             }
         });
 
         SetListInterest();
+
+        fetchTimeline();
 
         txtEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +101,20 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         return view;
     }
 
+    public void fetchTimeline()
+    {
+        if(network.isConnected())
+        {
+            TC.getTimeline();
+        }
+        else
+        {
+            progressBar.setVisibility(View.GONE);
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getActivity(), "phone is not connected to internet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void SetListInterest()
     {
         adapter2=new RecycleViewAdapterListCategories(ListInterest,getContext());
@@ -102,12 +127,20 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
     public void getTimelineResponse(boolean error, TimelineResponse response, Throwable t) {
         if(!error)
         {
-            adapter=new RecycleViewAdapterListPost(response.posts,getContext());
+            ListPost=response.posts;
+            ListPost2=new ArrayList<>();
+            for (ModelTimeline post: ListPost ) {
+                if(ListInterest.contains(post.categories))
+                {
+                    ListPost2.add(post);
+                }
+            }
+            adapter=new RecycleViewAdapterListPost(ListPost2,getContext());
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            progressBar.setVisibility(View.GONE);
-            swipeRefreshLayout.setRefreshing(false);
         }
+        progressBar.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -115,6 +148,7 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         this.ListInterest=ListInterest;
         adapter2.setListCategories(this.ListInterest);
         adapter2.notifyDataSetChanged();
+        fetchTimeline();
 
     }
 }

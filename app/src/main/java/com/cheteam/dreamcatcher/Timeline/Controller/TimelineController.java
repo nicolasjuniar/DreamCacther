@@ -16,10 +16,14 @@ public class TimelineController {
     TimelineAPI service;
     Call<TimelineResponse> CallResponse;
     onTimelineResponse listener;
+    onTimelineCategoryResponse listener2;
 
     public TimelineController(onTimelineResponse listener) {
         this.listener = listener;
     }
+
+
+    public TimelineController(onTimelineCategoryResponse listener2) { this.listener2=listener2; }
 
     public void getTimeline()
     {
@@ -38,7 +42,28 @@ public class TimelineController {
         });
     }
 
+    public void getTimelineByCategory(String category)
+    {
+        service=ServiceGenerator.createService(TimelineAPI.class);
+        CallResponse=service.GetTimelineByCategory(category);
+        CallResponse.enqueue(new Callback<TimelineResponse>() {
+            @Override
+            public void onResponse(Call<TimelineResponse> call, Response<TimelineResponse> response) {
+                listener2.getTimelineByCategoryResponse(false,response.body(),null);
+            }
+
+            @Override
+            public void onFailure(Call<TimelineResponse> call, Throwable t) {
+                listener2.getTimelineByCategoryResponse(true,null,t);
+            }
+        });
+    }
+
     public interface onTimelineResponse {
         public void getTimelineResponse(boolean error, TimelineResponse response,Throwable t);
+    }
+
+    public interface onTimelineCategoryResponse {
+        public void getTimelineByCategoryResponse(boolean error, TimelineResponse response,Throwable t);
     }
 }

@@ -1,11 +1,15 @@
 package com.cheteam.dreamcatcher.ArticlePreview.API;
 
 import com.cheteam.dreamcatcher.AddPost.View.Model.AddPostRequest;
+import com.cheteam.dreamcatcher.ArticlePreview.Model.BookmarkRequest;
+import com.cheteam.dreamcatcher.ArticlePreview.Model.BookmarkResponse;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -20,4 +24,8 @@ public interface ViewArticleApi {
 
     @POST("/v1/posts")
     Call<AddPostRequest> postArticle(@Body AddPostRequest post);
+
+    @POST("v1/bookmarks")
+    Call<BookmarkResponse> Bookmark(@Body BookmarkRequest body,
+                                    @Header("Authorization") String token);
 }
