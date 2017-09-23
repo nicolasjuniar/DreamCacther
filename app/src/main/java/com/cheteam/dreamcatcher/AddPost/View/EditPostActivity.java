@@ -17,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.ArticlePreview.View.ActivityPreview;
 import com.cheteam.dreamcatcher.ArticlePreview.View.EditPostPreview;
@@ -41,10 +40,6 @@ public class EditPostActivity extends AppCompatActivity{
     @BindView(R.id.bg_4_ep) ImageButton bg_4_ep;
     @BindView(R.id.bg_5_ep) ImageButton bg_5_ep;
     @BindView(R.id.et_title_ep) EditText et_title_ep;
-    @BindView(R.id.et_content_ep) EditText et_content_ep;
-
-    Bundle bundle = new Bundle();
-    private int id_background = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +52,6 @@ public class EditPostActivity extends AppCompatActivity{
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
-
         ll_select_category_ep.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -68,7 +62,6 @@ public class EditPostActivity extends AppCompatActivity{
                         .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
                             }
                         })
                         .setPositiveButton("APPLY",null)
@@ -76,6 +69,7 @@ public class EditPostActivity extends AppCompatActivity{
                         .show();
             }
         });
+
         bg_1_ep.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -120,13 +114,7 @@ public class EditPostActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id==R.id.add_post_menu){
-            bundle.putInt("id_user",1);
-            bundle.putInt("id_background", id_background);
-            bundle.putString("post_title", et_title_ep.getText().toString());
-            bundle.putString("categories", "Finances");
-            bundle.putString("content", et_content_ep.getText().toString());
-            Intent intent = new Intent(this, ActivityPreview.class);
-            intent.putExtras(bundle);
+            Intent intent = new Intent(EditPostActivity.this,ActivityPreview.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

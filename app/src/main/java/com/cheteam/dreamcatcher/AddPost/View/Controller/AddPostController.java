@@ -17,9 +17,9 @@ public class AddPostController {
     AddPostApi service;
     Call<AddPostRequest> CallAddPost;
 
-    public void addPost(AddPostRequest post, String token){
+    public void addPost(AddPostRequest post){
         service = ServiceGenerator.createService(AddPostApi.class);
-        CallAddPost = service.postArticle(post,token);
+        CallAddPost = service.postArticle(post);
         CallAddPost.enqueue(new Callback<AddPostRequest>() {
             @Override
             public void onResponse(Call<AddPostRequest> call, Response<AddPostRequest> response) {
