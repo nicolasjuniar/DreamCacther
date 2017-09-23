@@ -17,6 +17,7 @@ import com.cheteam.dreamcatcher.SplashScreenActivity;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.R;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -55,6 +56,20 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         return holder;
     }
 
+    public String convertTime(String published_at)
+    {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+        Date date = null;
+        try {
+            date = originalFormat.parse(published_at);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String formattedDate = targetFormat.format(date);
+        return formattedDate;
+    }
+
     @Override
     public void onBindViewHolder(RecycleViewAdapterListPost.ViewHolder holder, int position) {
         Typeface Roboto_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
@@ -68,20 +83,7 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         holder.txtTitle.setText(model.post_title);
         holder.txtFullName.setText(model.name);
         holder.txtCategories.setText(model.categories);
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            Date past = format.parse(model.published_at);
-            Date now = new Date();
-
-            String ms=TimeUnit.MILLISECONDS.toMillis(now.getTime() - past.getTime()) + " milliseconds ago";
-            ms=TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " minutes ago";
-            ms=TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " hours ago";
-            ms=TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " days ago";
-            holder.txtTime.setText(ms);
-        }
-        catch (Exception j){
-            j.printStackTrace();
-        }
+        holder.txtTime.setText(convertTime(model.published_at));
         holder.BgImage.setScaleType(ImageView.ScaleType.FIT_XY);
         switch(model.id_background)
         {

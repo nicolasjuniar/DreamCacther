@@ -23,6 +23,7 @@ import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListPost;
 import com.cheteam.dreamcatcher.Timeline.Controller.TimelineController;
 import com.cheteam.dreamcatcher.Timeline.Interface.IChangeCategory;
 import com.cheteam.dreamcatcher.Timeline.Interface.ISetCategory;
+import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
     RecycleViewAdapterListPost adapter;
 
     ArrayList<String> ListInterest;
+    ArrayList<ModelTimeline> ListPost;
+    ArrayList<ModelTimeline> ListPost2;
     RecycleViewAdapterListCategories adapter2;
 
     TimelineController TC;
@@ -61,8 +64,6 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
 
         network=new NetworkUtils(getActivity());
 
-        fetchTimeline();
-
         Bundle arguments = getArguments();
         ListInterest=arguments.getStringArrayList("listinterest");
 
@@ -74,6 +75,8 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         });
 
         SetListInterest();
+
+        fetchTimeline();
 
         txtEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +127,15 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
     public void getTimelineResponse(boolean error, TimelineResponse response, Throwable t) {
         if(!error)
         {
-            adapter=new RecycleViewAdapterListPost(response.posts,getContext());
+            ListPost=response.posts;
+            ListPost2=new ArrayList<>();
+            for (ModelTimeline post: ListPost ) {
+                if(ListInterest.contains(post.categories))
+                {
+                    ListPost2.add(post);
+                }
+            }
+            adapter=new RecycleViewAdapterListPost(ListPost2,getContext());
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
@@ -137,6 +148,7 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         this.ListInterest=ListInterest;
         adapter2.setListCategories(this.ListInterest);
         adapter2.notifyDataSetChanged();
+        fetchTimeline();
 
     }
 }
