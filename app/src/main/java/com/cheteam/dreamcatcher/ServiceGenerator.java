@@ -1,5 +1,6 @@
 package com.cheteam.dreamcatcher;
 
+import com.cheteam.dreamcatcher.Helper.LoggingInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

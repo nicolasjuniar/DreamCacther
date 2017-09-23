@@ -1,7 +1,6 @@
 package com.cheteam.dreamcatcher.ArticlePreview.API;
 
 import com.cheteam.dreamcatcher.AddPost.View.Model.AddPostRequest;
-import com.cheteam.dreamcatcher.AddPost.View.Model.AddPostRequest;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.BookmarkRequest;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.BookmarkResponse;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
