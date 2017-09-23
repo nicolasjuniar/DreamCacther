@@ -216,6 +216,8 @@ public class TimelineActivity extends AppCompatActivity{
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             preferences.putBoolean("session",false);
+                            preferences.putString("token","");
+                            preferences.putString("profile","");
                             startActivity(new Intent(TimelineActivity.this,LoginActivity.class));
                             finish();
                         }

@@ -163,7 +163,8 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                         Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
                         Bundle bundle=new Bundle();
                         bundle.putBoolean("login",true);
-                        bundle.putString("token",loginResponse.token);
+                        preferences.putString("token",loginResponse.token);
+                        savePreferences(response.body());
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
@@ -182,6 +183,11 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         {
             Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void savePreferences(LoginResponse response)
+    {
+        preferences.putString("profile", new Gson().toJson(response));
     }
 
     public void ClearError()
