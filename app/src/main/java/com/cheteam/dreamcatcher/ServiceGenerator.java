@@ -19,11 +19,6 @@ public class ServiceGenerator {
 
     public ServiceGenerator(){}
 
-    public String getBaseUrl()
-    {
-        return BASE_URL;
-    }
-
     public static <S> S createService(Class<S> serviceClass) {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
