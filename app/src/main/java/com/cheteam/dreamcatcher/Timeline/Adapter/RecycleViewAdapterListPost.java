@@ -3,6 +3,7 @@ package com.cheteam.dreamcatcher.Timeline.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.cheteam.dreamcatcher.SplashScreenActivity;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.R;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -55,11 +57,22 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         return holder;
     }
 
+    public String convertTime(String published_at)
+    {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+        Date date = null;
+        try {
+            date = originalFormat.parse(published_at);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String formattedDate = targetFormat.format(date);
+        return formattedDate;
+    }
+
     @Override
     public void onBindViewHolder(RecycleViewAdapterListPost.ViewHolder holder, int position) {
-        Typeface Merriweather_Bold=Typeface.createFromAsset(context.getAssets(), "fonts/Merriweather-Bold.ttf");
-        Typeface Lobster_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Lobster-Regular.ttf");
-        Typeface RockoFLF=Typeface.createFromAsset(context.getAssets(), "fonts/RockoFLF.ttf");
         Typeface Roboto_Regular=Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.txtTitle.setTypeface(Roboto_Regular);
         holder.txtFullName.setTypeface(Roboto_Regular);
@@ -71,21 +84,9 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         holder.txtTitle.setText(model.post_title);
         holder.txtFullName.setText(model.name);
         holder.txtCategories.setText(model.categories);
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            Date past = format.parse(model.published_at);
-            Date now = new Date();
-
-            String ms=TimeUnit.MILLISECONDS.toMillis(now.getTime() - past.getTime()) + " milliseconds ago";
-            ms=TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " minutes ago";
-            ms=TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " hours ago";
-            ms=TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " days ago";
-            holder.txtTime.setText(ms);
-        }
-        catch (Exception j){
-            j.printStackTrace();
-        }
+        holder.txtTime.setText(convertTime(model.published_at));
         holder.BgImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        holder.id_post=model.id_post;
         switch(model.id_background)
         {
             case 1:
@@ -117,6 +118,11 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
 
         switch (model.id_avatar)
         {
+            case 0:
+            {
+                holder.AvatarUser.setImageResource(R.drawable.avatar_0);
+                break;
+            }
             case 1:
             {
                 holder.AvatarUser.setImageResource(R.drawable.avatar_1);
@@ -163,6 +169,7 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
         @BindView(R.id.AvatarUser) CircleImageView AvatarUser;
         @BindView(R.id.BgImage) ImageView BgImage;
         @BindView(R.id.txtCategories) TextView txtCategories;
+        int id_post;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -172,6 +179,9 @@ public class RecycleViewAdapterListPost extends RecyclerView.Adapter<RecycleView
                 @Override
                 public void onClick(View view) {
                     Intent myactivity = new Intent(context, ViewPost.class);
+                    Bundle b=new Bundle();
+                    b.putInt("id_post",id_post);
+                    myactivity.putExtras(b);
                     myactivity.addFlags(FLAG_ACTIVITY_NEW_TASK);
                     context.getApplicationContext().startActivity(myactivity);
                 }

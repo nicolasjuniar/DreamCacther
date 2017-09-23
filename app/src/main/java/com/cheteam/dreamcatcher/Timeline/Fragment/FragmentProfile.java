@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,10 +51,12 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.AvatarUser) CircleImageView AvatarUser;
+    @BindView(R.id.collapsing_profile) CollapsingToolbarLayout collapsed_profile;
 
     RecyclerViewAdapterMypost adapter;
     private PreferenceHelper preferences;
     ProfileController PC;
+    String token;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,21 +64,21 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
                 container, false);
 
         ButterKnife.bind(this,view);
+        setUpCollapsingProfile();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         setFont();
         preferences=PreferenceHelper.getInstance(getActivity());
 
-        PC=new ProfileController(this);
-        PC.GetProfile();
-
         setContent(preferences.getBoolean("session",false));
+        token=preferences.getString("token","");
+        PC=new ProfileController(this);
+        PC.GetProfile(token);
 
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
             }
         });
         return view;
@@ -85,12 +89,12 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
         if(login)
         {
             txtLogin.setVisibility(View.GONE);
-            LayoutProfile.setVisibility(View.VISIBLE);
+            collapsed_profile.setVisibility(View.VISIBLE);
         }
         else if(!login)
         {
             txtLogin.setVisibility(View.VISIBLE);
-            LayoutProfile.setVisibility(View.GONE);
+            collapsed_profile.setVisibility(View.GONE);
         }
     }
 
@@ -200,5 +204,11 @@ public class FragmentProfile extends Fragment implements ProfileController.onPro
                 AvatarUser.setImageResource(R.drawable.avatar_5);
             }
         }
+    }
+
+    private void setUpCollapsingProfile(){
+        final CollapsingToolbarLayout collapsingProfile = collapsed_profile;
+        collapsingProfile.setTitleEnabled(false);
+
     }
 }

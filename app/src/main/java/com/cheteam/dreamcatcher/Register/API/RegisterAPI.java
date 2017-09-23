@@ -1,8 +1,10 @@
 package com.cheteam.dreamcatcher.Register.API;
 
+import com.cheteam.dreamcatcher.Register.Model.RegisterRequest;
 import com.cheteam.dreamcatcher.Register.Model.RegisterResponse;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
@@ -10,6 +12,6 @@ import retrofit2.http.POST;
  */
 
 public interface RegisterAPI {
-    @POST("v1/register")
-    Call<RegisterResponse> Register();
+    @POST("v1/register/")
+    Call<RegisterResponse> Register(@Body RegisterRequest body);
 }

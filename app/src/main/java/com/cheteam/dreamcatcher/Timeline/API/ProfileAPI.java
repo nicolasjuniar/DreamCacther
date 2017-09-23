@@ -1,9 +1,11 @@
 package com.cheteam.dreamcatcher.Timeline.API;
 
+import com.cheteam.dreamcatcher.Timeline.Model.MyBookmarkResponse;
 import com.cheteam.dreamcatcher.Timeline.Model.ProfileResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 
 
 /**
@@ -12,5 +14,8 @@ import retrofit2.http.GET;
 
 public interface ProfileAPI {
     @GET("v1/profile")
-    Call<ProfileResponse> GetProfile();
+    Call<ProfileResponse> getProfile(@Header("Authorization") String token);
+
+    @GET("v1/bookmars")
+    Call<MyBookmarkResponse> MyBookmarks(@Header("Authorization") String token);
 }

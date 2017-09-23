@@ -27,6 +27,7 @@
        android:textColorHint="@color/White"
        android:gravity="center_horizontal|center"
        android:letterSpacing="-0.01"
+       android:maxLength="45"
        />
     <TextView
         android:id="@+id/tv_choose_bg_ep"
@@ -53,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_courses"
+            android:background="@drawable/red_bg"
             android:clickable="true"/>
         <ImageButton
             android:id="@+id/bg_2_ep"
@@ -61,27 +62,27 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
-            android:background="@drawable/bg_facilities"/>
+            android:background="@drawable/green_bg"/>
         <ImageButton
             android:id="@+id/bg_3_ep"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
-            android:background="@drawable/bg_finances"/>
+            android:background="@drawable/blue_bg"/>
         <ImageButton
             android:id="@+id/bg_4_ep"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
-            android:background="@drawable/bg_opportunities"/>
+            android:background="@drawable/yellow_bg"/>
         <ImageButton
             android:id="@+id/bg_5_ep"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_skills"
+            android:background="@drawable/violet_bg"
             android:clickable="true"
             />
     </LinearLayout>

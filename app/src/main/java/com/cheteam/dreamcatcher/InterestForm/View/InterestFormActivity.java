@@ -19,9 +19,15 @@ import android.widget.Toast;
 import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.InterestForm.Adapter.RecycleViewAdapterListInterest;
 import com.cheteam.dreamcatcher.InterestForm.Model.ModelInterest;
+import com.cheteam.dreamcatcher.Login.Controller.LoginController;
+import com.cheteam.dreamcatcher.Login.Model.InterestRequest;
+import com.cheteam.dreamcatcher.Login.Model.InterestResponse;
+import com.cheteam.dreamcatcher.Login.Model.LoginResponse;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
+import com.cheteam.dreamcatcher.Login.View.onInterestUpdate;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.View.TimelineActivity;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -32,7 +38,7 @@ import butterknife.ButterKnife;
  * Created by Nicolas Juniar on 08/09/2017.
  */
 
-public class InterestFormActivity extends AppCompatActivity implements RecycleViewAdapterListInterest.onChangeInterest{
+public class InterestFormActivity extends AppCompatActivity implements RecycleViewAdapterListInterest.onChangeInterest,onInterestUpdate {
 
     @BindView(R.id.next) RelativeLayout next;
     @BindView(R.id.return1) RelativeLayout return1;
@@ -49,6 +55,8 @@ public class InterestFormActivity extends AppCompatActivity implements RecycleVi
     Boolean check;
     private PreferenceHelper preferences;
     private Boolean exit = false;
+    LoginController LC;
+    String token;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +67,9 @@ public class InterestFormActivity extends AppCompatActivity implements RecycleVi
         setFont();
         setListInterest();
         preferences=PreferenceHelper.getInstance(getApplicationContext());
+        token=preferences.getString("token","");
+        LC=new LoginController(this);
+
 
         Bundle bundle = getIntent().getExtras();
         check=bundle.getBoolean("login",false);
@@ -75,18 +86,20 @@ public class InterestFormActivity extends AppCompatActivity implements RecycleVi
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("listinterest",listInterest);
                 intent.putExtras(bundle);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 if(check)
                 {
                     preferences.putBoolean("session",true);
-                    preferences.putBoolean("interest",true);
+                    LC.UpdateInterest(new InterestRequest(listInterest),token);
+                    LoginResponse model=(new Gson().fromJson(preferences.getString("profile",""),LoginResponse.class));
+                    model.categories=listInterest;
+                    preferences.putString("profile",new Gson().toJson(model));
                     startActivity(intent);
                 }
                 else if(!check)
                 {
                     startActivity(intent);
                 }
-                finish();
+                finishAffinity();
             }
         });
 
@@ -178,5 +191,13 @@ public class InterestFormActivity extends AppCompatActivity implements RecycleVi
         listInterest.remove(interest);
         if(listInterest.size()<3)
             showNextButton(false);
+    }
+
+    @Override
+    public void InterestUpdateResponse(boolean error, InterestResponse response, Throwable t) {
+        if(error)
+        {
+            Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -14,8 +14,10 @@ import android.widget.Toast;
 
 import com.cheteam.dreamcatcher.InterestForm.View.InterestFormActivity;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
+import com.cheteam.dreamcatcher.NetworkUtils;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Register.Controller.RegisterController;
+import com.cheteam.dreamcatcher.Register.Model.RegisterRequest;
 import com.cheteam.dreamcatcher.Register.Model.RegisterResponse;
 
 import butterknife.BindView;
@@ -39,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     RegisterController RC;
     ProgressDialog progressDialog;
+    NetworkUtils network;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         ButterKnife.bind(this);
         RC=new RegisterController(this);
 
+        (btnRegister.getParent()).requestLayout();
         btnRegister.bringToFront();
+        network=new NetworkUtils(RegisterActivity.this);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,15 +60,23 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
                 ClearError();
                 if(CekInput())
                 {
-                    if(progressDialog==null)
+                    if(network.isConnected())
                     {
-                        progressDialog=new ProgressDialog(RegisterActivity.this);
-                        progressDialog.setMessage("Trying Login....");
-                        progressDialog.setIndeterminate(false);
-                        progressDialog.setCancelable(false);
+                        if(progressDialog==null)
+                        {
+                            progressDialog=new ProgressDialog(RegisterActivity.this);
+                            progressDialog.setMessage("Trying Login....");
+                            progressDialog.setIndeterminate(false);
+                            progressDialog.setCancelable(false);
+                        }
+                        progressDialog.show();
+                        RegisterRequest body=new RegisterRequest(txtName.getText().toString(),txtEmail.getText().toString(),txtPassword.getText().toString());
+                        RC.Register(body);
                     }
-                    progressDialog.show();
-                    RC.Register();
+                    else
+                    {
+                        Toast.makeText(RegisterActivity.this, "phone is not connected to internet", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -118,6 +131,10 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         if (txtName.getText().toString().isEmpty()) {
             txtName.setError("Name can't be empty");
             cek = false;
+        } else if(txtName.getText().toString().length()>18)
+        {
+            txtName.setError("Name maximal 18 character");
+            cek = false;
         } else
         {
             txtName.setError(null);
@@ -129,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
             cek = false;
         } else if(!txtEmail.getText().toString().matches(regex))
         {
-          txtEmail.setError("Email is invalid");
+            txtEmail.setError("Email is invalid");
         } else
         {
             txtEmail.setError(null);
@@ -163,13 +180,20 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
         if(!error)
         {
-            Toast.makeText(RegisterActivity.this, response.message, Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(RegisterActivity.this,InterestFormActivity.class);
-            Bundle bundle=new Bundle();
-            bundle.putBoolean("login",true);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            finish();
+            if(response.success)
+            {
+                Toast.makeText(RegisterActivity.this, "Register Successful", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(RegisterActivity.this,InterestFormActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putBoolean("login",true);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+            else
+            {
+                Toast.makeText(this, "Email already registered", Toast.LENGTH_SHORT).show();
+            }
         }
         if(error)
         {

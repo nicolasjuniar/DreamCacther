@@ -5,8 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +19,14 @@ import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
 import com.cheteam.dreamcatcher.InterestForm.View.InterestFormActivity;
 import com.cheteam.dreamcatcher.Login.API.LoginAPI;
 import com.cheteam.dreamcatcher.Login.Controller.LoginController;
+import com.cheteam.dreamcatcher.Login.Model.LoginRequest;
 import com.cheteam.dreamcatcher.Login.Model.LoginResponse;
+import com.cheteam.dreamcatcher.NetworkUtils;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Register.View.RegisterActivity;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 import com.cheteam.dreamcatcher.Timeline.View.TimelineActivity;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +51,8 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     ProgressDialog progressDialog;
     PreferenceHelper preferences;
 
+    NetworkUtils network;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +60,9 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         ButterKnife.bind(this);
         LC=new LoginController(this);
 
+        network=new NetworkUtils(LoginActivity.this);
+
+        (btnLogin.getParent()).requestLayout();
         btnLogin.bringToFront();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -61,15 +71,24 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 ClearError();
                 if(CekInput())
                 {
-                    if(progressDialog==null)
+                    if(network.isConnected())
                     {
-                        progressDialog=new ProgressDialog(LoginActivity.this);
-                        progressDialog.setMessage("Trying Login....");
-                        progressDialog.setIndeterminate(false);
-                        progressDialog.setCancelable(false);
+                        if(progressDialog==null)
+                        {
+                            progressDialog=new ProgressDialog(LoginActivity.this);
+                            progressDialog.setMessage("Trying Login....");
+                            progressDialog.setIndeterminate(false);
+                            progressDialog.setCancelable(false);
+                        }
+                        progressDialog.show();
+                        String email=txtEmail.getText().toString();
+                        String password=txtPassword.getText().toString();
+                        LC.Login(new LoginRequest(email,password));
                     }
-                    progressDialog.show();
-                    LC.Login();
+                    else
+                    {
+                        Toast.makeText(LoginActivity.this, "phone is not connected to internet", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -122,35 +141,54 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     }
 
     @Override
-    public void getLoginResponse(boolean error, LoginResponse loginResponse, Throwable t) {
+    public void getLoginResponse(boolean error, Response<LoginResponse> response , Throwable t) {
         if ((progressDialog != null) && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
         if(!error)
         {
-            LoginResponse response=loginResponse;
-            Toast.makeText(LoginActivity.this, loginResponse.message, Toast.LENGTH_SHORT).show();
-            Boolean interest=preferences.getBoolean("interest",false);
-            if(!interest)
+            if(response.code()==400)
             {
-                Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putBoolean("login",true);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                Toast.makeText(this, "Email is not registeed", Toast.LENGTH_SHORT).show();
             }
-            else if(interest)
+            else
             {
-                preferences.putBoolean("session",true);
-                startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
+                LoginResponse loginResponse=response.body();
+
+                if(response.body().success)
+                {
+                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    if(loginResponse.categories==null)
+                    {
+                        Intent intent=new Intent(LoginActivity.this,InterestFormActivity.class);
+                        Bundle bundle=new Bundle();
+                        bundle.putBoolean("login",true);
+                        preferences.putString("token",loginResponse.token);
+                        savePreferences(response.body());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        savePreferences(response.body());
+                        preferences.putBoolean("session",true);
+                        startActivity(new Intent(LoginActivity.this,TimelineActivity.class));
+                    }
+                    finish();
+                }
             }
-            finish();
+
         }
 
         if(error)
         {
             Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void savePreferences(LoginResponse response)
+    {
+        preferences.putString("profile", new Gson().toJson(response));
     }
 
     public void ClearError()
@@ -162,9 +200,15 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     public boolean CekInput() {
         boolean cek = true;
 
+        String regex = "^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$";
+
         if (txtEmail.getText().toString().isEmpty()) {
-            txtEmail.setError("Email is invalid");
+            txtEmail.setError("Email can't be empty");
             cek = false;
+        } else if(!txtEmail.getText().toString().matches(regex))
+        {
+            txtEmail.setError("Email is invalid");
+            cek= false;
         } else
         {
             txtEmail.setError(null);

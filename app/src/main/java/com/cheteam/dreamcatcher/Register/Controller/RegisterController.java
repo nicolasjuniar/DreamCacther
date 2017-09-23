@@ -1,6 +1,7 @@
 package com.cheteam.dreamcatcher.Register.Controller;
 
 import com.cheteam.dreamcatcher.Register.API.RegisterAPI;
+import com.cheteam.dreamcatcher.Register.Model.RegisterRequest;
 import com.cheteam.dreamcatcher.Register.Model.RegisterResponse;
 import com.cheteam.dreamcatcher.ServiceGenerator;
 
@@ -22,10 +23,10 @@ public class RegisterController {
         this.listener = listener;
     }
 
-    public void Register()
+    public void Register(RegisterRequest body)
     {
         service= ServiceGenerator.createService(RegisterAPI.class);
-        CallResponse=service.Register();
+        CallResponse=service.Register(body);
         CallResponse.enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {

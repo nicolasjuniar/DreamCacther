@@ -8,14 +8,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.AddPost.View.AddPostActivity;
+import com.cheteam.dreamcatcher.AddPost.View.Model.AddPostRequest;
+import com.cheteam.dreamcatcher.AddPost.View.Model.AddPostResponse;
 import com.cheteam.dreamcatcher.ArticlePreview.Controller.ArticleController;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
 import com.cheteam.dreamcatcher.CommentSection.View.MainComment;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.View.TimelineActivity;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,17 +33,32 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Layout untuk PREVIEW SUBMIT
  */
 
-public class ActivityPreview extends AppCompatActivity implements ArticleController.onViewArticleResponse{
-    @BindView(R.id.tv_title_preview) TextView tv_title_preview;
-    @BindView(R.id.tv_name_preview) TextView tv_name_preview;
-    @BindView(R.id.preview_category) TextView preview_category;
-    @BindView(R.id.preview_tanggal) TextView preview_tanggal;
-    @BindView(R.id.tv_content_preview) TextView tv_content_preview;
-    @BindView(R.id.preview_avatar_user) CircleImageView preview_avatar_user;
-    @BindView(R.id.bg_preview) ImageView bg_preview;
-    @BindView(R.id.my_toolbar_article_preview) Toolbar myToolbar;
+public class ActivityPreview extends AppCompatActivity implements ArticleController.onAddPostRequest{
+    @BindView(R.id.tv_title_preview)
+    TextView tv_title_preview;
+    @BindView(R.id.tv_name_preview)
+    TextView tv_name_preview;
+    @BindView(R.id.preview_category)
+    TextView preview_category;
+    @BindView(R.id.preview_tanggal)
+    TextView preview_tanggal;
+    @BindView(R.id.tv_content_preview)
+    TextView tv_content_preview;
+    @BindView(R.id.preview_avatar_user)
+    CircleImageView preview_avatar_user;
+    @BindView(R.id.bg_preview)
+    ImageView bg_preview;
+    @BindView(R.id.my_toolbar_article_preview)
+    Toolbar myToolbar;
+
     ArticleController mArticleController;
 
+    Bundle bundle;
+    int id_user;
+    int id_background;
+    String post_title;
+    String categories;
+    String content;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,65 +73,38 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
 
-        mArticleController =new ArticleController(this);
-        mArticleController.GetArticle(1);
+        mArticleController = new ArticleController(this);
 
+        //mArticleController.GetArticle(1);
+        bundle= getIntent().getExtras();
+        id_user = bundle.getInt("id_user");
+        id_background = bundle.getInt("id_background");
+        post_title = bundle.getString("post_title");
+        categories = bundle.getString("categories");
+        content = bundle.getString("content");
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case android.R.id.home: onBackPressed();
+        tv_title_preview.setText(post_title);
+        tv_name_preview.setText(R.string.Mae_Spancer); ///Belum FIX
+        preview_category.setText(categories);
+        tv_content_preview.setText(content);
+        switch (id_background) {
+            case 1:
+                bg_preview.setBackgroundResource(R.drawable.red_bg);
                 break;
-            case R.id.app_changes:
-                Intent intent= new Intent(this, TimelineActivity.class);
-                startActivity(intent);
-                finish();
+            case 2:
+                bg_preview.setBackgroundResource(R.drawable.green_bg);
                 break;
-
+            case 3:
+                bg_preview.setBackgroundResource(R.drawable.blue_bg);
+                break;
+            case 4:
+                bg_preview.setBackgroundResource(R.drawable.yellow_bg);
+                break;
+            case 5:
+                bg_preview.setBackgroundResource(R.drawable.violet_bg);
+                break;
         }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.item_article_preview, menu);
-
-        return true;
-    }
-
-
-    @Override
-    public void getViewArticleResponse(boolean error, ViewArticleResponse response, Throwable t) {
-        if(!error)
-        {
-            ViewArticleResponse model=response;
-            tv_title_preview.setText(model.post_title);
-            tv_name_preview.setText(model.name);
-            preview_category.setText(model.categories);
-            preview_tanggal.setText(model.published_at);
-            tv_content_preview.setText(model.content);
-            switch (model.id_background){
-                case 1:
-                    bg_preview.setBackgroundResource(R.drawable.red_bg);
-                    break;
-                case 2:
-                    bg_preview.setBackgroundResource(R.drawable.green_bg);
-                    break;
-                case 3:
-                    bg_preview.setBackgroundResource(R.drawable.blue_bg);
-                    break;
-                case 4:
-                    bg_preview.setBackgroundResource(R.drawable.yellow_bg);
-                    break;
-                case 5:
-                    bg_preview.setBackgroundResource(R.drawable.violet_bg);
-                    break;
-            }
-            switch (model.id_avatar){
+        switch (id_user) {
                 case 0:
                     preview_avatar_user.setBackgroundResource(R.drawable.avatar_0);
                     break;
@@ -142,6 +136,85 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
                     preview_avatar_user.setBackgroundResource(R.drawable.avatar_9);
                     break;
             }
-        }
+
+
+
+
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.app_changes:
+
+                mArticleController.addPost(new AddPostRequest(
+                        id_user,
+                        id_background,
+                        post_title,
+                        categories,
+                        content
+                 ), "iu6JrrCVyoaJNrl0dhAt");
+                Intent intent= new Intent(this, TimelineActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.item_article_preview, menu);
+
+        return true;
+    }
+
+    @Override
+    public void onAddPostRequest(boolean error, AddPostRequest response, Throwable t) {
+        if(!error){
+            Toast.makeText(this, new Gson().toJson(response), Toast.LENGTH_SHORT).show();
+//            tv_title_preview.setText(post_title);
+//            tv_name_preview.setText(R.string.Mae_Spancer); ///Belum FIX
+//            preview_category.setText(categories);
+//            tv_content_preview.setText(content);
+//            switch (id_background) {
+//                case 1:
+//                    bg_preview.setBackgroundResource(R.drawable.red_bg);
+//                    break;
+//                case 2:
+//                    bg_preview.setBackgroundResource(R.drawable.green_bg);
+//                    break;
+//                case 3:
+//                    bg_preview.setBackgroundResource(R.drawable.blue_bg);
+//                    break;
+//                case 4:
+//                    bg_preview.setBackgroundResource(R.drawable.yellow_bg);
+//                    break;
+//                case 5:
+//                    bg_preview.setBackgroundResource(R.drawable.violet_bg);
+//                    break;
+            }
+        }
 }
+
+    //
+//    @Override
+//    public void getViewArticleResponse(boolean error, ViewArticleResponse response, Throwable t) {
+//        if (!error) {
+//            ViewArticleResponse model = response;
+//            tv_title_preview.setText(model.post_title);
+//            tv_name_preview.setText(model.name);
+//            preview_category.setText(model.categories);
+//            preview_tanggal.setText(model.published_at);
+//            tv_content_preview.setText(model.content);
+//
+//
+//        }
+//    }
+//}

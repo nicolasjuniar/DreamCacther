@@ -21,10 +21,10 @@ public class ProfileController {
         this.listener = listener;
     }
 
-    public void GetProfile()
+    public void GetProfile(String token)
     {
         service= ServiceGenerator.createService(ProfileAPI.class);
-        CallProfileResponse=service.GetProfile();
+        CallProfileResponse=service.getProfile(token);
         CallProfileResponse.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
