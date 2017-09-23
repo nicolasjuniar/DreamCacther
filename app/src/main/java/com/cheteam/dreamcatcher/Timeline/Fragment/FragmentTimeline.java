@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
+import com.cheteam.dreamcatcher.Login.Controller.LoginController;
+import com.cheteam.dreamcatcher.Login.Model.InterestRequest;
+import com.cheteam.dreamcatcher.Login.Model.InterestResponse;
+import com.cheteam.dreamcatcher.Login.Model.LoginResponse;
 import com.cheteam.dreamcatcher.Login.View.LoginActivity;
+import com.cheteam.dreamcatcher.Login.View.onInterestUpdate;
 import com.cheteam.dreamcatcher.NetworkUtils;
 import com.cheteam.dreamcatcher.R;
 import com.cheteam.dreamcatcher.Timeline.Adapter.RecycleViewAdapterListCategories;
@@ -25,6 +32,7 @@ import com.cheteam.dreamcatcher.Timeline.Interface.IChangeCategory;
 import com.cheteam.dreamcatcher.Timeline.Interface.ISetCategory;
 import com.cheteam.dreamcatcher.Timeline.Model.ModelTimeline;
 import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -35,7 +43,7 @@ import butterknife.ButterKnife;
  * Created by Nicolas Juniar on 08/09/2017.
  */
 
-public class FragmentTimeline extends Fragment implements TimelineController.onTimelineResponse,ISetCategory {
+public class FragmentTimeline extends Fragment implements TimelineController.onTimelineResponse,onInterestUpdate,ISetCategory {
 
     @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.ListPost) RecyclerView recyclerView;
@@ -51,8 +59,10 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
     RecycleViewAdapterListCategories adapter2;
 
     TimelineController TC;
-
+    PreferenceHelper preferences;
     NetworkUtils network;
+    LoginController LC;
+    String token;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,9 +73,21 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         TC=new TimelineController(this);
 
         network=new NetworkUtils(getActivity());
+        LC= new LoginController(this);
 
+        preferences=PreferenceHelper.getInstance(getContext());
         Bundle arguments = getArguments();
-        ListInterest=arguments.getStringArrayList("listinterest");
+        token=preferences.getString("token","");
+        if(preferences.getBoolean("session",false))
+        {
+            LoginResponse model=new Gson().fromJson(preferences.getString("profile",""),LoginResponse.class);
+            Log.e("error kategori: ",new Gson().toJson(model) );
+            ListInterest=model.categories;
+        }
+        else
+        {
+            ListInterest=arguments.getStringArrayList("listinterest");
+        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -149,6 +171,15 @@ public class FragmentTimeline extends Fragment implements TimelineController.onT
         adapter2.setListCategories(this.ListInterest);
         adapter2.notifyDataSetChanged();
         fetchTimeline();
+        LC.UpdateInterest(new InterestRequest(ListInterest),token);
+        LoginResponse model=(new Gson().fromJson(preferences.getString("profile",""),LoginResponse.class));
+        model.categories=ListInterest;
+        preferences.putString("profile",new Gson().toJson(model));
+
+    }
+
+    @Override
+    public void InterestUpdateResponse(boolean error, InterestResponse response, Throwable t) {
 
     }
 }

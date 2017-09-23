@@ -7,6 +7,7 @@ import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -26,6 +27,10 @@ public interface ViewArticleApi {
     Call<AddPostRequest> postArticle(@Body AddPostRequest post);
 
     @POST("v1/bookmarks")
-    Call<BookmarkResponse> Bookmark(@Body BookmarkRequest body,
+    Call<BookmarkResponse> addBookmark(@Body BookmarkRequest body,
+                                    @Header("Authorization") String token);
+
+    @DELETE("v1/bookmarks/{id_post}")
+    Call<BookmarkResponse> removeBookmark(@Path("id_post") int id_post,
                                     @Header("Authorization") String token);
 }

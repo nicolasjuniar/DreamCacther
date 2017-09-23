@@ -7,5 +7,5 @@
         <item >Opportunities</item>
         <item >Courses</item>
     </string-array>
-    <string name="Mae_Spancer">Mae Spancer</string>
+    <string name="Mae_Spancer" translatable="false">Mae Spancer</string>
 </resources>

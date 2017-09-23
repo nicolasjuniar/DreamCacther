@@ -13,10 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cheteam.dreamcatcher.ArticlePreview.Controller.ArticleController;
+import com.cheteam.dreamcatcher.ArticlePreview.Model.BookmarkRequest;
+import com.cheteam.dreamcatcher.ArticlePreview.Model.BookmarkResponse;
 import com.cheteam.dreamcatcher.ArticlePreview.Model.ViewArticleResponse;
 import com.cheteam.dreamcatcher.CommentSection.View.MainComment;
 import com.cheteam.dreamcatcher.Helper.PreferenceHelper;
+import com.cheteam.dreamcatcher.Login.Model.LoginResponse;
 import com.cheteam.dreamcatcher.R;
+import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Rahmat Al Hakam on 14/09/2017.
  */
 
-public class ViewPost extends AppCompatActivity implements ArticleController.onViewArticleResponse{
+public class ViewPost extends AppCompatActivity implements ArticleController.onViewArticleResponse,ArticleController.onAddBookmarkResponse{
     @BindView(R.id.bg_view_post) ImageView bg_view_post;
     @BindView(R.id.avatar_vp) CircleImageView avatar_vp;
     @BindView(R.id.tv_name_vp) TextView tv_name_vp;
@@ -45,6 +49,9 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
     ArticleController AC;
     Bundle b;
     PreferenceHelper prefences;
+    int id_post;
+    int id_user;
+    String token;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,9 +65,13 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
         actionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
-        AC=new ArticleController(this);
+        AC=new ArticleController(this,this);
         b=getIntent().getExtras();
         AC.GetArticle(b.getInt("id_post"));
+        id_post=b.getInt("id_post");
+        token=b.getString("token","");
+        final BookmarkRequest body=new BookmarkRequest(id_user,id_user);
+        LoginResponse model=new Gson().fromJson(b.getString("profile",""), LoginResponse.class);
         bookmark_icon_vp.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp);
         prefences=PreferenceHelper.getInstance(getApplicationContext());
 
@@ -70,7 +81,7 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
         }
         else
         {
-            bookmark_icon_vp.setVisibility(View.GONE);
+            bookmark_icon_vp.setVisibility(View.INVISIBLE);
         }
 
         bookmark_icon_vp.setOnClickListener(new View.OnClickListener() {
@@ -80,11 +91,13 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
                 {
                     cek=true;
                     bookmark_icon_vp.setBackgroundResource(R.drawable.icon_bookmark);
+                    AC.addBookmark(body,token);
                 }
                 else if(cek)
                 {
                     cek=false;
                     bookmark_icon_vp.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp);
+                    AC.removeBookmark(id_post, token);
                 }
             }
         });
@@ -110,10 +123,7 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
         switch (id){
             case android.R.id.home: onBackPressed();
                 break;
-            case R.id.comment_vp:
-                Intent intent= new Intent(this, MainComment.class);
-                startActivity(intent);
-                break;
+
 
         }
 
@@ -231,5 +241,15 @@ public class ViewPost extends AppCompatActivity implements ArticleController.onV
                 avatar_vp.setImageResource(R.drawable.avatar_9);
             }
         }
+    }
+
+    @Override
+    public void getAddBookmarkResponse(boolean error, BookmarkResponse response, Throwable t) {
+
+    }
+
+    @Override
+    public void removeBookmarkResponse(boolean error, BookmarkResponse response, Throwable t) {
+
     }
 }
