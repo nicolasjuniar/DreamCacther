@@ -69,12 +69,8 @@
         <activity android:name=".ArticlePreview.View.EditPostPreview"
             android:label="Edit Post"
             android:theme="@style/AppTheme.NoActionBar"
-<<<<<<< HEAD
             android:screenOrientation="portrait"
             />
-=======
-            android:screenOrientation="portrait"/>
->>>>>>> 7501fab57fc3a7ac5d17c78d79c83df269f013c7
         <activity android:name=".AddPost.View.EditPostActivity"
             android:label="Edit Post"
             android:theme="@style/AppTheme.NoActionBar"
