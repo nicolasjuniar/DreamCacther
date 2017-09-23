@@ -4,6 +4,7 @@ import com.cheteam.dreamcatcher.Timeline.Model.TimelineResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 
 /**
@@ -13,4 +14,6 @@ import retrofit2.http.GET;
 public interface TimelineAPI {
     @GET("v1/posts")
     Call<TimelineResponse> GetTimeline();
+
+
 }

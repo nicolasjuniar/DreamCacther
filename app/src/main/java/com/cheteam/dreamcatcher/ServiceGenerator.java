@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Nicolas Juniar on 28/08/2016.
  */
 public class ServiceGenerator {
-    private static String BASE_URL = "http://private-2932ba-morpheus3.apiary-mock.com/" ;
+    private static String BASE_URL = "http://dreamcatcherz.herokuapp.com/" ;
 
     public ServiceGenerator(){}
 

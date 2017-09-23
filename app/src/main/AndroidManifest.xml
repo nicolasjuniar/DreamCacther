@@ -40,8 +40,8 @@
             android:label="Pick Avatar Profile"
             />
         <activity android:name=".AddPost.View.AddPostActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Add Post"/>
+                  android:theme="@style/AppTheme.CustomCategory"
+                  android:label="Add Post"/>
         <activity android:name=".ArticlePreview.View.ArticlePreview"
             android:label="Article Preview"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -58,8 +58,8 @@
             android:label="Edit Post"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AddPost.View.EditPostActivity"
-            android:label="Edit Post"
-            android:theme="@style/AppTheme.NoActionBar"/>
+                  android:label="Edit Post"
+                  android:theme="@style/AppTheme.CustomCategory"/>
     </application>
 
 </manifest>
