@@ -157,7 +157,7 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
                         post_title,
                         categories,
                         content
-                 ), "iu6JrrCVyoaJNrl0dhAt");
+                 ));
                 Intent intent= new Intent(this, TimelineActivity.class);
                 startActivity(intent);
                 finish();
@@ -201,7 +201,7 @@ public class ActivityPreview extends AppCompatActivity implements ArticleControl
 //                    break;
             }
         }
-}
+    }
 
     //
 //    @Override

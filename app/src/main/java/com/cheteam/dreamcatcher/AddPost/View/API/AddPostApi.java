@@ -6,8 +6,6 @@ import com.cheteam.dreamcatcher.AddPost.View.Model.AddPostResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 /**
@@ -15,9 +13,8 @@ import retrofit2.http.POST;
  */
 
 public interface AddPostApi {
-    @POST("/v1/posts/")
-    Call<AddPostRequest> postArticle(@Body AddPostRequest post,
-                                     @Header("Authorization") String token);
+    @POST("/v1/posts")
+    Call<AddPostRequest> postArticle(@Body AddPostRequest post);
 
 
 }

@@ -53,7 +53,7 @@ public class AddPostActivity extends AppCompatActivity  {
     @BindView(R.id.ib_bg_5_ap) ImageButton ib_bg_5_ap;
     @BindView(R.id.et_content_add_post) EditText et_content_add_post;
 
-    String category = "";
+
     Bundle bundle = new Bundle();
     private int id_background = 1;
     //idCat=0;
@@ -72,34 +72,21 @@ public class AddPostActivity extends AppCompatActivity  {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         myToolbar.setSubtitleTextColor(getResources().getColor(R.color.White));
-
         add_post_add_category.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                final String[] singleChoiceItems = getResources().getStringArray(R.array.dialog_choice_array);;
-                final int itemSelected = 0;
-
+                String[] singleChoiceItems = getResources().getStringArray(R.array.dialog_choice_array);;
+                int itemSelected = 0;
                 new AlertDialog.Builder(AddPostActivity.this)
                         .setTitle("Select Category")
                         .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(getApplicationContext(), singleChoiceItems[i], Toast.LENGTH_SHORT).show();
-                                switch (singleChoiceItems[i]){
-                                    case "Finances": category="Finances"; break;
-                                    case "Skills": category="Skills"; break;
-                                    case "Facilities": category="Facilities"; break;
-                                    case "Opportunities": category="Opportunities"; break;
-                                    case "Courses": category="Courses"; break;
-                                }
-                            }
-                        })
-                        .setPositiveButton("APPLY", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+
 
                             }
                         })
+                        .setPositiveButton("APPLY",null)
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -149,6 +136,7 @@ public class AddPostActivity extends AppCompatActivity  {
 
 
 
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,10 +155,10 @@ public class AddPostActivity extends AppCompatActivity  {
         int id = item.getItemId();
         if(id==R.id.add_post_menu)
         {
-            bundle.putInt("id_user", 1);
+            bundle.putInt("id_user",1);
             bundle.putInt("id_background", id_background);
             bundle.putString("post_title", add_post_title.getText().toString());
-            bundle.putString("categories", category);
+            bundle.putString("categories", "Finances");
             bundle.putString("content", et_content_add_post.getText().toString());
             Intent intent = new Intent(this, ActivityPreview.class);
             intent.putExtras(bundle);
